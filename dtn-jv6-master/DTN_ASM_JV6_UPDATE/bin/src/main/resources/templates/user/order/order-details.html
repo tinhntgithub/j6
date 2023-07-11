@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DTNsBike | Thông tin chi tiết đơn hàng | DH001</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+        crossorigin="anonymous"></script>
+        <link rel="shortcut icon" th:href="@{/user/img/logo/logo5.png}">
+</head>
+
+<body style="background:url(https://wallpaperbat.com/img/165425-road-bike-wallpaper-top-free-road-bike-background.jpg);background-size: cover;">
+    <section class="h-100 gradient-custom m-auto" style="width:70%;">
+        <div class="container mt-2 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-lg-10 col-xl-8">
+                    <div class="card" style="border-radius: 10px;
+                    border-bottom: 5px solid rgb(236, 96, 57);border-left: 5px solid rgb(232, 87, 54);border-right: 5px solid rgb(232, 87, 54);">
+                        <div class="card-header px-4 py-5 mb-0 text-center text-white d-flex" style="background: rgba(234, 72, 35, 0.897);">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" class="bi bi-clipboard2-check-fill" viewBox="0 0 16 16">
+                                <path d="M10 .5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5.5.5 0 0 1-.5.5.5.5 0 0 0-.5.5V2a.5.5 0 0 0 .5.5h5A.5.5 0 0 0 11 2v-.5a.5.5 0 0 0-.5-.5.5.5 0 0 1-.5-.5Z"/>
+                                <path d="M4.085 1H3.5A1.5 1.5 0 0 0 2 2.5v12A1.5 1.5 0 0 0 3.5 16h9a1.5 1.5 0 0 0 1.5-1.5v-12A1.5 1.5 0 0 0 12.5 1h-.585c.055.156.085.325.085.5V2a1.5 1.5 0 0 1-1.5 1.5h-5A1.5 1.5 0 0 1 4 2v-.5c0-.175.03-.344.085-.5Zm6.769 6.854-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/>
+                              </svg>
+                            <h5 class="mb-0 mt-4">Cảm ơn bạn đã mua hàng , 
+                                <span class="border-bottom" th:each="list:${or}">
+                                    <strong>[[${list.fullname}]]</strong></span> !</h5>
+                        </div>
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-center mb-4">
+                                <p class="lead fw-normal mb-0" style="color: #a85d08;">Mã DH: HD0011</p>
+                            </div>
+                            <div class="card shadow-0 border mb-4" >
+                                <div class="card-body" >
+                                    <div class="row" th:each="e:${details}" th:object="${e}">
+
+                                        <!-- <div class="col-md-2">
+                                        </div>
+                                        <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                                            <p class="text-muted mb-0">Tên sản phẩm</p>
+                                        </div>
+                                        <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                                            <p class="text-muted mb-0 small">Danh mục</p>
+                                        </div>
+                                        <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                                            <p class="text-muted mb-0 small">Số lượng</p>
+                                        </div>
+                                        <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                                            <p class="text-muted mb-0 small">Đơn giá</p>
+                                        </div>
+                                        <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                                            <p class="text-muted mb-0 small">Thành tiền</p>
+                                        </div>
+                                        <hr class="mb-4" style="background-color: #e0e0e0; opacity: 1;"> -->
+
+                                        
+                                        <div class="col-md-2">
+                                            <img src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/13.webp"
+                                                class="img-fluid" alt="Phone">
+                                        </div>
+                                        
+                                        <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                                            <p class="text-muted mb-0" th:text="*{productsId.name}"></p>
+                                        </div>
+                                        <!-- <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                                            <p class="text-muted mb-0 small" th:text="*{colorId.name}"></p>
+                                        </div> -->
+                                        <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                                            <p class="text-muted mb-0 small" th:text="*{qty}"></p>
+                                        </div>
+                                        <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                                            <p class="text-muted mb-0 small" th:text="*{price}"></p>
+                                        </div>
+                                        <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                                            <p class="text-muted mb-0 small" th:text="*{price*qty}"></p>
+                                        </div>
+                                    
+                                        <hr class="mb-4" style="background-color: #e0e0e0; opacity: 1;">
+                                    </div>
+                                    
+                                    
+                                </div>
+                                
+                            </div>
+                        
+                            <div class="d-flex justify-content-between pt-2">
+                                <p class="fw-bold mb-0" >Chi tiết đơn hàng:</p>
+                                <p class="text-muted mb-0"><span class="fw-bold me-4">Tổng:</span ><span th:text="${#aggregates.sum(details.![price*qty])}"></span> </p>
+                            </div>
+
+                            <div th:each="list:${or}">
+
+                            <div class="d-flex justify-content-between pt-2" >
+                                <p class="text-muted mb-0">Họ tên người nhận : [[${list.fullname}]]</p>
+                                <p class="text-muted mb-0"><span class="fw-bold me-4">(+) Phí ship:</span> 0 VND</p>
+                            </div>
+
+                            <div class="d-flex justify-content-between pt-2">
+                                <p class="text-muted mb-0">Số điện thoại : [[${list.phone}]]</p>
+                                <p class="text-muted mb-0"><span class="fw-bold me-4">(-) Giảm giá:</span> 0 VND</p>
+                            </div>
+
+                            <!-- <div class="d-flex justify-content-between pt-2">
+                                <p class="text-muted mb-0">Email : abc@gmail.com</p>
+                            </div> -->
+                            <div class="d-flex justify-content-between pt-2">
+                                <p class="text-muted mb-0">Địa chỉ : [[${list.address}]]</p>
+                            </div>
+
+                            <div class="d-flex justify-content-between">
+                                <p class="text-muted mb-0">Ngày đặt hàng : [[${list.date}]]</p>
+                            </div>
+                        </div>
+
+                        </div>
+                        <div class="card-footer border-0 mb-2"
+                            style="border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;background: #ffffff;">
+                            <hr class="" style="background-color: #e0e0e0; opacity: 1;">
+                            <h5 class="d-flex align-items-center justify-content-end text-danger mb-0">Tổng tiền:
+                                <span class="h5 mb-0 ms-2">[[${#aggregates.sum(details.![price*qty])}]] VND</span>
+                            </h5>
+                            <div class="justify-content-start">
+                                <a href="orders.html" class="btn btn-danger">Trở về...</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>

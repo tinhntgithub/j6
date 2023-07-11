@@ -147,8 +147,9 @@ ul {
 .second-featured-products.related-pro .post-title h2 {
     background: orangered none repeat scroll 0 0;
     color: #fff;
+    font-family:  "Poppins", sans-serif;
     font-size: 21px;
-    font-weight: 900;
+    font-weight: bold;
     line-height: 20px;
     position: relative;
     text-transform: capitalize;
@@ -675,7 +676,7 @@ span.total-pro {
     padding: 10px 15px;
     position: relative;
     text-transform: capitalize;
-    font-family: "Lato",sans-serif;
+    font-family:  "Poppins", sans-serif;
 }
 
 .header-bottom-list > li > ul.ht-dropdown li a {
@@ -830,7 +831,7 @@ span.total-pro {
   color: #363636;
   cursor: pointer;
   display: block;
-  font-family: "lato",sans-serif;
+  font-family: "Poppins", sans-serif;
   font-size: 14px;
   font-weight: 700;
   height: 40px;
@@ -1458,7 +1459,8 @@ li.megamenu-img a {
 .section-ttitle h2,.title-box h2 {
   color: #212121;
   font-size: 34px;
-  font-weight: 900;
+  font-family: "Arial";
+  font-weight: bold;
   line-height: 1;
   margin: 0;
   text-transform: capitalize;
@@ -1485,6 +1487,7 @@ li.megamenu-img a {
   border-radius: 0;
   color: #363636;
   font-size: 15px;
+  font-family:  "Poppins", sans-serif;
   font-weight: 600;
   margin: 0;
   padding: 0;
@@ -1505,7 +1508,8 @@ li.megamenu-img a {
 .section-ttitle2 {
   color: #212121;
   font-size: 24px;
-  font-weight: 900;
+  font-family: "Arial";
+  font-weight: bold;
   text-align: center;
 }
 
@@ -4540,4 +4544,12 @@ a.shipping-calculator-button:hover {
   text-decoration: none;
   top: 6px;
   transition: all 0.3s ease-in 0s;
+}
+/*----------------------------------------*/
+/* 30. Thong bao loi CSS
+/*----------------------------------------*/
+.erros_mess{
+    color:rgb(255, 68, 0);
+    font-style: normal;
+    font-size:13px;
 }

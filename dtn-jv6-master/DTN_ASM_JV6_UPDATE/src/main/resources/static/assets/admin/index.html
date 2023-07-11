@@ -226,6 +226,13 @@
       </nav>
       <!-- partial -->
       <div class="main-panel">
+      <div class="card row mt-2 bg-light ">
+
+    <h6 class="mb-4">Biểu đồ doanh thu</h6>
+    <canvas id="worldwide-sales"></canvas>
+
+
+  </div>
         <!-- View Start -->
         <div class="ng-view content-wrapper"></div>
         <!-- View End -->
@@ -247,10 +254,13 @@
   <!-- container-scroller -->
 
   <!-- plugins:js -->
+  
   <script src="asset/vendors/base/vendor.bundle.base.js"></script>
+
   <!-- endinject -->
   <!-- Plugin js for this page-->
   <script src="asset/vendors/chart.js/Chart.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> 
   <script src="asset/vendors/datatables.net/jquery.dataTables.js"></script>
   <script src="asset/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
   <!-- End plugin js for this page-->
@@ -263,15 +273,15 @@
   <script src="asset/js/dashboard.js"></script>
   <script src="asset/js/data-table.js"></script>
   <!-- Custom js for this page-->
-  <script src="asset/js/chart.js"></script>
+
   <script src="asset/js/jquery.dataTables.js"></script>
   <script src="asset/js/dataTables.bootstrap4.js"></script>
   <!-- End custom js for this page-->
 
   <script src="asset/js/jquery.cookie.js" type="text/javascript"></script>
-
-  <!-- Angulag admin spa -->
   <script src="asset/adminjs/admin-app.js"></script>
+  <!-- Angulag admin spa -->
+   <script src="asset/js/chart.js"></script>
   <script src="asset/adminjs/account.js"></script>
   <script src="asset/adminjs/product.js"></script>
   <script src="asset/adminjs/category.js"></script>

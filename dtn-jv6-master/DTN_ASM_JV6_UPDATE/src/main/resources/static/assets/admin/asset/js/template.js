@@ -56,7 +56,8 @@
 
     //checkbox and radios
     $(".form-check label,.form-radio label").append('<i class="input-helper"></i>');
-
+     // Worldwide Sales Chart
+     
     // Remove pro banner on close
 
    
@@ -92,7 +93,6 @@
     });
 
   });
-
 
 
 })(jQuery);
