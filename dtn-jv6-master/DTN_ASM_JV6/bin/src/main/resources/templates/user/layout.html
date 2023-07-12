@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.thymeleaf.org" th:fragment="dynamic(title,header,view)">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:replace="${title}"></title>
+    <!-- Favicons -->
+    <link rel="shortcut icon" th:href="@{../user/img/logo/logo5.png}">
+    <!-- Fontawesome css -->
+    <link rel="stylesheet" th:href="@{../user/css/font-awesome.min.css}">
+    <!-- Ionicons css -->
+    <link rel="stylesheet" th:href="@{../user/css/ionicons.min.css}">
+    <!-- linearicons css -->
+    <link rel="stylesheet" th:href="@{../user/css/linearicons.css}">
+    <!-- Nice select css -->
+    <link rel="stylesheet" th:href="@{../user/css/nice-select.css}">
+    <!-- Jquery fancybox css -->
+    <link rel="stylesheet" th:href="@{../user/css/jquery.fancybox.css}">
+    <!-- Jquery ui price slider css -->
+    <link rel="stylesheet" th:href="@{../user/css/jquery-ui.min.css}">
+    <!-- Meanmenu css -->
+    <link rel="stylesheet" th:href="@{../user/css/meanmenu.min.css}">
+    <!-- Nivo slider css -->
+    <link rel="stylesheet" th:href="@{../user/css/nivo-slider.css}">
+    <!-- Owl carousel css -->
+    <link rel="stylesheet" th:href="@{../user/css/owl.carousel.min.css}">
+    <!-- Bootstrap css -->
+    <link rel="stylesheet" th:href="@{../user/css/bootstrap.min.css}">
+    <!-- Custom css -->
+    <link rel="stylesheet" th:href="@{../user/css/default.css}">
+    <!-- Main css -->
+    <link rel="stylesheet" th:href="@{/user/style.css}">
+    <!-- Responsive css -->
+    <link rel="stylesheet" th:href="@{../user/css/responsive.css}">
+
+    <!-- Modernizer js -->
+    <script th:src="@{../user/js/vendor/modernizr-3.5.0.min.js}"></script>
+</head>
+
+<body>
+    <header th:replace="${header}"></header>
+    <main th:replace="${view}"></main>
+    <footer th:insert="~{/user/common/footer::footer}"></footer>
+
+    <!-- jquery 3.2.1 -->
+    <script th:src="@{../user/js/vendor/jquery-3.2.1.min.js}"></script>
+    <!-- Countdown js -->
+    <script th:src="@{../user/js/jquery.countdown.min.js}"></script>
+    <!-- Mobile menu js -->
+    <script th:src="@{../user/js/jquery.meanmenu.min.js}"></script>
+    <!-- ScrollUp js -->
+    <script th:src="@{../user/js/jquery.scrollUp.js}"></script>
+    <!-- Nivo slider js -->
+    <script th:src="@{../user/js/jquery.nivo.slider.js}"></script>
+    <!-- Fancybox js -->
+    <script th:src="@{../user/js/jquery.fancybox.min.js}"></script>
+    <!-- Jquery nice select js -->
+    <script th:src="@{../user/js/jquery.nice-select.min.js}"></script>
+    <!-- Jquery ui price slider js -->
+    <script th:src="@{../user/js/jquery-ui.min.js}"></script>
+    <!-- Owl carousel -->
+    <script th:src="@{../user/js/owl.carousel.min.js}"></script>
+    <!-- Bootstrap popper js -->
+    <script th:src="@{../user/js/popper.min.js}"></script>
+    <!-- Bootstrap js -->
+    <script th:src="@{../user/js/bootstrap.min.js}"></script>
+    <!-- Plugin js -->
+    <script th:src="@{../user/js/plugins.js}"></script>
+    <!-- Main activaion js -->
+    <script th:src="@{../user/js/main.js}"></script>
+</body>
+
+</html>

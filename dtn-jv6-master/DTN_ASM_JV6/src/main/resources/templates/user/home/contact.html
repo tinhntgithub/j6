@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{/user/layout::dynamic(~{::title},~{::header},~{::.content})}">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DTNsBike | Liên hệ</title>
+</head>
+<body>
+    <header th:insert="~{/user/common/header::header}"></header>
+    <div class="content">
+         <!-- Breadcrumb Start -->
+         <div class="breadcrumb-area mt-30">
+            <div class="container">
+                <div class="breadcrumb">
+                    <ul class="d-flex align-items-center">
+                        <li><a href="index.html">Trang chủ</a></li>
+                        <li class="active"><a href="contact.html">Trang liên hệ</a></li>
+                    </ul>
+                </div>
+            </div>
+            <!-- Container End -->
+        </div>
+        <!-- Breadcrumb End -->
+        <!-- Contact Email Area Start -->
+        <div class="contact-area ptb-sm-60 mt-5 mb-3">
+            <div class="container">
+                <div class="row">
+                    <div class="col-6">
+                        <h3 class="mb-20">LIÊN HỆ VỚI CHÚNG TÔI</h3>
+                    <p class="text-capitalize mb-20">Lưu ý: Những trường (*) là bắt buộc.</p>
+                    <form id="contact-form" class="contact-form" action="mail.php" method="post">
+                    <div class="address-wrapper row">
+                        <div class="col-md-12">
+                            <div class="address-fname">
+                                <input class="form-control" type="text" name="name" placeholder="Họ tên...">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="address-email">
+                                <input class="form-control" type="text" name="email" placeholder="Địa chỉ...">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="address-web">
+                                <input class="form-control" type="email" name="website" placeholder="Email...">
+                            </div>
+                        </div>
+                         <div class="col-md-12">
+                            <div class="address-web">
+                                <input class="form-control" type="text" name="sdt" placeholder="Số điện thoại...">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="address-subject">
+                                <input class="form-control" type="text" name="subject" placeholder="Chủ đề...">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="address-textarea">
+                                <textarea name="message" class="form-control" placeholder="Nội dung ..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="form-message">
+                    <div class="footer-content mail-content clearfix">
+                        <div class="send-email float-md-left">
+                            <input value="Gửi đi" class="return-customer-btn" type="submit">
+                        </div>
+                    </div>
+                </form>
+                    </div>
+                     <div class="col-6">
+                        <h3 class="mb-20">THÔNG TIN LIÊN HỆ</h3>
+                    <p class="text-capitalize mb-20">Để chúng tôi có thể phục vụ quý khách tốt nhất, xin vui lòng liên hệ:</p>
+                    <form id="contact-form" class="contact-form" action="mail.php" method="post">
+                    <div class="address-wrapper row">
+                        <div class="col-md-12">
+                            <div class="address-fname">
+                                <h5>CÔNG TY TNHH THƯƠNG MẠI VÀ DỊCH VỤ DTNsBike</h5>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mt-3">
+                            <div class="address-fname d-flex">
+                                <h6 class="mr-2">Địa chỉ:</h6> Số 288, Nguyễn Văn Linh, Ninh Kiều, Cần Thơ.
+                            </div>
+                        </div>
+                        <div class="col-md-12 mt-2">
+                            <div class="address-fname d-flex">
+                                <h6 class="mr-2">Điện thoại:</h6> 09xxxxxxxxx.
+                            </div>
+                        </div>
+                        <div class="col-md-12 mt-2">
+                            <div class="address-fname d-flex">
+                                <h6 class="mr-2">Hotline:</h6> 012 345 678 - 098 765 432.
+                            </div>
+                        </div>
+                        <div class="col-md-12 mt-2">
+                            <div class="address-fname d-flex">
+                                <h6 class="mr-2">Email:</h6> dtnsoftware2022@gmail.com
+                            </div>
+                        </div>
+                        <div class="col-md-12 mt-2">
+                            <div class="address-fname d-flex">
+                                <h6 class="mr-2">Giờ làm việc:</h6> 08:30 – 19:00 các ngày trong tuần.
+                            </div>
+                        </div>
+                         <div class="col-md-12 mt-2">
+                            <iframe width="100%" height="400" id="gmap-canvas"
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d11112.461893018359!2d105.76373845744831!3d10.029351406478225!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31a088476bafffdf%3A0x4da67960eb05332d!2zVHLGsOG7nW5nIENhbyDEkOG6s25nIFRo4buxYyBIw6BuaCBGUFQgUG9seXRlY2huaWMgQ-G6p24gVGjGoQ!5e0!3m2!1svi!2s!4v1642426185894!5m2!1svi!2s"
+                                frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+                        </div>
+                    </div>
+                
+                </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Contact Email Area End -->
+    </div>
+</body>
+</html>

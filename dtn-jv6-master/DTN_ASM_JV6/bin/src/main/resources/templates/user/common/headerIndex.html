@@ -1,0 +1,379 @@
+<html xmlns="http://www.thymeleaf.org">
+    <header th:fragment="header">
+               <!-- Banner Popup Start -->
+       <div class="popup_banner">
+        <span class="popup_off_banner text-danger">×</span>
+        <div class="banner_popup_area">
+                <img th:src="@{../user/img/banner/pop-banner.jpg}" alt="">
+        </div>
+    </div>
+    <!-- Banner Popup End -->
+    <!-- Main Header Area Start Here -->
+    <header>
+        <!-- Header Top Start Here -->
+        <div class="header-top-area" style="background-color:white;">
+            <div class="container">
+                <!-- Header Top Start -->
+                <div class="header-top" style="background-color:white;">
+                    <ul>
+                        <li style="font-size: 13px;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-geo-alt-fill" viewBox="0 0 16 16">
+                                    <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
+                                  </svg> 
+                                288 - Nguyễn Văn Linh - Ninh Kiều - Cần Thơ
+                           </li>
+                        <li style="font-size: 13px;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
+                                <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z"/>
+                              </svg>
+                                dtnsoftware2022@gmail.com
+                        </li>
+                        <li style="font-size: 13px;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-telephone-fill" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z"/>
+                              </svg>
+                            Đặt Hàng : 094xxxxxxx
+                        </li>
+                        <li style="font-size: 13px;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-clock" viewBox="0 0 16 16">
+                                <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z"/>
+                                <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0z"/>
+                              </svg>
+                            08:00 - 17:00
+                        </li>
+                    </ul>
+                    <ul>                                          
+                        <li>
+                            <img th:src="@{../user/img/header/vietnam.png}" alt="language-selector" width="24px">
+                            <a href="#">Tiếng Việt<i class="lnr lnr-chevron-down"></i></a>
+                            <!-- Dropdown Start -->
+                            <ul class="ht-dropdown">
+                                <li><a href="#"><img th:src="@{../user/img/header/english.jpg}" alt="language-selector" width="24px">English</a></li>
+                                <li><a href="#"><img th:src="@{../user/img/header/vietnam.png}" alt="language-selector" width="24px">Tiếng Việt</a></li>
+                            </ul>
+                            <!-- Dropdown End -->
+                        </li>
+                       
+                        <li>
+                            <a href="#" style="font-size:13px;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                              <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                              <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                            </svg>
+                                Tài khoản của tôi<i class="lnr lnr-chevron-down"></i>
+                            </a>
+                            <!-- Dropdown Start -->
+                            <ul class="ht-dropdown">
+                                <li><a href="login.html">Đăng nhập</a></li>
+                                <li><a href="register.html">Đăng ký</a></li>
+                                <li><a href="changepass.html">Đổi mật khẩu</a></li>
+                                <li><a href="forgot-password.html">Quên mật khẩu</a></li>
+                                <li><a href="update_account.html">Cập nhật tài khoản</a></li>
+                                <li><a href="#">Đăng xuất</a></li>
+                            </ul>
+                            <!-- Dropdown End -->
+                        </li> 
+                    </ul>
+                </div>
+                <!-- Header Top End -->
+            </div>
+            <!-- Container End -->
+        </div>
+        <!-- Header Top End Here -->
+        <!-- Header Middle Start Here -->
+        <div class="header-middle ptb-15">
+            <div class="container">
+                <div class="row align-items-center no-gutters">
+                    <div class="col-lg-3 col-md-12">
+                        <div class="logo mb-all-30">
+                            <a href="index.html"><img th:src="@{../user/img/logo/logo.png}" alt="logo-image"></a>
+                        </div>
+                    </div>
+                    <!-- Categorie Search Box Start Here -->
+                    <div class="col-lg-5 col-md-8 ml-auto mr-auto col-10">
+                        <div class="categorie-search-box">
+                            <form action="#">
+                                <div class="form-group">
+                                    <select class="bootstrap-select" name="poscats">
+                                        <option value="0">Danh mục</option>
+                                        <option value="2">Xe đạp bánh to</option>
+                                        <option value="3">Xe đạp đua</option>
+                                        <option value="4">Xe đạp đường phố</option>
+                                        <option value="5">Xe đạp thể thao</option>
+                                    </select>
+                                </div>
+                                <input type="text" name="search" placeholder="Nhập tên sản phẩm...">
+                                <button><i class="lnr lnr-magnifier"></i></button>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- Categorie Search Box End Here -->
+                    <!-- Cart Box Start Here -->
+                    <div class="col-lg-4 col-md-12">
+                        <div class="cart-box mt-all-30">
+                            <ul class="d-flex justify-content-lg-end justify-content-center align-items-center">
+                                <li><a href="cart.html"><i class="lnr lnr-cart"></i><span class="my-cart"><span class="total-pro">2</span>
+                                    <span>Giỏ hàng</span>
+                                </span>
+                                </a>
+                                    <ul class="ht-dropdown cart-box-width">
+                                        <li>
+                                            <!-- Cart Box Start -->
+                                            <div class="single-cart-box">
+                                                <div class="cart-img">
+                                                    <a href="product.html"><img th:src="@{../user/img/products/1.jpg}" alt="cart-image"></a>
+                                                    <span class="pro-quantity">1X</span>
+                                                </div>
+                                                <div class="cart-content">
+                                                    <h6><a href="product.html">Xe đạp Nhật chính hãng</a></h6>
+                                                    <span class="cart-price">1,200,000 đ</span>
+  <!--                                                   <span>Size: S</span> -->
+                                                    <span>Màu sắc: Đen</span>
+                                                </div>
+                                                <a class="del-icone" href="#"><i class="ion-close"></i></a>
+                                            </div>
+                                            <!-- Cart Box End -->
+                                            <!-- Cart Footer Inner Start -->
+                                            <div class="cart-footer">
+                                                  <div class="cart-actions text-center mb-2">
+                                                    <a class="cart-checkout w-100" href="cart.html">XEM GIỎ HÀNG</a>
+                                                </div>
+                                                <div class="cart-actions text-center">
+                                                    <a class="cart-checkout w-100" href="checkout.html">THANH TOÁN</a>
+                                                </div>
+                                            </div>
+                                            <!-- Cart Footer Inner End -->
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li><a href="product_favorite.html"><i class="lnr lnr-heart"></i><span class="my-cart"><span>Mặt hàng</span><span>yêu thích (0)</span></span></a>
+                                </li>
+                                <li><a href="#"><i class="lnr lnr-user"></i><span class="my-cart"><span> <strong>Sign In </strong>with</span><span> Google Account</span></span></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Cart Box End Here -->
+                </div>
+                <!-- Row End -->
+            </div>
+            <!-- Container End -->
+        </div>
+        <!-- Header Middle End Here -->
+        <!-- Header Bottom Start Here -->
+        <div class="header-bottom  header-sticky" style="background-color:black;">
+            <div class="container">
+                <div class="row align-items-center">
+                     <div class="col-xl-3 col-lg-4 col-md-6 vertical-menu d-none d-lg-block">
+                        <span class="categorie-title text-white" style="background-color: rgb(255, 68, 0);">Danh mục sản phẩm </span>
+                    </div>                       
+                    <div class="col-xl-9 col-lg-8 col-md-12">
+                        <nav class="d-none d-lg-block">
+                            <ul class="header-bottom-list d-flex">
+                                <li class="active"><a href="index.html">TRANG CHỦ</a></li>
+                                <li><a href="shop.html">SẢN PHẨM</a></li>
+                                <li><a href="about.html">GIỚI THIỆU</a></li>
+                                <li><a href="blog.html">TIN TỨC</a></li>
+                                <li><a href="contact.html">LIÊN HỆ</a></li>
+                                <li ><a href="#">QUẢN LÝ<i class="fa fa-angle-down"></i></a>
+                                    <!-- Home Version Dropdown Start -->
+                                    <ul class="ht-dropdown">
+                                        <li><a href="orders.html">Đơn hàng của bạn</a></li>
+                                        <li><a href="/admin/index.html">Trang quản trị</a></li>
+                                    </ul>
+                                    <!-- Home Version Dropdown End -->
+                                </li>
+                            </ul>
+                        </nav>
+                        <div class="mobile-menu d-block d-lg-none">
+                            <nav>
+                                <ul>
+                                    <li style="background-color:orangered;"><a class="text-white" href="index.html">TRANG CHỦ</a></li>
+                                    <li class="active"><a href="index.html">TRANG CHỦ</a></li>
+                                    <li><a href="shop.html">SẢN PHẨM</a></li>
+                                    <li><a href="about.html">GIỚI THIỆU</a></li>
+                                    <li><a href="blog.html">TIN TỨC</a></li>
+                                    <li><a href="contact.html">LIÊN HỆ</a></li>
+                                     <li ><a href="#">QUẢN LÝ<i class="fa fa-angle-down"></i></a>
+                                    <!-- Home Version Dropdown Start -->
+                                    <ul class="ht-dropdown">
+                                        <li><a href="orders.html">Đơn hàng của bạn</a></li>
+                                        <li><a href="/admin/index.html">Trang quản trị</a></li>
+                                    </ul>
+                                    <!-- Home Version Dropdown End -->
+                                </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+                <!-- Row End -->
+            </div>
+            <!-- Container End -->
+        </div>
+        <!-- Header Bottom End Here -->
+        <!-- Mobile Vertical Menu Start Here -->
+        <div class="container d-block d-lg-none">
+            <div class="vertical-menu mt-30">
+                <span class="categorie-title mobile-categorei-menu text-white" style="background-color: rgb(255, 68, 0);">Danh mục sản phẩm </span>
+                <nav>  
+                    <div id="cate-mobile-toggle" class="category-menu sidebar-menu sidbar-style mobile-categorei-menu-list menu-hidden ">
+                        <ul>
+                             <li><a href="shop.html"><span>
+                                     <img th:src="@{../user/img/vertical-menu/bike2.png}" alt="menu-icon">
+                                 </span>Xe đạp thể thao</a>
+                                </li>
+                                <li><a href="shop.html"><span>
+                                     <img th:src="@{../user/img/vertical-menu/bike2.png}" alt="menu-icon">
+                                 </span>Xe đạp trẻ em</a>
+                                </li>
+                                <li><a href="shop.html"><span>
+                                     <img th:src="@{../user/img/vertical-menu/bike2.png}" alt="menu-icon">
+                                 </span>Xe đạp 1</a>
+                                </li>
+                                <li><a href="shop.html"><span>
+                                     <img th:src="@{../user/img/vertical-menu/bike2.png}" alt="menu-icon">
+                                 </span>Xe đạp 2</a>
+                                </li>
+                                <li><a href="shop.html"><span>
+                                     <img th:src="@{../user/img/vertical-menu/bike2.png}" alt="menu-icon">
+                                 </span>Xe đạp 3</a>
+                                </li>
+                                <li><a href="shop.html"><span>
+                                     <img th:src="@{../user/img/vertical-menu/bike2.png}" alt="menu-icon">
+                                 </span>Xe đạp 4</a>
+                                </li>
+                                <li><a href="shop.html"><span>
+                                     <img th:src="@{../user/img/vertical-menu/bike2.png}" alt="menu-icon">
+                                 </span>Xe đạp 5</a>
+                                </li>
+                                <li><a href="shop.html"><span>
+                                     <img th:src="@{../user/img/vertical-menu/bike2.png}" alt="menu-icon">
+                                 </span>Xe đạp 6</a>
+                                </li>
+                                <li><a href="shop.html"><span>
+                                     <img th:src="@{../user/img/vertical-menu/bike2.png}" alt="menu-icon">
+                                 </span>Xe đạp 7</a>
+                                </li>
+                                <li><a href="shop.html"><span>
+                                     <img th:src="@{../user/img/vertical-menu/bike2.png}" alt="menu-icon">
+                                 </span>Xe đạp 8</a>
+                                </li>
+                                <li><a href="shop.html"><span>
+                                     <img th:src="@{../user/img/vertical-menu/bike2.png}" alt="menu-icon">
+                                 </span>Xe đạp thể thao</a>
+                                </li>
+                                <!-- More Categoies Start -->
+                               <!--  <li id="cate-toggle" class="category-menu v-cat-menu">
+                                    <ul>
+                                        <li class="has-sub"><a href="#">More Categories</a>
+                                            <ul class="category-sub">
+                                                <li><a href="shop.html"><span><img th:src="@{../user/img/vertical-menu/11.png}" alt="menu-icon"></span>Accessories</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li> -->
+                                <!-- More Categoies End -->
+                        </ul>
+                    </div>
+                    <!-- category-menu-end -->
+                </nav>
+            </div>
+        </div>
+        <!-- Mobile Vertical Menu Start End -->
+    </header>
+    <!-- Main Header Area End Here -->
+    <!-- Categorie Menu & Slider Area Start Here -->
+    <div class="main-page-banner pb-50 off-white-bg">
+        <div class="container">
+            <div class="row">
+                <!-- Vertical Menu Start Here -->
+                <div class="col-xl-3 col-lg-4 d-none d-lg-block">
+                    <div class="vertical-menu mb-all-30">
+                        <nav>
+                            <ul class="vertical-menu-list">
+                                 <li><a href="shop.html"><span>
+                                     <img th:src="@{../user/img/vertical-menu/bike2.png}" alt="menu-icon">
+                                 </span>Xe đạp thể thao</a>
+                                </li>
+                                <li><a href="shop.html"><span>
+                                     <img th:src="@{../user/img/vertical-menu/bike2.png}" alt="menu-icon">
+                                 </span>Xe đạp trẻ em</a>
+                                </li>
+                                <li><a href="shop.html"><span>
+                                     <img th:src="@{../user/img/vertical-menu/bike2.png}" alt="menu-icon">
+                                 </span>Xe đạp 1</a>
+                                </li>
+                                <li><a href="shop.html"><span>
+                                     <img th:src="@{../user/img/vertical-menu/bike2.png}" alt="menu-icon">
+                                 </span>Xe đạp 2</a>
+                                </li>
+                                <li><a href="shop.html"><span>
+                                     <img th:src="@{../user/img/vertical-menu/bike2.png}" alt="menu-icon">
+                                 </span>Xe đạp 3</a>
+                                </li>
+                                <li><a href="shop.html"><span>
+                                     <img th:src="@{../user/img/vertical-menu/bike2.png}" alt="menu-icon">
+                                 </span>Xe đạp 4</a>
+                                </li>
+                                <li><a href="shop.html"><span>
+                                     <img th:src="@{../user/img/vertical-menu/bike2.png}" alt="menu-icon">
+                                 </span>Xe đạp 5</a>
+                                </li>
+                                <li><a href="shop.html"><span>
+                                     <img th:src="@{../user/img/vertical-menu/bike2.png}" alt="menu-icon">
+                                 </span>Xe đạp 6</a>
+                                </li>
+                                <li><a href="shop.html"><span>
+                                     <img th:src="@{../user/img/vertical-menu/bike2.png}" alt="menu-icon">
+                                 </span>Xe đạp 7</a>
+                                </li>
+                                <li><a href="shop.html"><span>
+                                     <img th:src="@{../user/img/vertical-menu/bike2.png}" alt="menu-icon">
+                                 </span>Xe đạp 8</a>
+                                </li>
+                                <li><a href="shop.html"><span>
+                                     <img th:src="@{../user/img/vertical-menu/bike2.png}" alt="menu-icon">
+                                 </span>Xe đạp thể thao</a>
+                                </li>
+                                <!-- More Categoies Start -->
+                               <!--  <li id="cate-toggle" class="category-menu v-cat-menu">
+                                    <ul>
+                                        <li class="has-sub"><a href="#">More Categories</a>
+                                            <ul class="category-sub">
+                                                <li><a href="shop.html"><span><img th:src="@{../user/img/vertical-menu/11.png}" alt="menu-icon"></span>Accessories</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li> -->
+                                <!-- More Categoies End -->
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+                <!-- Vertical Menu End Here -->
+                <!-- Slider Area Start Here -->
+                <div class="col-xl-9 col-lg-8 slider_box">
+                    <div class="slider-wrapper theme-default">
+                        <!-- Slider Background  Image Start-->
+                        <div id="slider" class="nivoSlider">
+                            <a href="#"><img class="img-fluid" th:src="@{../user/img/slider/bn1.jpg}" data-thumb="@{../user/img/slider/bn1.jpg}" alt="" title="#htmlcaption"></a>
+                            <a href="#"><img class="img-fluid" th:src="@{../user/img/slider/bn2.jpg}" data-thumb="@{../user/img/slider/bn2.jpg}" alt="" title="#htmlcaption2"></a>
+                            <a href="#"><img class="img-fluid" th:src="@{../user/img/slider/bn3.jpg}" data-thumb="@{../user/img/slider/bn3.jpg}" alt="" title="#htmlcaption3"></a>
+                            <a href="#"><img class="img-fluid" th:src="@{../user/img/slider/bn4.jpg}" data-thumb="@{../user/img/slider/bn4.jpg}" alt="" title="#htmlcaption4"></a>
+                            <a href="#"><img class="img-fluid" th:src="@{../user/img/slider/bn5.jpg}" data-thumb="@{../user/img/slider/bn5.jpg}" alt="" title="#htmlcaption5"></a>
+                            <a href="#"><img class="img-fluid" th:src="@{../user/img/slider/bn6.jpg}" data-thumb="@{../user/img/slider/bn6.jpg}" alt="" title="#htmlcaption6"></a>
+                            <a href="#"><img class="img-fluid" th:src="@{../user/img/slider/bn7.jpg}" data-thumb="@{../user/img/slider/bn7.jpg}" alt="" title="#htmlcaption7"></a>
+                        </div>
+                        <!-- Slider Background  Image Start-->
+                    </div>
+                </div>
+                <!-- Slider Area End Here -->
+            </div>
+            <!-- Row End -->
+        </div>
+        <!-- Container End -->
+    </div>
+    <!-- Categorie Menu & Slider Area End Here -->
+    </header>
+</html>
