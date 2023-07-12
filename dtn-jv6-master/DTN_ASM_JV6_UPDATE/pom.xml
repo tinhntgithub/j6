@@ -11,7 +11,7 @@
 	<artifactId>asm</artifactId>
 	<version>1.0</version>
 	<packaging>war</packaging>
-	<name>DTN_ASM_JV6</name>
+	<name>ASM_JV6</name>
 	<description>asm</description>
 	<properties>
 		<java.version>1.8</java.version>
