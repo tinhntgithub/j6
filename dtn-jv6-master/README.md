@@ -1,4 +1,4 @@
-# Website thương mại điện tử bán xe đạp DTNsBike v1
+# Website thương mại điện tử bán xe đạp J6Team v1
 + Các chức năng chính:
   - Quản lý tài khoản
   - Quản lý giỏ hàng
