@@ -117,7 +117,7 @@ app.config(function($routeProvider){
 app.run(['$rootScope', function($rootScope) {
     $rootScope.page = {
         setTitle: function(title) {
-            this.title =  'DTNsBike |' + title;
+            this.title =  'J6TEAM |' + title;
           
         }
     }
