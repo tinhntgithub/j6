@@ -156,3 +156,81 @@ app.controller("account",function($scope,$http){
             console.log("Error", error);
         });
 });
+
+
+
+app.directive('worldwideSalesChart', function() {
+    return {
+      restrict: 'A',
+      link: function(scope, element, attrs) {
+        var chartData = scope.$eval(attrs.worldwideSalesData);
+        var chartLabels = scope.$eval(attrs.worldwideSalesLabels);
+        var chartBackgroundColor = scope.$eval(attrs.worldwideSalesBackgroundColor);
+        var chartTitle = attrs.chartTitle;
+        var ctx = element[0].getContext('2d');
+        var myChart = new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: chartLabels,
+            datasets: [{
+              label: 'VNĐ',
+              data: chartData,
+              backgroundColor: chartBackgroundColor
+            }]
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              title: {
+                display: true,
+                text: chartTitle, // Sử dụng giá trị của thuộc tính chart-title làm tiêu đề của biểu đồ
+                position: 'bottom'   , 
+                fontSize: 50
+            }
+            }
+            
+          }
+        });
+      }
+    };
+  });
+
+  app.directive('lineChart', function() {
+  return {
+    restrict: 'A',
+    link: function(scope, element, attrs) {
+      var chartData = scope.$eval(attrs.chartData);
+      var chartLabels = scope.$eval(attrs.chartLabels);
+      var chartBorderColor = scope.$eval(attrs.chartBorderColor);
+      var chartTitle = attrs.chartTitle;
+      var ctx = element[0].getContext('2d');
+      var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: chartLabels,
+          datasets: [{
+            label: 'VNĐ',
+            data: chartData,
+            backgroundColor: 'transparent',
+            borderColor: chartBorderColor,
+            borderWidth: 2,
+            fill: false
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            title: {
+              display: true,
+              text: chartTitle,
+              position: 'bottom',
+              fontSize: 50
+            }
+          }
+        }
+      });
+    }
+  };
+});
+
+  
