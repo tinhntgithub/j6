@@ -39,4 +39,7 @@ public class ProductColor implements Serializable {
 	@JsonIgnore
 	@OneToMany(mappedBy = "colorCart")
 	List<Cart> carts;
+	
+	@Column(name = "[quantity]")
+	private Integer qty;
 }

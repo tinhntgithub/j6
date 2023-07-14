@@ -1,12 +1,16 @@
 package dtn.asm.entity;
 
 import java.io.Serializable;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -36,13 +40,15 @@ public class Sale implements Serializable {
 	@Column(name = "[saledate]")
 	private Date saleDate;
 	
-	
 	@Column(name = "[amount]")
 	private Integer amount;
 	
 	@Column(name = "[createdate]")
 	private Date createDate = new Date();
 	
+	@Column(name = "[enddate]")
+	private Date endDate = new Date();
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "saleId")
 	List<Orders> saleOrders;

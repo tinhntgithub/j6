@@ -48,9 +48,6 @@ public class Products implements Serializable {
 	@Column(name = "[description]")
 	private String description;
 	
-	@Column(name = "[quantity]")
-	private Integer qty;
-	
 	@ManyToOne
 	@JoinColumn(name = "[brandid]")
 	private Brand brandPro;
