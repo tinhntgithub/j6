@@ -248,7 +248,7 @@ app.controller("product-form",function($scope,$http){
             headers: { 'Content-Type': undefined }
         }).then(resp => {
             $scope.form.img = resp.data.name;
-            console.logo("Success",resp.data);
+            console.log("Success",resp.data);
         }).catch(error => {
             console.log("Errors", error);
         })

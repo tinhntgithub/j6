@@ -29,8 +29,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import j6.asm.dao.AccountDAO;
 import j6.asm.dao.AddressDAO;
+import j6.asm.dao.AuthoritiesDAO;
+import j6.asm.dao.RolesDAO;
 import j6.asm.entity.Accounts;
 import j6.asm.entity.Address;
+import j6.asm.entity.Authorities;
+import j6.asm.entity.Roles;
 import j6.asm.model.ChangePassForm;
 import j6.asm.model.LoginForm;
 import j6.asm.model.SignUpForm;
@@ -51,6 +55,12 @@ public class AccountController {
 
 	@Autowired
 	AccountDAO accountdao;
+
+	@Autowired
+	AuthoritiesDAO authdao;
+
+	@Autowired
+	RolesDAO rolesdao;
 
 	@Autowired
 	AccountServiceImpl accountsService;
@@ -108,9 +118,17 @@ public class AccountController {
 			acc.setFullname(signUp.getFullname());
 			acc.setPhone(signUp.getPhone());
 			acc.setPassword(signUp.getPassword());
-			acc.setPhoto("abc.jpg");
+			acc.setPhoto("default.jpg");
 			acc.setEmail(signUp.getEmail());
 			accountdao.save(acc);
+
+			Roles roles = rolesdao.getById("CUST");
+
+			Authorities auth = new Authorities();
+			auth.setRoleId(roles);
+			auth.setUserAuthor(acc);
+			authdao.save(auth);
+
 			m.addAttribute("mess6", "Đăng ký thành công");
 		}
 		return "user/home/register";

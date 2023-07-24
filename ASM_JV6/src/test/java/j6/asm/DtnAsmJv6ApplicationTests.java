@@ -1,4 +1,4 @@
-package dtn.asm;
+package j6.asm;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

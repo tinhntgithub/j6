@@ -20,7 +20,7 @@ public class BlockLogin implements HandlerInterceptor {
 			throws Exception {
 		Accounts accounts = session.get("account");
 		if (accounts != null) {
-			response.sendRedirect("/DTNsBike/index.html");
+			response.sendRedirect("/index.html");
 		}
 		return true;
 	}
