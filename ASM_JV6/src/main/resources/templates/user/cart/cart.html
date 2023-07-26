@@ -52,7 +52,7 @@
                                     <tbody>
                                         <tr ng-repeat='listCart in Cart'>
                                             <td class="product-thumbnail">
-                                                <a><img src="{{url(listCart.proCart.img)}}" alt="cart-image"></a>
+                                                <a><img ng-src="{{url(listCart.proCart.img)}}" alt="cart-image"></a>
                                             </td>
                                             <td class="product-name"><a href="#">{{listCart.proCart.name}}</a></td>
                                             <td class="product-price"><span class="amount">{{listCart.proCart.price |

@@ -52,4 +52,10 @@ public class ProductColorServiceImp implements ProductColorService {
 	public Boolean checkExitsProduct(Integer id, Integer idd) {
 		return !dao.getProductColors(id, idd).isEmpty();
 	}
+
+	@Override
+	public List<ProductColor> getColorId(Integer id) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'getColorId'");
+	}
 }
