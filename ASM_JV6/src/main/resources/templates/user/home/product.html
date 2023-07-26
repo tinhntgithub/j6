@@ -34,24 +34,26 @@
                         <div class="col-lg-5 mb-all-40">
                             <!-- Thumbnail Large Image start -->
                             <div class="tab-content">
-                                <div id="thumb1" class="tab-pane fade show active">
+                                <div id="thumb" class="tab-pane fade show active">
                                     <a data-fancybox="images" th:href="@{|/uploads/productImg/*{img}|}">
                                         <img th:src="@{|/uploads/productImg/*{img}|}" alt="product-view"></a>
-                                     
+
                                 </div>
                             </div>
                             <!-- Thumbnail Large Image End -->
-                            <!-- Thumbnail Image End -->
+
+                            <!-- ... Đoạn mã trước đó ... -->
                             <div class="product-thumbnail mt-15">
                                 <div class="thumb-menu owl-carousel nav tabs-area" role="tablist">
-                                    <a class="active" data-toggle="tab" href="#thumb1"> <img
-                                            th:src="@{|/user/img/images_xedap/*{img}|}"></a>
-                                    <a class="active" data-toggle="tab" href="#thumb1">
-                                        <img th:src="@{|/user/img/images_xedap/*{img}|}"></a>
-                                    <a data-toggle="tab" href="#thumb2">
-                                        <img th:src="@{|/user/img/images_xedap/*{img}|}"></a>
+                                    <!-- Lặp qua danh sách hình ảnh từ model và hiển thị chúng -->
+                                    <div th:each="image : ${productImages}">
+                                        <a data-toggle="tab" th:href="'#thumb' + ${image.id}">
+                                            <img th:src="@{/uploads/productImg/__${image.image}__}" alt="Product Image">
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
+                            <!-- ... Đoạn mã sau đó ... -->
                             <!-- Thumbnail image end -->
                         </div>
                         <!-- Main Thumbnail Image End -->
@@ -59,12 +61,13 @@
                         <div class="col-lg-7">
                             <div class="thubnail-desc fix">
                                 <h3 class="product-header" th:text="*{name}"> </h3>
-                                <h4 class="product-header" th:text="|*{#numbers.formatInteger(price-(price*sale/100),3,'POINT')} VNĐ|"></h4>
+                                <h4 class="product-header"
+                                    th:text="|*{#numbers.formatInteger(price-(price*sale/100),3,'POINT')} VNĐ|"></h4>
                                 <div class="rating-summary fix mtb-10">
                                     <div class="rating">
                                         <i class="fa fa-star"></i>
                                         <i class="fa fa-star"></i>
-                                        <i class="fa fa-star-o"></i>
+                                        <i class="fa fa-star"></i>
                                         <i class="fa fa-star-o"></i>
                                         <i class="fa fa-star-o"></i>
                                     </div>
@@ -74,44 +77,63 @@
                                 </div>
                                 <div class="pro-price mtb-30">
                                     <p class="d-flex align-items-center" th:if="*{sale>0}"><span
-                                            class="prev-price">[[*{#numbers.formatInteger(price,3,'POINT')}]] VNĐ</span><span
-                                            class="price"
+                                            class="prev-price">[[*{#numbers.formatInteger(price,3,'POINT')}]]
+                                            VNĐ</span><span class="price"
                                             th:utext="|*{#numbers.formatInteger(price-(price*sale/100),3,'POINT')} VNĐ|">
                                         </span>
                                         <span class="saving-price" th:if="*{sale>0}">sale <strong
                                                 th:text="*{sale}"></strong>%</span>
                                     </p>
                                 </div>
-                                <p class="mb-20 pro-desc-details" th:text="*{description}">Mô tả sương sương</p>
-                                <div class="color clearfix mb-20">
+                                <!-- ... Other HTML code ... -->
+                                <div class="color clearfix mb-20" th:if="${listColor != null}">
                                     <label>màu</label>
                                     <ul class="color-list">
-                                        <li>
-                                            <a class="orange active" href="#"></a>
-                                        </li>
-                                        <li>
-                                            <a class="paste" href="#"></a>
+                                        <li th:each="colorList : ${listColor}">
+                                            <!-- Kiểm tra nếu màu sắc hiện tại là màu mặc định (active) thì thêm class 'active' -->
+                                            <!-- <a href="#" th:class="${colorList.color.id == 1 ? 'paste active' : (colorList.color.id == 2 ? 'black' :
+                                            (colorList.color.id == 3 ? 'yellow' : (colorList.color.id == 4 ? 'white' : (colorList.color.id == 5 ? 'red' : 'default-class'))))}"></a> -->
+                                            <!-- <a href="" th:style="'background-color: ' + ${colorList.color.hex}"></a> -->
+
+                                            <a href="#" th:style="'background-color: ' + ${colorList.color.hex}" th:onclick="'updateQuantity(' + ${colorList.color.id} + '); return false;'"></a>
+                                            <!-- <a href="" th:text="${colorList.qty}"></a> -->
                                         </li>
                                     </ul>
                                 </div>
+                                <!-- ... Other HTML code ... -->
+
+
                                 <div class="box-quantity d-flex hot-product2">
                                     <form action="#">
-                                        <input class="quantity mr-15" ng-model="quantity"  type="number" min="1" max="99">
+                                        <input id="quantity" class="quantity mr-15" ng-model="quantity" type="number" min="1"
+                                            max="99">
                                     </form>
                                     <div class="pro-actions">
                                         <div class="actions-primary">
-                                            <a th:attr="ng-click=|addCartQty(*{id})|" title="" data-original-title="Thêm vào giỏ hàng"> + Thêm
+                                            <a th:attr="ng-click=|addCartQty(*{id})|" title=""
+                                                data-original-title="Thêm vào giỏ hàng"> + Thêm
                                                 vào giỏ hàng</a>
                                         </div>
                                         <div class="actions-secondary">
-                                            <a th:attr="ng-click=|like(*{id})|" title="" data-original-title="WishList"><i
-                                                    class="lnr lnr-heart"></i> <span>Thêm vào danh sách yêu
+                                            <a th:attr="ng-click=|like(*{id})|" title=""
+                                                data-original-title="WishList"><i class="lnr lnr-heart"></i> <span>Thêm
+                                                    vào danh sách yêu
                                                     thích</span></a>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="pro-ref mt-20">
-                                    <p><span class="in-stock"><i class="ion-checkmark-round"></i> CÒN HÀNG</span></p>
+                                    <!-- Hiển thị còn hàng và giá trị mặc định -->
+                                    <div class="pro-ref mt-20">
+                                        <p id="quantityInfo" th:if="${listColor != null && listColor.size() > 0}">
+                                            CÒN HÀNG - Số lượng tồn kho: <span th:text="${listColor.get(0).qty}"></span>
+                                        </p>
+                                        <p id="outOfStockMsg" th:if="${listColor == null || listColor.size() == 0}">
+                                            HẾT HÀNG
+                                        </p>
+                                    </div>
+                                    
+
                                 </div>
                             </div>
                         </div>
@@ -128,71 +150,47 @@
 
 
         <!-- Thong tin chi tiet -->
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-12">
-                    <ul class="main-thumb-desc nav tabs-area" role="tablist">
+        <section id="tabs" class="project-tab">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <nav>
+                            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact"
+                                    role="tab" aria-controls="nav-contact" aria-selected="false">Thông số kỹ thuật</a>
+                                <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home"
+                                    role="tab" aria-controls="nav-home" aria-selected="true">Mô tả sản phẩm</a>
+                                <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile"
+                                    role="tab" aria-controls="nav-profile" aria-selected="false">Đánh giá</a>
 
-                        <li><a data-toggle="tab" href="#review">Thông tin chi tiết sản phẩm</a></li>
-                    </ul>
-                    <!-- Product Thumbnail Tab Content Start -->
-                    <div class="tab-content thumb-content border-default">
-                        <div id="review" class="tab-pane fade">
-                            <!-- Reviews Start -->
-                            <div class="review border-default universal-padding">
-                                <div class="group-title">
-                                    <h2>Thông tin chi tiết</h2>
-                                </div>
-                                <h4 class="review-mini-title" th:text="*{name}"></h4>
-                                <ul class="review-list">
-                                    <!-- Single Review List Start -->
-                                    <li>
-                                        <span>Loại SP</span>
-                                        <label>Xe đạp địa hình</label>
-                                    </li>
-                                    <!-- Single Review List End -->
-                                    <!-- Single Review List Start -->
-                                    <li>
-                                        <span>Số lượng</span>
-                                        <label th:text="*{qty}"></label>
-                                    </li>
-                                    <!-- Single Review List End -->
-                                    <!-- Single Review List Start -->
-                                    <li>
-                                        <span>Giá</span>
 
-                                        <label th:text="*{price}"></label>
-                                    </li>
-                                    <!-- Single Review List End -->
-                                    <!-- Single Review List Start -->
-                                    <li>
-                                        <span>Ngày nhập</span>
-                                        <label th:text="*{date}"></label>
-                                    </li>
-                                    <!-- Single Review List End -->
-                                    <!-- Single Review List Start -->
-                                    <li>
-                                        <span>Thương hiệu</span>
-                                        <label th:text="*{brandPro}"></label>
-                                    </li>
-                                    <!-- Single Review List End -->
-                                    <!-- Single Review List Start -->
-                                    <li>
-                                        <span>Xuất xứ</span>
-                                        <label th:text="*{madein}"></label>
-                                    </li>
-                                    <!-- Single Review List End -->
-                                </ul>
                             </div>
-                            <!-- Reviews End -->
+                        </nav>
+                        <div class="tab-content" id="nav-tabContent">
+                            <div class="tab-pane fade" id="nav-contact" role="tabpanel"
+                                aria-labelledby="nav-contact-tab">
+
+                            </div>
+                            <div class="tab-pane fade show active" id="nav-home" role="tabpanel"
+                                aria-labelledby="nav-home-tab">
+                                <p class="mb-20 pro-desc-details mt-5" th:text="${item.description}">Mô tả sương sương
+                                </p>
+
+                            </div>
+                            <div class="tab-pane fade" id="nav-profile" role="tabpanel"
+                                aria-labelledby="nav-profile-tab">
+                            </div>
+
                         </div>
-                        <!-- Product Thumbnail Tab Content End -->
                     </div>
                 </div>
-                <!-- Row End -->
             </div>
-            <!-- Container End -->
-        </div>
+        </section>
+        <!--  -->
+
+
+
+
         <!-- Thong tin chi tiet end -->
         <!-- Realted Products Start Here -->
         <div class="hot-deal-products off-white-bg pt-100 pb-90 pt-sm-60 pb-sm-50">
@@ -209,25 +207,33 @@
                         <!-- Product Image Start -->
                         <div class="pro-img">
                             <a th:href="@{|/product.html?id=${p.id}|}">
-                                <img class="primary-img"  th:src="${'/uploads/productImg/'+{p.img}}" alt="single-product">
+                                <img class="primary-img" th:src="${'/uploads/productImg/'+{p.img}}"
+                                    alt="single-product">
                             </a>
-                            <a href="#" class="quick_view" data-toggle="modal" data-target="#myModal" title="Quick View"><i class="lnr lnr-magnifier"></i></a>
+                            <a href="#" class="quick_view" data-toggle="modal" data-target="#myModal"
+                                title="Quick View"><i class="lnr lnr-magnifier"></i></a>
                         </div>
                         <!-- Product Image End -->
                         <!-- Product Content Start -->
                         <div class="pro-content">
                             <div class="pro-info">
                                 <h4><a th:utext="${p.name}" href="#"></a></h4>
-                                <p><span th:utext="|${#numbers.formatInteger(p.price-(p.price*p.sale/100),3,'POINT')} VNĐ|" class="price"> </span></p>
-                                <p><del th:if="${p.sale>0}" class="prev-price">[[${#numbers.formatInteger(p.price,3,'POINT')}]] VNĐ</del></p>
-                                <div class="label-product l_sale" th:if="${p.sale>0}"><span th:utext="${p.sale}"></span><span class="symbol-percent">%</span></div>
+                                <p><span th:utext="|${#numbers.formatInteger(p.price-(p.price*p.sale/100),3,'POINT')} VNĐ|"
+                                        class="price"> </span></p>
+                                <p><del th:if="${p.sale>0}"
+                                        class="prev-price">[[${#numbers.formatInteger(p.price,3,'POINT')}]] VNĐ</del>
+                                </p>
+                                <div class="label-product l_sale" th:if="${p.sale>0}"><span
+                                        th:utext="${p.sale}"></span><span class="symbol-percent">%</span></div>
                             </div>
                             <div class="pro-actions">
                                 <div class="actions-primary">
-                                    <a th:attr="ng-click=|addCart(${p.id})|" title="Add to Cart" > + Thêm vào giỏ hàng</a>
+                                    <a th:attr="ng-click=|addCart(${p.id})|" title="Add to Cart"> + Thêm vào giỏ
+                                        hàng</a>
                                 </div>
                                 <div class="actions-secondary">
-                                    <a th:attr="ng-click=|like(${p.id})|" title="WishList"><i class="lnr lnr-heart"></i> <span>Thêm vào danh sách yêu thích</span></a>
+                                    <a th:attr="ng-click=|like(${p.id})|" title="WishList"><i class="lnr lnr-heart"></i>
+                                        <span>Thêm vào danh sách yêu thích</span></a>
                                 </div>
                             </div>
                         </div>
@@ -243,6 +249,9 @@
         <!-- Realated Products End Here -->
 
     </div>
+   
+
+
 </body>
 
 </html>

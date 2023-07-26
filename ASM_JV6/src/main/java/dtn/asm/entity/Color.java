@@ -27,6 +27,9 @@ public class Color implements Serializable {
 	@Column(name = "[name]")
 	private String name;
 
+	@Column(name = "[hex]")
+	private String hex;
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "color")
 	List<ProductColor> productColors;

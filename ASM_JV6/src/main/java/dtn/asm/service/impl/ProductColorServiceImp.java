@@ -7,9 +7,7 @@ import org.springframework.stereotype.Service;
 
 import dtn.asm.dao.OrderDetailsDAO;
 import dtn.asm.dao.ProductColorDAO;
-import dtn.asm.entity.Color;
 import dtn.asm.entity.ProductColor;
-import dtn.asm.service.OrderDetailsService;
 import dtn.asm.service.ProductColorService;
 @Service
 public class ProductColorServiceImp implements ProductColorService {
@@ -51,5 +49,10 @@ public class ProductColorServiceImp implements ProductColorService {
 	@Override
 	public Boolean checkExitsProduct(Integer id, Integer idd) {
 		return !dao.getProductColors(id, idd).isEmpty();
+	}
+
+	@Override
+	public List<ProductColor> getColorId(Integer id) {
+		return dao.getColorId(id);
 	}
 }

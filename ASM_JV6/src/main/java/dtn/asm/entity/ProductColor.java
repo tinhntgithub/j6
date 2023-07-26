@@ -17,20 +17,20 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "Productcolor", uniqueConstraints = { @UniqueConstraint(columnNames = { "productId", "colorId" }) })
 public class ProductColor implements Serializable {
-	private static final long serialVersionUID = 1L;
+	 static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "[id]")
-	private Integer id;
+	 Integer id;
 
 	@ManyToOne
 	@JoinColumn(name = "[productid]")
-	private Products products;
+	 Products products;
 
 	@ManyToOne
 	@JoinColumn(name = "[colorid]")
-	private Color color;
+	 Color color;
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "colorId")
@@ -39,4 +39,10 @@ public class ProductColor implements Serializable {
 	@JsonIgnore
 	@OneToMany(mappedBy = "colorCart")
 	List<Cart> carts;
+<<<<<<< Updated upstream
+=======
+	
+	@Column(name = "[quantity]")
+	 Integer qty;
+>>>>>>> Stashed changes
 }

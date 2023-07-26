@@ -12,12 +12,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import dtn.asm.dao.CategoriesDAO;
 import dtn.asm.dao.FavoritesDAO;
+import dtn.asm.dao.ProductImgDAO;
 import dtn.asm.dao.ProductsDAO;
 import dtn.asm.entity.Categories;
 import dtn.asm.entity.Favorites;
 import dtn.asm.entity.ProductColor;
+import dtn.asm.entity.ProductImg;
 import dtn.asm.entity.Products;
 import dtn.asm.service.CategoriesService;
+import dtn.asm.service.ProductColorService;
+import dtn.asm.service.ProductImgService;
 import dtn.asm.service.ProductsService;
 import dtn.asm.service.SessionService;
 import dtn.asm.service.impl.CategoryServiceImp;
@@ -36,8 +40,12 @@ public class HomeController {
 	CategoriesDAO cateDAO;
 	@Autowired
 	FavoritesDAO favoritesDAO;
+	@Autowired
+	ProductImgService productImgService;
+	@Autowired
+	ProductColorService colorService;
 
-//	Index Page :))
+	// Index Page :))
 	@RequestMapping("/index.html")
 	public String index(Model m, @RequestParam("cateid") Optional<Integer> cateid) {
 
@@ -57,7 +65,7 @@ public class HomeController {
 		return "/user/home/index";
 	}
 
-//	About page
+	// About page
 	@RequestMapping("/about.html")
 	public String about(Model m) {
 
@@ -65,7 +73,7 @@ public class HomeController {
 		return "/user/home/about";
 	}
 
-//	Contact page
+	// Contact page
 	@RequestMapping("/contact.html")
 	public String contact(Model m) {
 
@@ -73,7 +81,7 @@ public class HomeController {
 		return "/user/home/contact";
 	}
 
-//	Product page
+	// Product page
 	@RequestMapping("/shop.html")
 	public String shopPage(Model m, @RequestParam("cateid") Optional<Integer> cateid) {
 		List<Products> product = null;
@@ -99,7 +107,7 @@ public class HomeController {
 		return "/user/home/shop";
 	}
 
-//	Product details page
+	// Product details page
 	@RequestMapping("/product.html")
 	public String product(Model m, @RequestParam("id") Integer id) {
 		Products product = productservice.findById(id);
@@ -108,6 +116,12 @@ public class HomeController {
 		List<Products> pro = productservice.findByCateId(product.getCatePro().getId());
 		m.addAttribute("product", pro);
 
+		List<ProductImg> productImages = productImgService.findByImgPro(id);
+		m.addAttribute("productImages", productImages);
+	
+		List<ProductColor> color = colorService.getColorId(id);
+		m.addAttribute("listColor", color);
+		// System.out.println(color);
 		return "/user/home/product";
 	}
 
