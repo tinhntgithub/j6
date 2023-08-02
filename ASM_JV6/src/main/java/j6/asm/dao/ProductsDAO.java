@@ -10,16 +10,18 @@ import j6.asm.entity.Categories;
 import j6.asm.entity.Products;
 
 public interface ProductsDAO extends JpaRepository<Products, Integer> {
-		
+
 	List<Products> findByCatePro(Categories catePro);
-	
+
 	List<Products> findByBrandPro(Brand brandPro);
-	
-	@Query (value = "select * from Products where CategoryId = ?1",nativeQuery = true)
+
+	@Query(value = "select * from Products where CategoryId = ?1", nativeQuery = true)
 	List<Products> listProduct_InCategories(int cate_id);
-	
+
 	@Query("SELECT count(o) FROM Products o WHERE o.avaliable = true")
 	Integer getCount();
-	
-	
+
+	@Query(value = "select p from Products p where p.id = ?1")
+	Products findByProductId(int id);
+
 }

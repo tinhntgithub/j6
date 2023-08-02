@@ -26,17 +26,18 @@
         </div>
         <!-- Breadcrumb End -->
         <!-- Cart Main Area Start -->
-        <div class="cart-main-area ptb-20 ptb-sm-60 mb-3" ng-controller="pushCart" >
+        <div class="cart-main-area ptb-20 ptb-sm-60 mb-3" ng-controller="pushCart">
             <div class="container" ng-if="Cart.length > 0">
                 <div class="row">
                     <div class="col-md-9 col-sm-9">
                         <!-- Form Start -->
                         <form action="#">
                             <!-- Table Content Start -->
-                            <div class="table-content table-responsive mb-45" >
+                            <div class="table-content table-responsive mb-45">
                                 <table class="table table-hover">
                                     <thead style="background-color:orangered;">
                                         <tr class="text-white">
+                                            <th>Id</th>
                                             <th class="product-thumbnail">Hình ảnh</th>
                                             <th class="product-name">Sản phẩm</th>
                                             <th class="product-price">Đơn giá</th>
@@ -51,14 +52,15 @@
                                     </thead>
                                     <tbody>
                                         <tr ng-repeat='listCart in Cart'>
+                                            <td>{{listCart.proCart.id}}</td>
                                             <td class="product-thumbnail">
-                                                <a><img src="{{url(listCart.proCart.img)}}" alt="cart-image"></a>
+                                                <a><img ng-src="{{url(listCart.proCart.img)}}" alt="cart-image"></a>
                                             </td>
                                             <td class="product-name"><a href="#">{{listCart.proCart.name}}</a></td>
                                             <td class="product-price"><span class="amount">{{listCart.proCart.price |
                                                     currency : '' :0 |replace: ',':'.'}} VNĐ</span></td>
                                             <td class="product-quantity"><input ng-blur="updateCart(listCart.id)"
-                                                    type="number" ng-model="listCart.qty"></td>
+                                                    type="number" ng-model="listCart.qty" min="1"></td>
                                             <td class="product-subtotal">{{listCart.proCart.price*listCart.qty |
                                                 currency : '' :0 |replace: ',':'.'}} VNĐ</td>
                                             <td class="product-remove"> <a href=""
@@ -103,7 +105,7 @@
                                     </div>
                                 </div>
                                 <div class="col-12 wc-proceed-to-checkout text-center">
-                                    <a href="checkout.html" class="w-100">THANH TOÁN</a>
+                                    <a href="checkout.html" ng-click="loadCartProduct()" class="w-100">THANH TOÁN</a>
                                 </div>
                                 <!-- <div class="col-12 mt-2">
                                     <div class="row p-2">
@@ -127,7 +129,7 @@
                 <h1 class="text-center mt-4 mb-4">Giỏ hàng trống</h1>
             </div>
         </div>
-       
+
         <!-- Cart Main Area End -->
     </div>
 </body>
