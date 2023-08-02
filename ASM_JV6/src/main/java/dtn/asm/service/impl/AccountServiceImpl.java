@@ -1,5 +1,6 @@
 package dtn.asm.service.impl;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,7 +17,7 @@ import dtn.asm.service.AccountsService;
 public class AccountServiceImpl implements AccountsService {
 	@Autowired
 	AccountDAO dao;
-	@Autowired 
+	@Autowired
 	OrdersDAO daoOrder;
 	@Autowired
 	FavoritesDAO daoFav;
@@ -25,6 +26,21 @@ public class AccountServiceImpl implements AccountsService {
 	public List<Accounts> findAll() {
 
 		return dao.findAll();
+	}
+
+	@Override
+	public Optional<Accounts> checkDuplicateEmail(String email) {
+		return dao.checkDuplicateEmail(email);
+	}
+	
+	@Override
+	public List<Object[]> getPurchaseDataByYearRange(Date from, Date to) {
+		return dao.getPurchaseDataByYearRange(from, to);
+	}
+
+	@Override
+	public List<Object[]> getReportAllCustomer() {
+		return dao.getReportAllCustomer();
 	}
 
 	@Override
@@ -54,23 +70,24 @@ public class AccountServiceImpl implements AccountsService {
 	@Override
 	public Boolean check(String id) {
 		Accounts ac = this.findById(id);
-		return daoFav.findByUserFvr(ac).isEmpty() &&  daoOrder.findByUserOrder(ac).isEmpty();
+		return daoFav.findByUserFvr(ac).isEmpty() && daoOrder.findByUserOrder(ac).isEmpty();
 	}
-	
+
 	@Override
 	public Boolean checkUsername(String id) {
 		return this.findById(id) != null;
 	}
+
 	@Override
 	public Boolean checkEmail(String email) {
 		return !dao.findByEmail(email).isEmpty();
 	}
-	
+
 	@Override
 	public Boolean checkPhone(String phone) {
 		return !dao.findByPhone(phone).isEmpty();
 	}
-	
+
 	@Override
 	public Integer getCount() {
 		return dao.getCount();

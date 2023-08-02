@@ -1,3 +1,76 @@
+// Alert Toastify
+alertSuccess = function (message) { 
+    Toastify({
+      text: message,
+      duration: 3000,
+      //destination: "https://github.com/apvarun/toastify-js",
+      newWindow: true,
+      //close: true,
+      gravity: "top", // `top` or `bottom`
+      position: "right", // `left`, `center` or `right`
+      stopOnFocus: true, // Prevents dismissing of toast on hover
+      style: {
+        background: "#34c240",
+        color: "white",
+      },
+      onClick: function(){} // Callback after click
+    }).showToast();
+  }
+
+  alertWarning = function (message) { 
+    Toastify({
+      text: message,
+      duration: 3000,
+      //destination: "https://github.com/apvarun/toastify-js",
+      newWindow: true,
+      //close: true,
+      gravity: "top", // `top` or `bottom`
+      position: "right", // `left`, `center` or `right`
+      stopOnFocus: true, // Prevents dismissing of toast on hover
+      style: {
+        background: "#fa9f47",
+        color: "white",
+      },
+      onClick: function(){} // Callback after click
+    }).showToast();
+  }
+
+  alertDanger = function (message) { 
+    Toastify({
+      text: message,
+      duration: 3000,
+      //destination: "https://github.com/apvarun/toastify-js",
+      newWindow: true,
+      //close: true,
+      gravity: "top", // `top` or `bottom`
+      position: "right", // `left`, `center` or `right`
+      stopOnFocus: true, // Prevents dismissing of toast on hover
+      style: {
+        background: "#d64242",
+        color: "white",
+      },
+      onClick: function(){} // Callback after click
+    }).showToast();
+  }
+
+  alertResetAndEdit = function (message) { 
+    Toastify({
+      text: message,
+      duration: 3000,
+      //destination: "https://github.com/apvarun/toastify-js",
+      newWindow: true,
+      //close: true,
+      gravity: "top", // `top` or `bottom`
+      position: "right", // `left`, `center` or `right`
+      stopOnFocus: true, // Prevents dismissing of toast on hover
+      style: {
+        background: "#0090e0",
+        color: "white",
+      },
+      onClick: function(){} // Callback after click
+    }).showToast();
+  }
+// End Alert
 //Start Delete Address
 function deleteAddress(adr, id) {
     $(".address").text(adr);

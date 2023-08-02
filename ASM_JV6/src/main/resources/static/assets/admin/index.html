@@ -14,6 +14,9 @@
   <!-- End plugin css for this page -->
   <!-- inject:css -->
   <link rel="stylesheet" href="asset/css/style.css">
+  <!-- DataTables CSS -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.7.0/css/buttons.dataTables.min.css">
   <!-- endinject -->
   <link rel="shortcut icon" href="asset/images/favicon.png" />
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
@@ -28,10 +31,9 @@
     <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
       <div class="navbar-brand-wrapper d-flex justify-content-center">
         <div class="navbar-brand-inner-wrapper d-flex justify-content-between align-items-center w-100">
-          <a style="width: 200px;height: 100px;" class="navbar-brand brand-logo" href="#"><img
-              class="img-fluid " src="asset/images/favicon2.png" alt="logo" style="width: 200px;height: 75px;"/></a>
-          <a class="navbar-brand brand-logo-mini" href="#"><img src="asset/images/favicon.png"
-              alt="logo" /></a>
+          <a style="width: 200px;height: 100px;" class="navbar-brand brand-logo" href="#"><img class="img-fluid "
+              src="asset/images/favicon2.png" alt="logo" style="width: 200px;height: 75px;" /></a>
+          <a class="navbar-brand brand-logo-mini" href="#"><img src="asset/images/favicon.png" alt="logo" /></a>
           <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
             <span class="mdi mdi-sort-variant"></span>
           </button>
@@ -226,7 +228,7 @@
       </nav>
       <!-- partial -->
       <div class="main-panel">
-     
+
         <!-- View Start -->
         <div class="ng-view content-wrapper"></div>
         <!-- View End -->
@@ -248,13 +250,13 @@
   <!-- container-scroller -->
 
   <!-- plugins:js -->
-  
+
   <script src="asset/vendors/base/vendor.bundle.base.js"></script>
 
   <!-- endinject -->
   <!-- Plugin js for this page-->
   <script src="asset/vendors/chart.js/Chart.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> 
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="asset/vendors/datatables.net/jquery.dataTables.js"></script>
   <script src="asset/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
   <!-- End plugin js for this page-->
@@ -271,11 +273,26 @@
   <script src="asset/js/jquery.dataTables.js"></script>
   <script src="asset/js/dataTables.bootstrap4.js"></script>
   <!-- End custom js for this page-->
+  <script src="asset/js/dirPagination.js"></script>
+  <!-- DataTables JavaScript -->
+  <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.23/js/dataTables.bootstrap4.min.js"></script>
+
+  <!-- DataTables Buttons JavaScript -->
+  <script src="https://cdn.datatables.net/buttons/1.7.0/js/dataTables.buttons.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.html5.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.print.min.js"></script>
+
+  <!-- PDFMake JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.70/pdfmake.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.70/vfs_fonts.js"></script>
+
 
   <script src="asset/js/jquery.cookie.js" type="text/javascript"></script>
   <script src="asset/adminjs/admin-app.js"></script>
   <!-- Angulag admin spa -->
-   <script src="asset/js/chart.js"></script>
+  <script src="asset/js/chart.js"></script>
+ 
   <script src="asset/adminjs/account.js"></script>
   <script src="asset/adminjs/product.js"></script>
   <script src="asset/adminjs/category.js"></script>

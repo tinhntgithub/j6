@@ -1,6 +1,9 @@
 package dtn.asm.controller.admin;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -39,24 +42,29 @@ public class IndexRestController {
 	ColorService colors;
 	@Autowired
 	PriceHistoryService prices;
-	
+
 	@GetMapping("/rest/indexCount")
 	public JsonNode getCountIndex() {
-		
+
 		ObjectMapper mapper = new ObjectMapper();
 		ObjectNode node = mapper.createObjectNode();
-		node.put("accountCount",accounts.getCount());
-		node.put("productCount",products.getCount());
-		node.put("cateCount",category.getCount());
-		node.put("brandCount",brands.getCount());
-		node.put("orderCount",orders.getCount());
-		node.put("saleCount",sales.getCount());
-		node.put("colorCount",colors.getCount());
-		node.put("priceNew",prices.getPriceNew());
-		
+		node.put("accountCount", accounts.getCount());
+		node.put("productCount", products.getCount());
+		node.put("cateCount", category.getCount());
+		node.put("brandCount", brands.getCount());
+		node.put("orderCount", orders.getCount());
+		node.put("saleCount", sales.getCount());
+		node.put("colorCount", colors.getCount());
+		node.put("priceNew", prices.getPriceNew());
+
 		return node;
-		
+
 	}
-	
+
+	@GetMapping("/rest/revenueData")
+	public ResponseEntity<List<Object[]>> getRevenueByYear() {
+		List<Object[]> revenueData = orders.getRevenueByYear();
+		return ResponseEntity.ok(revenueData);
+	}
 
 }
