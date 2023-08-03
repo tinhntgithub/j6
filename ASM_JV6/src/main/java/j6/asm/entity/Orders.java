@@ -26,41 +26,41 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity
 @Table(name = "Orders")
-public class Orders implements Serializable {
-
+public class Orders implements Serializable{
+	
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "[id]")
 	private Integer id;
-
+	
 	@ManyToOne
-	@JoinColumn(name = "[username]")
+	@JoinColumn(name="[username]")
 	private Accounts userOrder;
-
+	
 	@Column(name = "[createdate]")
 	@Temporal(TemporalType.DATE)
 	private Date date = new Date();
-
+	
 	@ManyToOne
-	@JoinColumn(name = "[saleid]")
+	@JoinColumn(name="[saleid]")
 	private Sale saleId;
-
+	
 	@Column(name = "[address]")
 	private String address;
-
+	
 	@Column(name = "[fullname]")
 	private String fullname;
-
+	
 	@Column(name = "[phone]")
 	private String phone;
-
+	
 	@ManyToOne
-	@JoinColumn(name = "[statusid]")
+	@JoinColumn(name="[statusid]")
 	private Status statusId;
-
-	@JsonIgnore // Ngăn việc chuyển đổi thuộc tính orderDetails thành JSON
+	
+	@JsonIgnore
 	@OneToMany(mappedBy = "ordersId")
 	List<OrderDetails> orderDetails;
 }

@@ -1,19 +1,16 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-    th:replace="~{/user/layout::dynamic(~{::title},~{::header},~{::.content})}">
-
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{/user/layout::dynamic(~{::title},~{::header},~{::.content})}">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>J6TEAM | Đơn hàng của bạn</title>
 </head>
-
 <body>
     <header th:insert="~{/user/common/header::header}"></header>
     <div class="content">
-        <!-- Breadcrumb Start -->
-        <div class="breadcrumb-area mt-30">
+           <!-- Breadcrumb Start -->
+           <div class="breadcrumb-area mt-30">
             <div class="container">
                 <div class="breadcrumb">
                     <ul class="d-flex align-items-center">
@@ -28,180 +25,160 @@
         <!-- Wish List Start -->
         <div class="cart-main-area wish-list ptb-20 ptb-sm-60 mb-3">
             <div class="container">
-                <!-- Arrivals Products Area Start Here -->
-                <div class="second-arrivals-product pb-45 pb-sm-5">
-                    <div class="container">
-                        <div class="main-product-tab-area">
-                            <div class="tab-menu mb-25">
-                                <div class="">
-                                    <h5>ĐƠN HÀNG CỦA BẠN</h5>
-                                </div>
-                                <!-- Nav tabs -->
-                                <ul class="nav tabs-area" role="tablist">
-                                    <li class="nav-item">
-                                        <a class="nav-link active" data-toggle="tab" href="#order1">Đơn hàng đang chờ
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" data-toggle="tab" href="#order3">Đơn hàng đã hủy</a>
-                                    </li>
-                                </ul>
+                 <!-- Arrivals Products Area Start Here -->
+        <div class="second-arrivals-product pb-45 pb-sm-5">
+            <div class="container">
+                <div class="main-product-tab-area">
+                    <div class="tab-menu mb-25">
+                        <div class="">
+                            <h5>ĐƠN HÀNG CỦA BẠN</h5>
+                       </div>
+                        <!-- Nav tabs -->
+                        <ul class="nav tabs-area" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-toggle="tab" href="#order1">Đơn hàng đang chờ </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#order3">Đơn hàng đã hủy</a>
+                            </li>
+                        </ul>                       
 
-                            </div>
+                    </div> 
 
-                            <!-- Tab Contetn Start -->
-                            <div class="tab-content">
-                                <!-- Đơn hàng đang chờ -->
-                                <div id="order1" class="tab-pane fade show active">
-                                    <div class="row">
-                                        <div class="col-md-12 col-sm-12 col-xs-12">
-                                            <h2 th:hidden="${!or.isEmpty()}">Bạn chưa có đơn hàng nào</h2>
-                                            <!-- Form Start -->
-                                            <form action="#">
-                                                <!-- Table Content Start -->
-                                                <div class="table-content table-responsive">
-                                                    <table class="table table-hover" th:hidden="${or.isEmpty()}">
-                                                        <thead style="background-color:orangered;">
-                                                            <tr class="text-white">
-                                                                <th>Mã đơn hàng</th>
-                                                                <th>Ngày tạo đơn hàng</th>
-                                                                <th>
-                                                                    Trạng thái
-                                                                </th>
-                                                                <th>Chi tiết đơn hàng</th>
-                                                                <th>Hủy đơn</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody th:each="list, lo : ${or}">
-                                                            <tr>
-                                                                <td class="h6">
-                                                                    <strong th:utext="${list.id}"></strong>
-                                                                </td>
-                                                                <td><a href="#" class="text-dark"><strong
-                                                                            th:utext="${#dates.format(list.date,'dd-MM-yyyy')}"></strong></a>
-                                                                </td>
-                                                                <td class="text-primary"
-                                                                    th:utext="${list.statusId.name}"></td>
-                                                                <td><a th:href="@{|/order_details.html?id=${list.id}|}"
-                                                                        class="btn btn-danger w-50">Xem</a></td>
-                                                                <td>
-                                                                    <button class="btn btn-warning w-100"
-                                                                        data-toggle="modal"
-                                                                        th:attr="data-target='#exampleModal'+${list.id}">
-                                                                        Hủy
-                                                                    </button>
-                                                                </td>
-                                                            </tr>
-                                                            <!-- Modal -->
-                                                            <div class="modal fade"
-                                                                th:attr="id='exampleModal'+${list.id}" tabindex="-1"
-                                                                role="dialog" aria-labelledby="exampleModalLabel"
-                                                                aria-hidden="true">
-                                                                <div class="modal-dialog" role="document">
-                                                                    <div class="modal-content">
-                                                                        <div class="modal-header">
-                                                                            <h5 class="modal-title"
-                                                                                id="exampleModalLabel">Hủy đơn hàng</h5>
-                                                                            <button type="button" class="close"
-                                                                                data-dismiss="modal" aria-label="Close">
-                                                                                <span aria-hidden="true">&times;</span>
-                                                                            </button>
-                                                                        </div>
-                                                                        <div class="modal-body">
-                                                                            Nhấn Hủy hàng để xác nhận hủy đơn hàng
-                                                                        </div>
-                                                                        <div class="modal-footer">
-                                                                            <a th:href="@{|/orders.html/huy/${list.id}|}"
-                                                                                class="btn btn-primary">Hủy hàng</a>
-                                                                            <button type="button"
-                                                                                class="btn btn-secondary"
-                                                                                data-dismiss="modal">Đóng</button>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </tbody>
-                                                    </table>
+                    <!-- Tab Contetn Start -->
+                    <div class="tab-content">
+                        <!-- Đơn hàng đang chờ -->
+                        <div id="order1" class="tab-pane fade show active">
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <h2 th:hidden="${!or.isEmpty()}">Bạn chưa có đơn hàng nào</h2>
+                                    <!-- Form Start -->
+                                    <form action="#">
+                                        <!-- Table Content Start -->
+                                        <div class="table-content table-responsive" >
+                                            <table class="table table-hover" th:hidden="${or.isEmpty()}">
+                                                <thead style="background-color:orangered;">
+                                                    <tr class="text-white">
+                                                        <th>Mã đơn hàng</th>
+                                                        <th>Ngày tạo đơn hàng</th>
+                                                        <th>
+                                                           Trạng thái
+                                                        </th>
+                                                        <th>Chi tiết đơn hàng</th>
+                                                         <th>Hủy đơn</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody th:each="list, lo:${or}">
+                                                    <tr> 
+                                                        <td class="h6">
+                                                            <strong th:utext="${list.id}"></strong>
+                                                        </td>
+                                                        <td><a href="#" class="text-dark"><strong th:utext="${#dates.format(list.date,'dd-MM-yyyy')}"  ></strong></a></td>
+                                                        <td class="text-primary" th:utext="${list.statusId.name}"></td>
+                                                        <td><a th:href="@{|/order_details.html?id=${list.id}|}" class="btn btn-danger w-50">Xem</a></td>
+                                                         <td> 
+                                                            <button  class="btn btn-warning w-100"  data-toggle="modal" 
+                                                            th:attr="data-target='#exampleModal'+${list.id}">
+                                                                Hủy
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                <!-- Modal -->
+                                                <div class="modal fade" th:attr="id='exampleModal'+${list.id}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Hủy đơn hàng</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                        Nhấn Hủy hàng để xác nhận hủy đơn hàng
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <a th:href="@{|/orders.html/huy/${list.id}|}" class="btn btn-primary">Hủy hàng</a>
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                                                        </div>
+                                                    </div>
+                                                    </div>
                                                 </div>
-                                                <!-- Table Content Start -->
-                                            </form>
-                                            <!-- Form End -->
+                                                </tbody>
+                                            </table>
                                         </div>
-                                    </div>
+                                        <!-- Table Content Start -->
+                                    </form>
+                                    <!-- Form End -->
                                 </div>
-                                <!--Đơn hàng đang chờ end  -->
-                                <!-- Đơn hàng đã giao -->
-
-                                <!--Đơn hàng đã giao end  -->
-                                <!-- Đơn hàng đã hủy -->
-                                <div id="order3" class="tab-pane fade">
-                                    <div class="row">
-                                        <div class="col-md-12 col-sm-12 col-xs-12">
-                                            <h2 th:hidden="${!huy.isEmpty()}">Bạn chưa có đơn hàng nào</h2>
-                                            <!-- Form Start -->
-                                            <form action="#">
-                                                <!-- Table Content Start -->
-                                                <div class="table-content table-responsive">
-                                                    <table class="table table-hover" th:hidden="${huy.isEmpty()}">
-                                                        <thead style="background-color:orangered;">
-                                                            <tr class="text-white">
-                                                                <th>Mã đơn hàng</th>
-                                                                <th>Ngày tạo đơn hàng</th>
-                                                                <th>
-                                                                    Trạng thái
-                                                                </th>
-                                                                <th>Chi tiết đơn hàng</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody th:each="h:${huy}">
-                                                            <tr>
-                                                                <td class="h6">
-                                                                    <strong th:utext="${h.id}"></strong>
-                                                                </td>
-                                                                <td><a href="#" class="text-dark"
-                                                                        th:utext="${#dates.format(h.date,'dd-mm-yyyy')}"><strong></strong></a>
-                                                                </td>
-                                                                <td class="text-danger" th:utext="${h.statusId.name}">
-                                                                </td>
-                                                                <td><a th:href="@{|/order_details.html?id=${h.id}|}"
-                                                                        class="btn btn-danger w-50">Xem</a></td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                                <!-- Table Content Start -->
-                                            </form>
-                                            <!-- Form End -->
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--Đơn hàng đã hủy end  -->
-                        </div>
-                        <!-- Tab Content End -->
-                    </div>
-                    <!-- main-product-tab-area-->
-                    <div class="row mt-3">
-                        <!-- Cart Button Start -->
-                        <div class="col-md-10 col-sm-12"></div>
-                        <div class="col-md-2 col-sm-12">
-                            <div class="buttons-cart">
-                                <!--                                         <input type="submit" value="Cập nhật giỏ hàng"> -->
-                                <a href="shop.html">Tiếp tục mua hàng</a>
                             </div>
                         </div>
-                        <!-- Cart Button Start -->
+                        <!--Đơn hàng đang chờ end  -->
+                         <!-- Đơn hàng đã giao -->
+                    
+                        <!--Đơn hàng đã giao end  -->
+                         <!-- Đơn hàng đã hủy -->
+                         <div id="order3" class="tab-pane fade">
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <h2 th:hidden="${!huy.isEmpty()}">Bạn chưa có đơn hàng nào</h2>
+                                    <!-- Form Start -->
+                                    <form action="#">
+                                        <!-- Table Content Start -->
+                                        <div class="table-content table-responsive">
+                                            <table class="table table-hover" th:hidden="${huy.isEmpty()}">
+                                                <thead style="background-color:orangered;">
+                                                    <tr class="text-white">
+                                                        <th>Mã đơn hàng</th>
+                                                        <th>Ngày tạo đơn hàng</th>
+                                                        <th>
+                                                           Trạng thái
+                                                        </th>
+                                                        <th>Chi tiết đơn hàng</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody th:each="h:${huy}">
+                                                    <tr>  
+                                                        <td class="h6">
+                                                            <strong th:utext="${h.id}"></strong>
+                                                        </td>
+                                                        <td><a href="#" class="text-dark" th:utext="${#dates.format(h.date,'dd-mm-yyyy')}"><strong></strong></a></td>
+                                                        <td class="text-danger" th:utext="${h.statusId.name}"></td>
+                                                        <td><a th:href="@{|/order_details.html?id=${h.id}|}" class="btn btn-danger w-50">Xem</a></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <!-- Table Content Start -->
+                                    </form>
+                                    <!-- Form End -->
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                        <!--Đơn hàng đã hủy end  -->
                     </div>
+                    <!-- Tab Content End -->
                 </div>
-                <!-- Container End -->
+                <!-- main-product-tab-area-->
+                <div class="row mt-3">
+                    <!-- Cart Button Start -->
+                    <div class="col-md-10 col-sm-12"></div>
+                     <div class="col-md-2 col-sm-12">
+                         <div class="buttons-cart">
+<!--                                         <input type="submit" value="Cập nhật giỏ hàng"> -->
+                             <a href="shop.html">Tiếp tục mua hàng</a>
+                         </div>
+                     </div>
+                     <!-- Cart Button Start -->
+                 </div>
             </div>
-            <!-- Arrivals Products Area End Here -->
-            <!-- Row End -->
+            <!-- Container End -->
         </div>
+        <!-- Arrivals Products Area End Here -->
+                <!-- Row End -->
+            </div>
+        </div>
+        <!-- Wish List End -->
     </div>
-    <!-- Wish List End -->
-    </div>
-
 </body>
-
 </html>

@@ -553,19 +553,14 @@ NOTE: main.js, All custom script and plugin activation script in this file.
     /*----------------------------
     18. Price Slider Activation
     -----------------------------*/
-    
-
     $("#slider-range").slider({
         range: true,
         min: 0,
-        max: 1000000000, // Tăng max lên 1 tỷ (1.000.000.000)
-        values: [0, 1000000000], // Giá trị mặc định từ 0 đến 1 triệu (1.000.000)
-        slide: function(event, ui) {
-            // Hiển thị giá trị có dấu chấm ở giữa
-            var minVal = ui.values[0].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-            var maxVal = ui.values[1].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-            $("#amount").val(minVal + " vnđ - " + maxVal + " vnđ");
-        }
+        max: 99,
+        values: [0,99],
+    slide: function( event, ui ) {
+        $( "#amount" ).val(ui.values[ 0 ] + " vnđ - " + ui.values[ 1 ] +" vnđ");
+      }
     });
     $( "#amount" ).val($( "#slider-range" ).slider( "values", 0 ) +
       " vnđ - " + $( "#slider-range" ).slider( "values", 1 ) +" vnđ" );

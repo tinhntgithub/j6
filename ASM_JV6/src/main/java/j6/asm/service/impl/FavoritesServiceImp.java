@@ -18,10 +18,7 @@ public class FavoritesServiceImp implements FavoritesService {
 	public List<Favorites> findAll() {
 		return dao.findAll();
 	}
-	@Override
-	public List<Object[]> listReportFavorites(){
-		return dao.listReportFavorites();
-	}
+	
 	@Override
 	public Favorites findById(Integer id) {
 		return dao.getById(id);

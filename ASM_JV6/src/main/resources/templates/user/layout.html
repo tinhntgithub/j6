@@ -34,54 +34,44 @@
 	<link rel="stylesheet" th:href="@{/user/style.css}">
 	<!-- Responsive css -->
 	<link rel="stylesheet" th:href="@{/user/css/responsive.css}">
-	<!-- Toastify -->
-	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
-	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
-	<!-- Recapcha -->
-	<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
 	<!-- Modernizer js -->
 	<script th:src="@{/user/js/vendor/modernizr-3.5.0.min.js}"></script>
 </head>
 
-<body ng-app="gemApp">
+<body  ng-app="gemApp" >
 	<header th:replace="${header}"></header>
 	<main th:replace="${view}"></main>
 	<footer th:insert="~{/user/common/footer::footer}"></footer>
-	<!-- jquery 3.2.1 -->
-	<script th:src="@{/user/js/vendor/jquery-3.2.1.min.js}"></script>
-	<!-- sweetalert -->
-	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.20/dist/sweetalert2.all.min.js"></script>
-	<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.20/dist/sweetalert2.min.css" rel="stylesheet">
-	<!-- Nhúng FontAwesome -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-	<!-- Countdown js -->
-	<script th:src="@{/user/js/jquery.countdown.min.js}"></script>
-	<!-- Mobile menu js -->
-	<script th:src="@{/user/js/jquery.meanmenu.min.js}"></script>
-	<!-- ScrollUp js -->
-	<script th:src="@{/user/js/jquery.scrollUp.js}"></script>
-	<!-- Nivo slider js -->
-	<script th:src="@{/user/js/jquery.nivo.slider.js}"></script>
-	<!-- Fancybox js -->
-	<script th:src="@{/user/js/jquery.fancybox.min.js}"></script>
-	<!-- Jquery nice select js -->
-	<script th:src="@{/user/js/jquery.nice-select.min.js}"></script>
-	<!-- Jquery ui price slider js -->
-	<script th:src="@{/user/js/jquery-ui.min.js}"></script>
-	<!-- Owl carousel -->
-	<script th:src="@{/user/js/owl.carousel.min.js}"></script>
-	<!-- Bootstrap popper js -->
-	<script th:src="@{/user/js/popper.min.js}"></script>
-	<!-- Bootstrap js -->
-	<script th:src="@{/user/js/bootstrap.min.js}"></script>
-	<!-- Plugin js -->
-	<script th:src="@{/user/js/plugins.js}"></script>
-	<!-- Main activaion js -->
-	<script th:src="@{/user/js/main.js}"></script>
-	<!-- Angular.js -->
-	<script th:src="@{//ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js}"></script>
-	<script th:src="@{/user/js/custom.js}"></script>
+    <!-- jquery 3.2.1 -->
+    <script th:src="@{/user/js/vendor/jquery-3.2.1.min.js}"></script>
+    <!-- Countdown js -->
+    <script th:src="@{/user/js/jquery.countdown.min.js}"></script>
+    <!-- Mobile menu js -->
+    <script th:src="@{/user/js/jquery.meanmenu.min.js}"></script>
+    <!-- ScrollUp js -->
+    <script th:src="@{/user/js/jquery.scrollUp.js}"></script>
+    <!-- Nivo slider js -->
+    <script th:src="@{/user/js/jquery.nivo.slider.js}"></script>
+    <!-- Fancybox js -->
+    <script th:src="@{/user/js/jquery.fancybox.min.js}"></script>
+    <!-- Jquery nice select js -->
+    <script th:src="@{/user/js/jquery.nice-select.min.js}"></script>
+    <!-- Jquery ui price slider js -->
+    <script th:src="@{/user/js/jquery-ui.min.js}"></script>
+    <!-- Owl carousel -->
+    <script th:src="@{/user/js/owl.carousel.min.js}"></script>
+    <!-- Bootstrap popper js -->
+    <script th:src="@{/user/js/popper.min.js}"></script>
+    <!-- Bootstrap js -->
+    <script th:src="@{/user/js/bootstrap.min.js}"></script>
+    <!-- Plugin js -->
+    <script th:src="@{/user/js/plugins.js}"></script>
+    <!-- Main activaion js -->
+    <script th:src="@{/user/js/main.js}"></script>
+    <!-- Angular.js -->
+    <script th:src="@{//ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js}"></script>
+    <script th:src="@{/user/js/custom.js}"></script>
 </body>
 
 </html>

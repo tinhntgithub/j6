@@ -49,10 +49,10 @@
 						<div class="well">
 							<div class="return-customer">
 								<h3 class="mb-10 custom-title">đăng nhập</h3>
-								<!-- <div th:if="${#strings.equals(param.err, '123')}" class="alert alert-danger"
+								<div th:if="${#strings.equals(param.err, '123')}" class="alert alert-danger"
 									role="alert">
 									Tài khoản và mật khẩu chưa chính xác!
-								</div> -->
+								</div>
 								<th:block th:switch="${message}">
 									<div th:case="'123'" class="alert alert-danger" role="alert">
 										Đăng nhập thất bại!
@@ -83,19 +83,18 @@
 											th:utext="|${#fields.hasErrors('pass')?'<b>Mật khẩu: </b>':'<b>Mật khẩu</b>'}|">
 											Mật khẩu:
 										</label>
-										<span class="erros_mess" th:errors="*{pass}">Mật khẩu không được để trống</span>
+										<span class="erros_mess" th:errors="*{pass}"></span>
 										<input th:field="*{pass}" type="password" placeholder="Mật khẩu"
 											id="input-passwords" class="form-control" value>
 									</div>
 									<p class="lost-password"><a href="forgot-password.html">Quên mật khẩu?</a></p>
 									<button class="return-customer-btn">Đăng
 										nhập</button>
-										<a class="return-customer-btn" href="/oauth2/authorization/google" >Tài khoản Google</a>
+									<input type="submit" value="Tài khoản Google" class="return-customer-btn">
 								</form>
 								<script th:inline="javascript">
 									var myData = /*[[${loginForm.pass}]]*/ 'default';
 									document.getElementById("input-passwords").value = myData;
-									
 								</script>
 							</div>
 						</div>

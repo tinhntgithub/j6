@@ -45,6 +45,9 @@ public class CategoryRestController {
 	
 	@PostMapping("/rest/categories")
 	public ResponseEntity<Categories> post(@RequestBody Categories cate){
+//		if(category.findById(cate.getId()) != null) {
+//			return ResponseEntity.badRequest().build();
+//		}
 		category.create(cate);
 		return ResponseEntity.ok(category.findById(cate.getId()));
 	}

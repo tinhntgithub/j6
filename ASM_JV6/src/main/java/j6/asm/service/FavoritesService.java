@@ -11,8 +11,6 @@ public interface FavoritesService {
 
 	Favorites findById(Integer id);
 
-	List<Object[]> listReportFavorites();
-
 	void create(Favorites entity);
 
 	void update(Favorites entity);

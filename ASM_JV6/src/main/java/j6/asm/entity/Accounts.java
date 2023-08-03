@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -23,11 +22,9 @@ public class Accounts implements Serializable {
 
 	@Id
 	@Column(name = "[username]")
-	@NotBlank(message = "{NotBlank.Account.username}")
 	String username;
 
 	@Column(name = "[password]")
-	@NotBlank(message = "{NotBlank.Account.password}")
 	String password;
 
 	@Column(name = "[fullname]")
