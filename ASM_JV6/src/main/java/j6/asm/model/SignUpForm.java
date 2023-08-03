@@ -27,4 +27,6 @@ public class SignUpForm {
 	@NotBlank
 	String phone;
 	Boolean active = true;
+	@NotBlank
+	String check;
 }

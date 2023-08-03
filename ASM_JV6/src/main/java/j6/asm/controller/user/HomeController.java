@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import j6.asm.dao.CategoriesDAO;
 import j6.asm.dao.FavoritesDAO;
 import j6.asm.dao.ProductsDAO;
+import j6.asm.entity.Accounts;
 import j6.asm.entity.Categories;
 import j6.asm.entity.Favorites;
 import j6.asm.entity.ProductColor;
@@ -50,6 +51,18 @@ public class HomeController {
 //	Index Page :))
 	@RequestMapping("/index.html")
 	public String index(Model m, @RequestParam("cateid") Optional<Integer> cateid) {
+		Accounts acc = session.get("account");
+		if (acc != null) {
+			for (Integer i = 0; i < acc.getAuthorities().size(); i++) {
+				String check = acc.getAuthorities().get(i).getRoleId().getId();
+				if (check.equals("STAF") == true || check.equals("DIRE") == true) {
+					m.addAttribute("au", true);
+					break;
+				} else {
+					m.addAttribute("au", false);
+				}
+			}
+		}
 
 		List<Products> product = productservice.findAll();
 		m.addAttribute("product", product);
@@ -85,30 +98,30 @@ public class HomeController {
 
 //	Product page
 	@RequestMapping("/shop.html")
-    public String shopPage(Model m, @RequestParam("cateid") Optional<Integer> cateid,
-            @RequestParam("p") Optional<Integer> p) {
+	public String shopPage(Model m, @RequestParam("cateid") Optional<Integer> cateid,
+			@RequestParam("p") Optional<Integer> p) {
 
-        List<Categories> categories = cateDAO.listCateInProduct();
-        if (!categories.isEmpty()) {
-            m.addAttribute("cate", categories);
-        }
+		List<Categories> categories = cateDAO.listCateInProduct();
+		if (!categories.isEmpty()) {
+			m.addAttribute("cate", categories);
+		}
 
-        Pageable pageable = PageRequest.of(p.orElse(0), 6);
+		Pageable pageable = PageRequest.of(p.orElse(0), 6);
 
-        if (cateid.isPresent()) {
-            Page<Products> page = productservice.listProduct_InCategoriesPage(cateid.get(), pageable);
-            m.addAttribute("product", page);
-        } else {
-            Page<Products> page = productservice.findAllPage(pageable);
-            m.addAttribute("product", page);
-        }
+		if (cateid.isPresent()) {
+			Page<Products> page = productservice.listProduct_InCategoriesPage(cateid.get(), pageable);
+			m.addAttribute("product", page);
+		} else {
+			Page<Products> page = productservice.findAllPage(pageable);
+			m.addAttribute("product", page);
+		}
 
-        List<Favorites> favorites = favoritesDAO.findAll();
-        m.addAttribute("kt", 0);
-        m.addAttribute("favorites", favorites);
-        m.addAttribute("sp", "active");
-        return "/user/home/shop";
-    }
+		List<Favorites> favorites = favoritesDAO.findAll();
+		m.addAttribute("kt", 0);
+		m.addAttribute("favorites", favorites);
+		m.addAttribute("sp", "active");
+		return "/user/home/shop";
+	}
 
 //	Product details page
 	@RequestMapping("/product.html")

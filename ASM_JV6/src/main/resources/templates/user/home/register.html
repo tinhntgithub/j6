@@ -100,8 +100,10 @@
                             <div class="terms">
                                 <div class="float-md-right">
                                     <span>Tôi đã đọc và đồng ý với <a href="#" class="agree"><b>Chính sách bảo mật</b></a></span>
-                                    <input type="checkbox" name="agree" value="1"> &nbsp;
+                                    <input type="checkbox" th:field="*{check}" name="check" value="1"> &nbsp;                                
                                     <input type="submit" value="Tiếp tục" class="return-customer-btn">
+                                    </br>
+                                    <i class="erros_mess" th:errors="*{check}"></i>
                                 </div>
                             </div>
                         </form>

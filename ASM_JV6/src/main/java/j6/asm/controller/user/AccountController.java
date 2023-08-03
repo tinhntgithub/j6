@@ -112,6 +112,10 @@ public class AccountController {
 			m.addAttribute("mess4", "Vui lòng kiểm tra lại mật khẩu");
 			loi++;
 		}
+		if (signUp.getCheck()== null) {
+			System.out.println(signUp.getCheck());
+			loi++;
+		}		
 		if (loi == 0) {
 			Accounts acc = new Accounts();
 			acc.setUsername(signUp.getUsername());
