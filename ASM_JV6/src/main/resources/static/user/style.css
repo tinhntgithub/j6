@@ -4615,3 +4615,48 @@ a.shipping-calculator-button:hover {
     color: #333;
     font-weight: 600;
 }
+a.form-check-label{
+    color: #333;
+}
+
+.shop__product__option {
+	margin-bottom: 45px;
+}
+
+.shop__product__option p {
+	color: #111111;
+	margin-bottom: 0;
+}
+
+.shop__product__option__right {
+	text-align: right;
+}
+
+.shop__product__option__right p {
+	display: inline-block;
+	margin-bottom: 0;
+}
+
+.shop__product__option__right .nice-select {
+	float: none;
+	display: inline-block;
+	padding: 0;
+	line-height: 26px;
+	height: auto;
+	border: none;
+	padding-right: 28px;
+}
+
+.shop__product__option__right .nice-select:after {
+	border-bottom: 1.5px solid #111111;
+	border-right: 1.5px solid #111111;
+	height: 8px;
+	right: 12px;
+	width: 8px;
+}
+
+.shop__product__option__right .nice-select span {
+	color: #111111;
+	font-size: 15px;
+	font-weight: 700;
+}

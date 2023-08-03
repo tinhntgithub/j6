@@ -65,4 +65,9 @@ public class ProductColorServiceImp implements ProductColorService {
 		return dao.getOne(id, idd);
 	}
 
+	@Override
+	public List<ProductColor> getColorId(Integer id) {
+		return dao.getColorId(id);
+	}
+
 }

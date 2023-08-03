@@ -19,7 +19,7 @@ public class InterceptorConfig implements WebMvcConfigurer {
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(blockLogin).addPathPatterns("/login.html", "/register.html").excludePathPatterns("");
+		registry.addInterceptor(blockLogin).addPathPatterns("/login.html", "/register.html","/compareEmail.html").excludePathPatterns("");
 
 		registry.addInterceptor(deleteSessionLogin).addPathPatterns("/*").excludePathPatterns("");
 	}

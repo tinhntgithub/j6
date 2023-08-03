@@ -39,4 +39,9 @@ public class ProductImgServiceImp implements ProductImgService {
 		dao.deleteById(id);
 	}
 
+	@Override
+	public List<ProductImg> findByImgPro(Integer imgPro) {
+		return dao.findByImgId(imgPro);
+	}
+
 }

@@ -24,4 +24,7 @@ public interface ProductColorService {
 	Boolean checkOrder(Integer id);
 	
 	Boolean checkExitsProduct(Integer id,Integer idd);
+
+	List<ProductColor> getColorId(Integer id);
+
 }

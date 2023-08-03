@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,8 +19,11 @@ import j6.asm.dao.ProductsDAO;
 import j6.asm.entity.Categories;
 import j6.asm.entity.Favorites;
 import j6.asm.entity.ProductColor;
+import j6.asm.entity.ProductImg;
 import j6.asm.entity.Products;
 import j6.asm.service.CategoriesService;
+import j6.asm.service.ProductColorService;
+import j6.asm.service.ProductImgService;
 import j6.asm.service.ProductsService;
 import j6.asm.service.SessionService;
 import j6.asm.service.impl.CategoryServiceImp;
@@ -36,6 +42,10 @@ public class HomeController {
 	CategoriesDAO cateDAO;
 	@Autowired
 	FavoritesDAO favoritesDAO;
+	@Autowired
+	ProductImgService productImgService;
+	@Autowired
+	ProductColorService colorService;
 
 //	Index Page :))
 	@RequestMapping("/index.html")
@@ -75,29 +85,30 @@ public class HomeController {
 
 //	Product page
 	@RequestMapping("/shop.html")
-	public String shopPage(Model m, @RequestParam("cateid") Optional<Integer> cateid) {
-		List<Products> product = null;
+    public String shopPage(Model m, @RequestParam("cateid") Optional<Integer> cateid,
+            @RequestParam("p") Optional<Integer> p) {
 
-		List<Categories> categories = cateDAO.listCateInProduct();
-		if (!categories.isEmpty()) {
-			m.addAttribute("cate", categories);
-		}
+        List<Categories> categories = cateDAO.listCateInProduct();
+        if (!categories.isEmpty()) {
+            m.addAttribute("cate", categories);
+        }
 
-		if (cateid.isPresent()) {
-			product = productservice.findByCateId(cateid.get());
-		} else {
-			product = productservice.findAll();
-		}
+        Pageable pageable = PageRequest.of(p.orElse(0), 6);
 
-		m.addAttribute("product", product);
+        if (cateid.isPresent()) {
+            Page<Products> page = productservice.listProduct_InCategoriesPage(cateid.get(), pageable);
+            m.addAttribute("product", page);
+        } else {
+            Page<Products> page = productservice.findAllPage(pageable);
+            m.addAttribute("product", page);
+        }
 
-		List<Favorites> favorites = favoritesDAO.findAll();
-		m.addAttribute("kt", 0);
-		m.addAttribute("favorites", favorites);
-
-		m.addAttribute("sp", "active");
-		return "/user/home/shop";
-	}
+        List<Favorites> favorites = favoritesDAO.findAll();
+        m.addAttribute("kt", 0);
+        m.addAttribute("favorites", favorites);
+        m.addAttribute("sp", "active");
+        return "/user/home/shop";
+    }
 
 //	Product details page
 	@RequestMapping("/product.html")
@@ -107,6 +118,12 @@ public class HomeController {
 
 		List<Products> pro = productservice.findByCateId(product.getCatePro().getId());
 		m.addAttribute("product", pro);
+
+		List<ProductImg> productImages = productImgService.findByImgPro(id);
+		m.addAttribute("productImages", productImages);
+
+		List<ProductColor> color = colorService.getColorId(id);
+		m.addAttribute("listColor", color);
 
 		return "/user/home/product";
 	}

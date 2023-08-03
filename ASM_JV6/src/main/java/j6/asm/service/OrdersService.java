@@ -18,6 +18,9 @@ public interface OrdersService {
 	
 	List<Orders> findAllOrderDone();
 
+	List<Object[]> getRevenueByYear();
+
+
 	Orders findById(Integer id);
 
 	void create(Orders entity);

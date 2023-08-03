@@ -1,3 +1,76 @@
+// Alert Toastify
+alertSuccess = function (message) { 
+    Toastify({
+      text: message,
+      duration: 3000,
+      //destination: "https://github.com/apvarun/toastify-js",
+      newWindow: true,
+      //close: true,
+      gravity: "top", // `top` or `bottom`
+      position: "right", // `left`, `center` or `right`
+      stopOnFocus: true, // Prevents dismissing of toast on hover
+      style: {
+        background: "#34c240",
+        color: "white",
+      },
+      onClick: function(){} // Callback after click
+    }).showToast();
+  }
+
+  alertWarning = function (message) { 
+    Toastify({
+      text: message,
+      duration: 3000,
+      //destination: "https://github.com/apvarun/toastify-js",
+      newWindow: true,
+      //close: true,
+      gravity: "top", // `top` or `bottom`
+      position: "right", // `left`, `center` or `right`
+      stopOnFocus: true, // Prevents dismissing of toast on hover
+      style: {
+        background: "#fa9f47",
+        color: "white",
+      },
+      onClick: function(){} // Callback after click
+    }).showToast();
+  }
+
+  alertDanger = function (message) { 
+    Toastify({
+      text: message,
+      duration: 3000,
+      //destination: "https://github.com/apvarun/toastify-js",
+      newWindow: true,
+      //close: true,
+      gravity: "top", // `top` or `bottom`
+      position: "right", // `left`, `center` or `right`
+      stopOnFocus: true, // Prevents dismissing of toast on hover
+      style: {
+        background: "#d64242",
+        color: "white",
+      },
+      onClick: function(){} // Callback after click
+    }).showToast();
+  }
+
+  alertResetAndEdit = function (message) { 
+    Toastify({
+      text: message,
+      duration: 3000,
+      //destination: "https://github.com/apvarun/toastify-js",
+      newWindow: true,
+      //close: true,
+      gravity: "top", // `top` or `bottom`
+      position: "right", // `left`, `center` or `right`
+      stopOnFocus: true, // Prevents dismissing of toast on hover
+      style: {
+        background: "#0090e0",
+        color: "white",
+      },
+      onClick: function(){} // Callback after click
+    }).showToast();
+  }
+// End Alert
 //Start Delete Address
 function deleteAddress(adr, id) {
     $(".address").text(adr);
@@ -99,7 +172,7 @@ app.controller("cartCtr", function ($scope, $http,$rootScope, $window) {
         var urlLogin = "http://" + $window.location.host + "/login.html";
         $http.get(url).then(resp => {
 			console.log(resp);
-            alert("Thêm vào giỏ hàng thành công");
+            alertSuccess("Thêm vào giỏ hàng thành công");
             $rootScope.$emit("list", {});
         }
         ).catch(error => {
@@ -149,7 +222,10 @@ app.controller("cartCtr", function ($scope, $http,$rootScope, $window) {
 	}
 })
 
-app.controller("pushCart", function ($scope, $http,$rootScope) {
+var itemChecked = [];
+
+app.controller("pushCart", function ($scope, $http, $rootScope) {
+
     $rootScope.$on("list", function(){
         var url = `${host}Cart/listCart`;
     $scope.url = function (filename) {
@@ -168,11 +244,11 @@ app.controller("pushCart", function ($scope, $http,$rootScope) {
     })
      });
 
-     var url = `${host}Cart/listCart`;
-     $scope.url = function (filename) {
-         return `${host}uploads/productImg/${filename}`;
-     }
-     $http.get(url).then(resp => {
+    var url = `${host}Cart/listCart`;
+    $scope.url = function (filename) {
+        return `${host}uploads/productImg/${filename}`;
+    }
+    $http.get(url).then(resp => {
         $scope.Cart = resp.data;
         if ($scope.Cart.length <= 99) {
             $scope.total = $scope.Cart.length;
@@ -190,7 +266,7 @@ app.controller("pushCart", function ($scope, $http,$rootScope) {
         }
     }).catch(error => {
         console.log("Errors", error);
-    })
+    });
     $scope.deleteCart = function (id,name) {
         if(confirm("Bạn có muốn xóa sản phẩm "+name+" khỏi giỏ hàng không ?") == true){
         var url = `${host}Cart/delete/${id}`
@@ -219,12 +295,60 @@ app.controller("pushCart", function ($scope, $http,$rootScope) {
         }
         
     }
+
+    // $scope.checkedItem = function (listCart) {
+    //     console.clear();
+    //     itemChecked.push(listCart);
+    //     console.log(itemChecked);
+    // };
         
-})
-    // $rootScope.$emit("list", {});
-   
+}) 
 //End Cart Controller
 
+// Orders Controller
+app.controller("checkoutCtrl", function ($scope, $http) {
 
+    $scope.delelteProductFormCart = function(){
 
+    }
 
+    $scope.payFromCart = [];
+
+    $scope.loadCartProduct = function () {
+        var url = `${host}Cart/listCart`;
+        $http.get(url).then((resp) => {
+            // Access the itemChecked array from SharedService
+            $scope.payFromCart = resp.data;
+            alertSuccess("Lấy API thành công");
+            console.log("Success", $scope.payFromCart);
+        }).catch((error) => {
+            alertDanger("Lấy API thất bại");
+            console.log("Error", error);
+        });
+    };
+
+    // Function to calculate the subtotal
+    $scope.getSubtotal = function () {
+        let subtotal = 0;
+        for (const listCart of $scope.payFromCart) {
+        subtotal += listCart.proCart.price * listCart.qty;
+        }
+        return subtotal;
+    };
+
+    // Function to calculate the discount (assuming discount is 0 for now)
+    $scope.getDiscount = function () {
+        // You can calculate the discount here based on your business logic
+        return 0;
+    };
+
+    // Function to calculate the total amount
+    $scope.getTotal = function () {
+        return $scope.getSubtotal() - $scope.getDiscount();
+    };
+
+    $scope.loadCartProduct();
+
+    //alert(this.temp);
+});
+// End Orders Controller

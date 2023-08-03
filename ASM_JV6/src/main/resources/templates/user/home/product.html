@@ -93,9 +93,9 @@
                                             <!-- Kiểm tra nếu màu sắc hiện tại là màu mặc định (active) thì thêm class 'active' -->
                                             <!-- <a href="#" th:class="${colorList.color.id == 1 ? 'paste active' : (colorList.color.id == 2 ? 'black' :
                                             (colorList.color.id == 3 ? 'yellow' : (colorList.color.id == 4 ? 'white' : (colorList.color.id == 5 ? 'red' : 'default-class'))))}"></a> -->
-                                            <!-- <a href="" th:style="'background-color: ' + ${colorList.color.hex}"></a> -->
+                                            <a href="" th:style="'background-color: ' + ${colorList.color.hex}"></a>
 
-                                            <a href="#" th:style="'background-color: ' + ${colorList.color.hex}" th:onclick="'updateQuantity(' + ${colorList.color.id} + '); return false;'"></a>
+                                            <!-- <a href="#" th:style="'background-color: ' + ${colorList.color.hex}" th:onclick="'updateQuantity(' + ${colorList.color.id} + '); return false;'"></a> -->
                                             <!-- <a href="" th:text="${colorList.qty}"></a> -->
                                         </li>
                                     </ul>
