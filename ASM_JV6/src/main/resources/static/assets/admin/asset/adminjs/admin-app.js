@@ -30,10 +30,10 @@ app.config(function($routeProvider){
         templateUrl: "page/product-manager/product-category.html",
         controller: "product-category"
     })
-    .when("/product-img",{
-        templateUrl: "page/product-manager/product-img.html",
-        controller: "product-img"
-    })
+    // .when("/product-img",{
+    //     templateUrl: "page/product-manager/product-img.html",
+    //     controller: "product-img"
+    // })
     .when("/category-form",{
         templateUrl: "page/category-manager/category-form.html",
         controller: "category-form"
