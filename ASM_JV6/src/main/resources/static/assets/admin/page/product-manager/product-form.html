@@ -153,6 +153,78 @@
                   </div>
                 </div>
               </div>
+              <div class="col-md-12">
+                <label class="col-form-label">(<strong class="text-danger">*</strong>) Màu sản phẩm:</label>
+
+                <div class="row mb-3 d-flex justify-content-center form-group">
+                  <!-- <div class="col-1"></div>
+                  <div class="col-2">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="color-checkbox" name="color" value="Red">
+                    </div>
+                  </div>
+                  <div class="col-1">
+                    <label class="form-text">Xanh</label>
+                  </div>
+                  <div class="col-2">
+                    <div class="color-square" style="width: 30px; height: 30px; background-color: blue;"></div>
+                  </div>
+                  <div class="col-3">
+                    <div class="form-text">
+                      <input type="number" class="form-control" placeholder="Số lượng">
+                    </div>
+                  </div> -->
+
+                  <div class="col-md-12 text-center" style="height: 400px; overflow: auto;">
+                    <table class="table table-sm" >
+                      <thead>
+                        <tr>
+                          <th>Chọn</th>
+                          <th>Mã màu</th>
+                          <th>Tên màu</th>
+                          <th>Số lượng sản phẩm</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr ng-repeat="cl in colorlist">
+                          <td>
+                            <input class="form-check-input" type="checkbox" id="{{cl.id}}" name="color" ng-model="cl.isChecked" ng-change="toggleInput(cl)">
+                          </td>
+                          <td>
+                            <div class="row d-flex flex-row mb-3 mt-3 justify-content-center">
+                              <div
+                                style="width: 30px; height: 30px; background-color: {{cl.hex}};"></div>
+                                <p>{{cl.hex}}</p>
+                            </div>
+
+                          </td>
+                          <td>
+                            <p><strong>{{cl.name}}</strong></p>
+                          </td>
+                          <td>
+                            <div class="form-text">
+                              <input ng-attr-id="{{cl.id}}input" type="number" class="form-control" ng-model="cl.quantity"  ng-disabled="!cl.isChecked">
+                            </div> 
+                          </td>
+                        </tr>
+                        
+                      </tbody>
+                      <tfoot>
+                        <tr>
+                          <th>
+                            <button class="btn btn-secondary mt-1">Thêm màu mới</button>
+                          </th>
+                        </tr>
+                        
+                      </tfoot>
+                    </table>
+                    
+                  </div>
+
+                </div>
+
+
+              </div>
             </div>
             <div class="col-6">
               <div class="col-12 text-center">
@@ -183,6 +255,23 @@
                   max-height: 100%;
                   object-fit: cover;
                 }
+
+                .image-container {
+                  position: relative;
+                  display: inline-block;
+                }
+
+                .delete-btn {
+                  position: absolute;
+                  top: -10px;
+                  right: -10px;
+                  border-radius: 50%;
+                  width: 30px;
+                  height: 30px;
+                  line-height: 30px;
+                  text-align: center;
+                  padding: 0;
+                }
               </style>
 
               <!-- Additional product detail images -->
@@ -190,134 +279,62 @@
               <div class="col-12">
                 <label class="col-form-label">(<strong class="text-danger">*</strong>) Ảnh chi tiết:</label>
               </div>
+              <div class="col-12 text-center mb-4"><label class="btn btn-danger text-white ">Chọn (các) hình
+                  <input type="file" hidden accept="image/*" multiple
+                    onchange="angular.element(this).scope().imgdts(this.files)">
+                </label></div>
               <div class="row col-12">
-                <div class="col-4 text-center mb-3">
-                  <!-- Wrap the input with a label element -->
+                <div class="col-4 text-center mb-3 position-relative" ng-repeat="dt in imgdt">
                   <label for="detailImg1" class="detail-img-label">
-                    <input type="file" id="detailImg1" accept="image/*" style="display: none;"
-                      onchange="angular.element(this).scope().uploadDetailImage(1, this.files)">
-                    <img id="detailImg1" ng-src="{{url(form.detailImg1)}}" class="img-fluid detail-img"
-                      alt="Ảnh chi tiết 1">
+                    <div class="image-container">
+                      <img ng-src="{{urldt(dt.name)}}" class="img-fluid detail-img" alt="Ảnh chi tiết">
+                      <button type="button" class="btn btn-danger btn-sm delete-btn" ng-click="deleteImage(dt.name)">
+                        X
+                      </button>
+                    </div>
                   </label>
                 </div>
-                <div class="col-4 text-center mb-3">
-                  <!-- Wrap the input with a label element -->
-                  <label for="detailImg2" class="detail-img-label">
-                    <input type="file" id="detailImg2" accept="image/*" style="display: none;"
-                      onchange="angular.element(this).scope().uploadDetailImage(2, this.files)">
-                    <img id="detailImg2" ng-src="{{url(form.detailImg2)}}" class="img-fluid detail-img"
-                      alt="Ảnh chi tiết 2">
-                  </label>
-                </div>
-                <div class="col-4 text-center mb-3">
-                  <!-- Wrap the input with a label element -->
-                  <label for="detailImg3" class="detail-img-label">
-                    <input type="file" id="detailImg3" accept="image/*" style="display: none;"
-                      onchange="angular.element(this).scope().uploadDetailImage(3, this.files)">
-                    <img id="detailImg3" ng-src="{{url(form.detailImg3)}}" class="img-fluid detail-img"
-                      alt="Ảnh chi tiết 3">
-                  </label>
-                </div>
+
               </div>
 
-
-              <div class="col-12">
-                <label class="col-form-label">(<strong class="text-danger">*</strong>) Màu sản phẩm:</label>
-
-                <div class="row mb-3 align-items-center form-group">
-                  <div class="col-1"></div>
-                  <div class="col-2">
-                    <div class="form-check">
-                      <input class="form-check-input" type="checkbox" id="color-checkbox" name="color" value="Red">
-                    </div>
-                  </div>
-                  <div class="col-1">
-                    <label class="form-text fs-5">Xanh</label>
-                  </div>
-                  <div class="col-2">
-                    <div class="color-square" style="width: 40px; height: 40px; background-color: blue;"></div>
-                  </div>
-                  <div class="col-3">
-                    <div class="form-text">
-                      <input type="number" class="form-control" placeholder="Số lượng">
-                    </div>
-                  </div>
-                </div>
-                
-                <div class="row mb-3 align-items-center form-group">
-                  <div class="col-1"></div>
-                  <div class="col-2">
-                    <div class="form-check">
-                      <input class="form-check-input" type="checkbox" id="color-checkbox" name="color" value="Red">
-                    </div>
-                  </div>
-                  <div class="col-1">
-                    <label class="form-text fs-5">Xám</label>
-                  </div>
-                  <div class="col-2">
-                    <div class="color-square" style="width: 40px; height: 40px; background-color: gray;"></div>
-                  </div>
-                  <div class="col-3">
-                    <div class="form-text">
-                      <input type="number" class="form-control" placeholder="Số lượng">
-                    </div>
-                  </div>
-                </div><div class="row mb-3 align-items-center form-group">
-                  <div class="col-1"></div>
-                  <div class="col-2">
-                    <div class="form-check">
-                      <input class="form-check-input" type="checkbox" id="color-checkbox" name="color" value="Red">
-                    </div>
-                  </div>
-                  <div class="col-1">
-                    <label class="form-text fs-5">Đen</label>
-                  </div>
-                  <div class="col-2">
-                    <div class="color-square" style="width: 40px; height: 40px; background-color: black;"></div>
-                  </div>
-                  <div class="col-3">
-                    <div class="form-text">
-                      <input type="number" class="form-control" placeholder="Số lượng">
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
 
 
 
 
             </div>
-
-
           </div>
+
+          <div class="text-end mb-4" ng-init="showButton">
+            <button type="submit" ng-show="showButton" class="btn btn-inverse-success btn-fw" id="btnThem"
+              ng-click="create()">
+              <div class="d-flex">
+                <i class="mdi mdi-plus-circle"></i>
+                <strong class="mt-1 ms-1 h6">Thêm mới</strong>
+              </div>
+            </button>
+            <button ng-hide="showButton" class="btn btn-inverse-primary btn-fw" ng-click="update()">
+              <div class="d-flex">
+                <i class="mdi mdi-content-save"></i>
+                <strong class="mt-1 ms-1 h6">Cập nhật</strong>
+              </div>
+            </button>
+            <button class="btn btn-inverse-warning btn-fw" ng-click="reset()">
+              <div class="d-flex">
+                <i class="mdi mdi-refresh"></i>
+                <strong class="mt-1 ms-1 h6">Làm mới</strong>
+              </div>
+            </button>
+          </div>
+        </form>
       </div>
-
-      <div class="text-end mb-4" ng-init="showButton">
-        <button type="submit" ng-show="showButton" class="btn btn-inverse-success btn-fw" id="btnThem"
-          ng-click="create()">
-          <div class="d-flex">
-            <i class="mdi mdi-plus-circle"></i>
-            <strong class="mt-1 ms-1 h6">Thêm mới</strong>
-          </div>
-        </button>
-        <button ng-hide="showButton" class="btn btn-inverse-primary btn-fw" ng-click="update()">
-          <div class="d-flex">
-            <i class="mdi mdi-content-save"></i>
-            <strong class="mt-1 ms-1 h6">Cập nhật</strong>
-          </div>
-        </button>
-        <button class="btn btn-inverse-warning btn-fw" ng-click="reset()">
-          <div class="d-flex">
-            <i class="mdi mdi-refresh"></i>
-            <strong class="mt-1 ms-1 h6">Làm mới</strong>
-          </div>
-        </button>
-      </div>
-      </form>
     </div>
-  </div>
 
   </div>
+
+  <script>
+      function handleCheck(checkbox){
+        console.log(checkbox);
+    }
+  </script>
   <!-- thân end -->
 </body>

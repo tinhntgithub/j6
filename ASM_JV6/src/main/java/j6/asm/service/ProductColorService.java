@@ -9,7 +9,11 @@ import j6.asm.entity.ProductColor;
 public interface ProductColorService {
 	List<ProductColor> findAll();
 
+	List<ProductColor> findByPd(Integer pdid);
+
 	ProductColor findById(Integer id);
+
+	ProductColor getOne(Integer id, Integer idd);
 
 	void create(ProductColor entity);
 

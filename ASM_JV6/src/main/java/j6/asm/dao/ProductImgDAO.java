@@ -14,5 +14,9 @@ public interface ProductImgDAO extends JpaRepository<ProductImg, Integer> {
 
 	@Query (value = "select * from ProductImg where ProductId = ?1",nativeQuery = true)
 	List<ProductImg> findByImgId(int id);
+
+	@Query (value = "select * from ProductImg where ProductId = ?1",nativeQuery = true)
+	List<ProductImg> findByPdid(Integer id);
 	
+
 }
