@@ -64,8 +64,20 @@
                       <label class="col-12">(<strong class="text-danger">*</strong>) Ngày giảm giá:</label>
                       <div class="col-12">
                         <label class="input-group">
-                            <input value="{{form.saleDate | date:'dd-MM-yyyy'}}" class="form-control" placeholder="dd-MM-yyyy"  disabled />
+                            <input value="{{form.saleDate | date:'dd-MM-yyyy HH:mm:ss'}}" class="form-control" placeholder="dd-MM-yyyy"  disabled />
                              <input ng-model="form.saleDate" class="form-control"  type="date" style="width:30px;" />
+                        </label>
+                        <h6 class="mt-2 alert alert-danger" role="alert" ng-show="loi3 != 0 && loi3 != null"style="font-size: 12px;">{{loi3}}</h6>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group row">
+                      <label class="col-12">(<strong class="text-danger">*</strong>) Ngày kết thúc giảm giá:</label>
+                      <div class="col-12">
+                        <label class="input-group">
+                            <input value="{{form.endDate | date:'dd-MM-yyyy HH:mm:ss'}}" class="form-control" placeholder="dd-MM-yyyy"  disabled />
+                             <input ng-model="form.endDate" class="form-control"  type="date" style="width:30px;" />
                         </label>
                         <h6 class="mt-2 alert alert-danger" role="alert" ng-show="loi3 != 0 && loi3 != null"style="font-size: 12px;">{{loi3}}</h6>
                       </div>

@@ -248,7 +248,7 @@ app.controller("product-form",function($scope,$http){
             headers: { 'Content-Type': undefined }
         }).then(resp => {
             $scope.form.img = resp.data.name;
-            console.logo("Success",resp.data);
+            console.log("Success",resp.data);
         }).catch(error => {
             console.log("Errors", error);
         })
@@ -338,15 +338,17 @@ app.controller("product-form",function($scope,$http){
         }else {
             $scope.loi1 = '';
         }
-        if (qty == null || qty.length <= 0) {
-            $scope.loi2 = '* Không được bỏ trống số lượng';
-             loi++;
-        } else if(qty <= 0){
-            $scope.loi2 = '* Số lượng phải lớn hơn 0';
-             loi++;
-        }else {
-            $scope.loi2 = '';
-        }
+        // if (qty == null || qty.length <= 0) {
+        //     $scope.loi2 = '* Không được bỏ trống số lượng';
+        //      loi++;
+        // } 
+        // else if(qty <= 0){
+        //     $scope.loi2 = '* Số lượng phải lớn hơn 0';
+        //      loi++;
+        // }
+        // else if{
+        //     $scope.loi2 = '';
+        // }
         if (sale == null || sale.length <= 0) {
             $scope.loi3 = '* Không được bỏ trống giảm giá';
              loi++;
