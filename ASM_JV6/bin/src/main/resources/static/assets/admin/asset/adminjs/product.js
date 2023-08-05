@@ -2,19 +2,21 @@ let host4 = "http://localhost:8080/rest";
 
 var test4 = 0;
 var key4 = null;
+var cllist = null;
 var form4 = {};
 var url4 = "http://localhost:8080/uploads/productImg";
+var url5 = "http://localhost:8080/uploadmulti/productDtImg";
 
 
 // List sản phẩm controller
-app.controller("product-list",function($scope,$http){
-    $scope.$on('$routeChangeSuccess', function(event, current, previous) {
+app.controller("product-list", function ($scope, $http) {
+    $scope.$on('$routeChangeSuccess', function (event, current, previous) {
         $scope.page.setTitle(current.$$route.title || ' Danh sách sản phẩm');
     });
 
 
-     $scope.url = function (filename) {
-        return`${url4}/${filename}`;
+    $scope.url = function (filename) {
+        return `${url4}/${filename}`;
     }
 
     $scope.items = [];
@@ -47,11 +49,11 @@ app.controller("product-list",function($scope,$http){
             $scope.begin = 0;
             $scope.length = Object.keys($scope.items).length;
             $scope.pageCount = Math.ceil($scope.length / $scope.pageSize);
-             if ($scope.length >= $scope.pageSize) {
-            $scope.index2 = $scope.pageSize;
-        } else {
-            $scope.index2 = Math.ceil($scope.length - ($scope.pageCount / 2));
-        }
+            if ($scope.length >= $scope.pageSize) {
+                $scope.index2 = $scope.pageSize;
+            } else {
+                $scope.index2 = Math.ceil($scope.length - ($scope.pageCount / 2));
+            }
 
             // $scope.prop ='id';
             console.log("Success", resp)
@@ -161,7 +163,7 @@ app.controller("product-list",function($scope,$http){
     $scope.next = function () {
         if ($scope.begin < ($scope.pageCount - 1) * $scope.pageSize) {
             $scope.begin += $scope.pageSize;
-            $scope.index +=1;
+            $scope.index += 1;
         }
     }
 
@@ -175,23 +177,33 @@ app.controller("product-list",function($scope,$http){
 });
 
 // Form sản phẩm controller
-app.controller("product-form",function($scope,$http){
-    $scope.$on('$routeChangeSuccess', function(event, current, previous) {
+app.controller("product-form", function ($scope, $http) {
+    $scope.$on('$routeChangeSuccess', function (event, current, previous) {
         $scope.page.setTitle(current.$$route.title || ' Form Sản Phẩm');
     });
 
+    var url5 = "http://localhost:8080/rest/uploadmulti/productDtImg";
+
     var url4 = "http://localhost:8080/rest/uploads/productImg";
     $scope.url = function (filename) {
-        if(filename != null){
-            return`${url4}/${filename}`;
-        }else{
+        if (filename != null) {
+            return `${url4}/${filename}`;
+        } else {
+            return 'asset/images/default.jpg';
+        }
+    }
+
+    $scope.urldt = function (filename) {
+        if (filename != null) {
+            return `http://localhost:8080/rest/uploads/productDtImg/${filename}`;
+        } else {
             return 'asset/images/default.jpg';
         }
     }
 
 
-     var loi = 0;
-     $scope.load_Cate = function () {
+    var loi = 0;
+    $scope.load_Cate = function () {
         var url = `${host4}/categories`;
         $http.get(url).then(resp => {
             $scope.cates = resp.data;
@@ -201,7 +213,7 @@ app.controller("product-form",function($scope,$http){
         });
 
     }
-     $scope.load_Brand = function () {
+    $scope.load_Brand = function () {
         var url = `${host4}/brands`;
         $http.get(url).then(resp => {
             $scope.brands = resp.data;
@@ -211,6 +223,36 @@ app.controller("product-form",function($scope,$http){
         });
 
     }
+    $scope.pdcolor = {};
+    $scope.colorlist = [];
+
+    // $scope.getColorlist = function () {
+    //     var url = `${host4}/colors`;
+    //     $http.get(url).then(resp => {
+    //         $scope.colorlist = resp.data.map(color => {
+    //             color.isChecked = false;
+    //             return color;
+    //         });
+    //     }).catch(error => {
+    //         console.log("Error", error);
+    //         return null;
+    //     });
+
+
+    // }
+
+    $scope.load_ColorList = function () {
+
+
+    }
+
+    $scope.toggleInput = function (cl) {
+        console.log(cl.isChecked);
+        if (!cl.isChecked) {
+            cl.quantity = null;
+        }
+    }
+
 
 
 
@@ -222,12 +264,61 @@ app.controller("product-form",function($scope,$http){
     }
 
     $scope.form = {};
+    $scope.imgdt = [];
 
     $scope.load = function () {
         if (key4 != null) {
             var url = `${host4}/products/${key4}`;
+            var url2 = `${host4}/pdimg/${key4}`;
+            var url3 = `${host4}/pdcl/${key4}`;
             $http.get(url).then(resp => {
                 $scope.form = resp.data;
+
+                $http.get(url2).then(resp => {//Product image
+                    $scope.imgdt = resp.data;
+                    console.log("Success", resp)
+                }).catch(error => {
+                    console.log("Error", error);
+                });
+                $http.get(url3).then(resp => {// product colors
+                    $scope.pdcolor = resp.data;
+
+                    //load color list 
+                    var urlcl = `${host4}/colors`;
+                    $http.get(urlcl).then(resp => {
+                        $scope.colorlist = resp.data.map(color => {
+                            color.isChecked = false;
+                            return color;
+                        });
+
+                        $scope.pdcolor.forEach((pdColorItem) => {
+                            const colorId = pdColorItem.color.id;
+                            const existingColor = $scope.colorlist.find((colorItem) => colorItem.id === colorId);
+                            if (existingColor) {
+                                existingColor.quantity = pdColorItem.qty;
+                                existingColor.isChecked = true;
+                            } else {
+                                $scope.colorlist.push({
+                                    id: colorId,
+                                    name: pdColorItem.color.name,
+                                    hex: pdColorItem.color.hex,
+                                    isChecked: false,
+                                    quantity: pdColorItem.qty,
+                                });
+                            }
+                        });
+
+                         console.log($scope.pdcolor, $scope.colorlist)
+                    }).catch(error => {
+                        console.log("Error", error);
+                    });
+
+
+
+
+                }).catch(error => {
+                    console.log("Error", error);
+                });
 
                 form4 = $scope.form;
                 console.log("Success", resp)
@@ -236,6 +327,16 @@ app.controller("product-form",function($scope,$http){
             });
             key4 = null;
         } else {
+            //load color list 
+            var urlcl = `${host4}/colors`;
+            $http.get(urlcl).then(resp => {
+                $scope.colorlist = resp.data.map(color => {
+                    color.isChecked = false;
+                    return color;
+                });
+            }).catch(error => {
+                console.log("Error", error);
+            });
             $scope.reset();
 
         }
@@ -244,20 +345,82 @@ app.controller("product-form",function($scope,$http){
         var form = new FormData();
         form.append('files', files[0]);
         $http.post(url4, form, {
-            transformRequest:angular.identity,
+            transformRequest: angular.identity,
             headers: { 'Content-Type': undefined }
         }).then(resp => {
             $scope.form.img = resp.data.name;
-            console.logo("Success",resp.data);
+            console.log("Success", resp.data);
         }).catch(error => {
             console.log("Errors", error);
         })
 
     }
 
+
+
+    // $scope.datalist = [];
+
+    // $scope.updateDataList = function (cl) {
+    //     var inputId = cl.id + "input";
+    //     var inputElement = document.getElementById(inputId);
+    //     if (inputElement) {
+    //         var quantityValue = parseInt(inputElement.value);
+    //         cl.quantity = quantityValue;
+    //     }
+
+    //     var checkElement = document.getElementById(cl.id);
+
+    //     if (checkElement.checked && $scope.datalist.indexOf(cl.id) === -1) {
+    //         $scope.datalist.push({ id: cl.id, quantity: cl.quantity });
+    //     } else if (!checkElement.checked && $scope.datalist.indexOf(cl.id) !== -1) {
+    //         const index = $scope.datalist.indexOf(cl.id);
+    //         $scope.datalist.splice(index, 1);
+    //     } else {    
+    //         console.log('sai rồi');
+    //     }
+    //     console.log($scope.datalist);
+    // };
+
+
+    $scope.imgdts = function (files) {
+        var form = new FormData();
+        for (var i = 0; i < files.length; i++) {
+            form.append("files", files[i]);
+        }
+
+        $http.post(url5, form, {
+            transformRequest: angular.identity,
+            headers: { 'Content-Type': undefined }
+        }).then(resp => {
+            $scope.imgdt.push(...resp.data);
+            console.log("Success", resp.data);
+        }).catch(error => {
+            console.log("Errors", error);
+        })
+
+    }
+
+
+    $scope.deleteImage = function (imageName) {
+        var index = -1;
+        for (var i = 0; i < $scope.imgdt.length; i++) {
+            if ($scope.imgdt[i].name === imageName) {
+                index = i;
+                break;
+            }
+        }
+
+        if (index !== -1) {
+            $scope.imgdt.splice(index, 1);
+            console.log("Delete success");
+        }
+    };
+
+
     $scope.reset = function () {
         $scope.form = {};
         $scope.showButton = true;
+        $scope.imgdt = [];
         $scope.loi = '';
         $scope.loi1 = '';
         $scope.loi2 = '';
@@ -267,13 +430,61 @@ app.controller("product-form",function($scope,$http){
         $scope.loi6 = '';
         $scope.loi7 = '';
     }
-   
+
     $scope.create = function () {
+        // var imglist = angular.copy($scope.imgdt);
+        // var data = [];
+        // for (var i = 0; i < imglist.length; i++) {
+        //     var item = $scope.imgdt[i];
+        //     for (var key in item) {
+        //         if (key.startsWith('name')) {
+        //             data.push(item[key]);
+        //         }
+        //     }
+        // }
+        // console.log(data, imglist, $scope.imgdt)
+        // var cllist = angular.copy($scope.colorlist)
+        //         var cldata = cllist.filter((item) => item.isChecked === true)
+        //             .map(({ id, quantity }) => ({ id, quantity }));;
+
+        //         var clsjon = JSON.stringify(cldata);
+        //         console.log(cldata);
         if ($scope.check() == true) {
             var item = angular.copy($scope.form);
             var url = `${host4}/products`;
             $http.post(url, item).then(resp => {
-                $scope.items.push(item);
+                // $scope.items.push(item);
+                var imglist = angular.copy($scope.imgdt);
+                var data = [];
+                for (var i = 0; i < imglist.length; i++) {
+                    var item = $scope.imgdt[i];
+                    for (var key in item) {
+                        if (key.startsWith('name')) {
+                            data.push(item[key]);
+                        }
+                    }
+                }
+
+                $http.post(`${host4}/pdimg/` + resp.data.id, data).then(resp => {
+                    console.log("Success - Product img", resp)
+                }).catch(error => {
+                    console.log("Error", error);
+                });
+
+                var cllist = angular.copy($scope.colorlist)
+                var cldata = cllist.filter((item) => item.isChecked === true)
+                    .map(({ id, quantity }) => ({ id, quantity }));
+
+                var clsjon = JSON.stringify(cldata);
+
+                $http.post(`${host4}/pdcolor/` + resp.data.id, clsjon, {
+                    headers: { 'Content-Type': 'application/json' }
+                }).then(resp => {
+                    console.log("Success - Product Color", resp)
+                }).catch(error => {
+                    console.log("Error", error);
+                });
+
                 console.log("Success", resp)
             }).catch(error => {
                 console.log("Error", error);
@@ -290,13 +501,48 @@ app.controller("product-form",function($scope,$http){
     }
 
     $scope.update = function () {
+
+    
         if ($scope.check() == true) {
             var item = angular.copy($scope.form);
             var url = `${host4}/products/${$scope.form.id}`;
+            var url2 = `${host4}/pdimg/${$scope.form.id}`;
+            var url3 = `${host4}/pdcolor/${$scope.form.id}`;
 
             $http.put(url, item).then(resp => {
-                var index = $scope.items.findIndex(item => item.id == $scope.form.id);
-                $scope.items[index] = resp.data;
+                // var index = $scope.items.findIndex(item => item.id == $scope.form.id);
+                // $scope.items[index] = resp.data;
+
+                var imglist = $scope.imgdt;
+                var data = [];
+                for (var i = 0; i < imglist.length; i++) {
+                    var item = $scope.imgdt[i];
+                    for (var key in item) {
+                        if (key.startsWith('name')) {
+                            data.push(item[key]);
+                        }
+                    }
+                }
+                $http.post(url2, data).then(resp => { //uodate product image
+                    console.log("Success", resp)
+                }).catch(error => {
+                    console.log("Error", error);
+                });
+
+                var cllist = angular.copy($scope.colorlist)
+                var cldata = cllist.filter((item) => item.isChecked === true)
+                    .map(({ id, quantity }) => ({ id, quantity }));
+                
+                var clsjon = JSON.stringify(cldata);
+
+                $http.put(url3, clsjon, {
+                    headers: { 'Content-Type': 'application/json' }
+                }).then(resp => {
+                    console.log("Success - Update pdcl", resp)
+                }).catch(error => {
+                    console.log("Error", error);
+                });
+
                 console.log("Success", resp)
             }).catch(error => {
                 console.log("Error", error);
@@ -304,7 +550,7 @@ app.controller("product-form",function($scope,$http){
             Swal.fire({
                 position: 'top',
                 title: 'Cập nhật thành công!',
-                text: 'Đã cập nhật sản phẩm '+item.name ,
+                text: 'Đã cập nhật sản phẩm ' + item.name,
                 icon: 'success'
             }
             )
@@ -325,58 +571,60 @@ app.controller("product-form",function($scope,$http){
 
         if (name == null || name.length <= 0) {
             $scope.loi = '* Không được bỏ trống tên sản phẩm';
-             loi++;
+            loi++;
         } else {
             $scope.loi = '';
         }
         if (price == null || price.length <= 0) {
             $scope.loi1 = '* Không được bỏ trống đơn giá';
-             loi++;
-        } else if(price <= 0){
+            loi++;
+        } else if (price <= 0) {
             $scope.loi1 = '* Đơn giá phải lớn hơn 0';
-             loi++;
-        }else {
+            loi++;
+        } else {
             $scope.loi1 = '';
         }
-        if (qty == null || qty.length <= 0) {
-            $scope.loi2 = '* Không được bỏ trống số lượng';
-             loi++;
-        } else if(qty <= 0){
-            $scope.loi2 = '* Số lượng phải lớn hơn 0';
-             loi++;
-        }else {
-            $scope.loi2 = '';
-        }
+        // if (qty == null || qty.length <= 0) {
+        //     $scope.loi2 = '* Không được bỏ trống số lượng';
+        //      loi++;
+        // } 
+        // else if(qty <= 0){
+        //     $scope.loi2 = '* Số lượng phải lớn hơn 0';
+        //      loi++;
+        // }
+        // else if{
+        //     $scope.loi2 = '';
+        // }
         if (sale == null || sale.length <= 0) {
             $scope.loi3 = '* Không được bỏ trống giảm giá';
-             loi++;
-        } else if(sale < 0 || sale > 40){
+            loi++;
+        } else if (sale < 0 || sale > 40) {
             $scope.loi3 = '* Giảm giá phải từ 0 đến 40 %';
-             loi++;
-        }else {
+            loi++;
+        } else {
             $scope.loi3 = '';
         }
         if (madein == null || madein.length <= 0) {
             $scope.loi4 = '* Không được bỏ trống xuất xứ';
-             loi++;
+            loi++;
         } else {
             $scope.loi4 = '';
         }
         if (cate == null || cate.length <= 0 || cate == undefined) {
             $scope.loi5 = '* Vui lòng chọn danh mục sản phẩm';
-             loi++;
+            loi++;
         } else {
             $scope.loi5 = '';
         }
         if (brand == null || brand.length <= 0 || brand == undefined) {
             $scope.loi6 = '* Vui lòng chọn thương hiệu sản phẩm';
-             loi++;
+            loi++;
         } else {
             $scope.loi6 = '';
         }
         if (available == null || available.length <= 0 || available == undefined) {
             $scope.loi7 = '* Vui lòng chọn trạng thái';
-             loi++;
+            loi++;
         } else {
             $scope.loi7 = '';
         }
@@ -388,29 +636,31 @@ app.controller("product-form",function($scope,$http){
             return true;
         }
     }
- 
+
+
+
 
 
     $scope.load();
 
     $scope.load_Cate();
     $scope.load_Brand();
-
+    $scope.load_ColorList();
 });
 
 // Update danh mục sản phẩm controller
-app.controller("product-category",function($scope,$http){
-    $scope.$on('$routeChangeSuccess', function(event, current, previous) {
+app.controller("product-category", function ($scope, $http) {
+    $scope.$on('$routeChangeSuccess', function (event, current, previous) {
         $scope.page.setTitle(current.$$route.title || ' Update Danh Mục');
     });
 
     var loi = 0;
     $scope.form1 = {};
-     $scope.load_Cate = function () {
+    $scope.load_Cate = function () {
         var url = `${host4}/categories`;
         $http.get(url).then(resp => {
             $scope.cates = resp.data;
-            $scope.form1 =  $scope.cates;
+            $scope.form1 = $scope.cates;
             console.log("Success", resp)
         }).catch(error => {
             console.log("Error", error);
@@ -418,7 +668,7 @@ app.controller("product-category",function($scope,$http){
 
     }
 
-     $scope.load_Products = function () {
+    $scope.load_Products = function () {
         var url = `${host4}/products`;
         $http.get(url).then(resp => {
             $scope.products = resp.data;
@@ -429,30 +679,30 @@ app.controller("product-category",function($scope,$http){
         });
 
     }
-    $scope.loadName = function(id){
+    $scope.loadName = function (id) {
         var url = `${host4}/productss/${id}`;
-             $http.get(url).then(resp => {
-                $scope.name = resp.data.name;
-                console.log("Success", resp.data.name)
-            })
+        $http.get(url).then(resp => {
+            $scope.name = resp.data.name;
+            console.log("Success", resp.data.name)
+        })
     }
-    
-    $scope.save = function(id){
-        if($scope.check()==true){
+
+    $scope.save = function (id) {
+        if ($scope.check() == true) {
             Swal.fire({
-            position: 'top',
-            title: 'Thông báo !',
-            text: "Cập nhật danh mục cho sản phẩm " +  $scope.name + " này!?",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes !'
-        }).then((result) => {
-            if (result.isConfirmed) {
+                position: 'top',
+                title: 'Thông báo !',
+                text: "Cập nhật danh mục cho sản phẩm " + $scope.name + " này!?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes !'
+            }).then((result) => {
+                if (result.isConfirmed) {
                     var item = angular.copy($scope.form1.catePro);
                     var url = `${host4}/productss/${id}`;
-                    $http.put(url,item).then(resp => {
+                    $http.put(url, item).then(resp => {
                         $scope.load_All();
                         console.log("Success", resp)
                     }).catch(error => {
@@ -461,12 +711,12 @@ app.controller("product-category",function($scope,$http){
                     Swal.fire({
                         position: 'top',
                         title: 'Cập nhật thành công!',
-                        text: 'Đã cập nhật ' +  $scope.name,
+                        text: 'Đã cập nhật ' + $scope.name,
                         icon: 'success'
                     }
                     )
                 }
-        })
+            })
         }
     }
 
@@ -476,27 +726,27 @@ app.controller("product-category",function($scope,$http){
 
         if (cate == null || cate.length <= 0 || cate == undefined) {
             $scope.loi = '* Vui lòng chọn danh mục sản phẩm';
-             loi++;
+            loi++;
         } else {
             $scope.loi = '';
         }
         if (product == null || product.length <= 0 || product == undefined) {
             $scope.loi1 = '* Vui lòng chọn sản phẩm';
-             loi++;
+            loi++;
         } else {
             $scope.loi1 = '';
         }
 
-        if(loi > 0){
+        if (loi > 0) {
             loi = 0;
             return false;
-        }else{
+        } else {
             return true;
         }
-        
+
     }
-     $scope.url = function (filename) {
-        return`${url4}/${filename}`;
+    $scope.url = function (filename) {
+        return `${url4}/${filename}`;
     }
 
     $scope.items = [];
@@ -529,11 +779,11 @@ app.controller("product-category",function($scope,$http){
             $scope.begin = 0;
             $scope.length = Object.keys($scope.items).length;
             $scope.pageCount = Math.ceil($scope.length / $scope.pageSize);
-             if ($scope.length >= $scope.pageSize) {
-            $scope.index2 = $scope.pageSize;
-        } else {
-            $scope.index2 = Math.ceil($scope.length - ($scope.pageCount / 2));
-        }
+            if ($scope.length >= $scope.pageSize) {
+                $scope.index2 = $scope.pageSize;
+            } else {
+                $scope.index2 = Math.ceil($scope.length - ($scope.pageCount / 2));
+            }
 
             // $scope.prop ='id';
             console.log("Success", resp)
@@ -579,7 +829,7 @@ app.controller("product-category",function($scope,$http){
     $scope.next = function () {
         if ($scope.begin < ($scope.pageCount - 1) * $scope.pageSize) {
             $scope.begin += $scope.pageSize;
-            $scope.index +=1;
+            $scope.index += 1;
         }
     }
 
@@ -593,18 +843,18 @@ app.controller("product-category",function($scope,$http){
     $scope.load_Products();
 });
 // Update danh mục sản phẩm controller
-app.controller("product-img",function($scope,$http){
-    $scope.$on('$routeChangeSuccess', function(event, current, previous) {
+app.controller("product-img", function ($scope, $http) {
+    $scope.$on('$routeChangeSuccess', function (event, current, previous) {
         $scope.page.setTitle(current.$$route.title || ' Update Ảnh Sản Phẩm');
     });
 
     var loi = 0;
     $scope.form1 = {};
-     $scope.load_Cate = function () {
+    $scope.load_Cate = function () {
         var url = `${host4}/categories`;
         $http.get(url).then(resp => {
             $scope.cates = resp.data;
-            $scope.form1 =  $scope.cates;
+            $scope.form1 = $scope.cates;
             console.log("Success", resp)
         }).catch(error => {
             console.log("Error", error);
@@ -612,7 +862,7 @@ app.controller("product-img",function($scope,$http){
 
     }
 
-     $scope.load_Products = function () {
+    $scope.load_Products = function () {
         var url = `${host4}/products`;
         $http.get(url).then(resp => {
             $scope.products = resp.data;
@@ -623,30 +873,30 @@ app.controller("product-img",function($scope,$http){
         });
 
     }
-    $scope.loadName = function(id){
+    $scope.loadName = function (id) {
         var url = `${host4}/productss/${id}`;
-             $http.get(url).then(resp => {
-                $scope.name = resp.data.name;
-                console.log("Success", resp.data.name)
-            })
+        $http.get(url).then(resp => {
+            $scope.name = resp.data.name;
+            console.log("Success", resp.data.name)
+        })
     }
-    
-    $scope.save = function(id){
-        if($scope.check()==true){
+
+    $scope.save = function (id) {
+        if ($scope.check() == true) {
             Swal.fire({
-            position: 'top',
-            title: 'Thông báo !',
-            text: "Cập nhật danh mục cho sản phẩm " +  $scope.name + " này!?",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes !'
-        }).then((result) => {
-            if (result.isConfirmed) {
+                position: 'top',
+                title: 'Thông báo !',
+                text: "Cập nhật danh mục cho sản phẩm " + $scope.name + " này!?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes !'
+            }).then((result) => {
+                if (result.isConfirmed) {
                     var item = angular.copy($scope.form1.catePro);
                     var url = `${host4}/productss/${id}`;
-                    $http.put(url,item).then(resp => {
+                    $http.put(url, item).then(resp => {
                         $scope.load_All();
                         console.log("Success", resp)
                     }).catch(error => {
@@ -655,12 +905,12 @@ app.controller("product-img",function($scope,$http){
                     Swal.fire({
                         position: 'top',
                         title: 'Cập nhật thành công!',
-                        text: 'Đã cập nhật ' +  $scope.name,
+                        text: 'Đã cập nhật ' + $scope.name,
                         icon: 'success'
                     }
                     )
                 }
-        })
+            })
         }
     }
 
@@ -670,27 +920,27 @@ app.controller("product-img",function($scope,$http){
 
         if (cate == null || cate.length <= 0 || cate == undefined) {
             $scope.loi = '* Vui lòng chọn danh mục sản phẩm';
-             loi++;
+            loi++;
         } else {
             $scope.loi = '';
         }
         if (product == null || product.length <= 0 || product == undefined) {
             $scope.loi1 = '* Vui lòng chọn sản phẩm';
-             loi++;
+            loi++;
         } else {
             $scope.loi1 = '';
         }
 
-        if(loi > 0){
+        if (loi > 0) {
             loi = 0;
             return false;
-        }else{
+        } else {
             return true;
         }
-        
+
     }
-     $scope.url = function (filename) {
-        return`${url4}/${filename}`;
+    $scope.url = function (filename) {
+        return `${url4}/${filename}`;
     }
 
     $scope.items = [];
@@ -723,11 +973,11 @@ app.controller("product-img",function($scope,$http){
             $scope.begin = 0;
             $scope.length = Object.keys($scope.items).length;
             $scope.pageCount = Math.ceil($scope.length / $scope.pageSize);
-             if ($scope.length >= $scope.pageSize) {
-            $scope.index2 = $scope.pageSize;
-        } else {
-            $scope.index2 = Math.ceil($scope.length - ($scope.pageCount / 2));
-        }
+            if ($scope.length >= $scope.pageSize) {
+                $scope.index2 = $scope.pageSize;
+            } else {
+                $scope.index2 = Math.ceil($scope.length - ($scope.pageCount / 2));
+            }
 
             // $scope.prop ='id';
             console.log("Success", resp)
@@ -773,7 +1023,7 @@ app.controller("product-img",function($scope,$http){
     $scope.next = function () {
         if ($scope.begin < ($scope.pageCount - 1) * $scope.pageSize) {
             $scope.begin += $scope.pageSize;
-            $scope.index +=1;
+            $scope.index += 1;
         }
     }
 

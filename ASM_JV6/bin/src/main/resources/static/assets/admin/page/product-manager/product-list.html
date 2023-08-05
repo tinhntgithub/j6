@@ -73,12 +73,12 @@
                           <i class="mdi mdi-swap-vertical"></i>
                         </a>
                       </th>
-                      <th>
+                      <!-- <th>
                         <a ng-click="sortBy('qty')" href="" style="text-decoration: none;" class="text-dark">
                           Số lượng
                           <i class="mdi mdi-swap-vertical"></i>
                         </a>
-                      </th>
+                      </th> -->
                       <th>
                         <a ng-click="sortBy('date')" href="" style="text-decoration: none;" class="text-dark">
                           Ngày tạo
@@ -115,12 +115,12 @@
                           <i class="mdi mdi-swap-vertical"></i>
                         </a>
                       </th>
-                      <th>
+                      <!-- <th>
                         <a ng-click="sortBy('qty')" href="" style="text-decoration: none;" class="text-dark">
                           Số lượng
                           <i class="mdi mdi-swap-vertical"></i>
                         </a>
-                      </th>
+                      </th> -->
                       <th>
                         <a ng-click="sortBy('date')" href="" style="text-decoration: none;" class="text-dark">
                           Ngày tạo
@@ -150,8 +150,8 @@
                                                 style="width: 64px;height: 64px;">
                         </td>
                       <td class="h5">{{product.name}}</td>
-                      <td>{{product.price}} VND</td>
-                      <td>{{product.qty}}</td>
+                      <td>{{product.price|number:0}} VND </td>
+                     
                       <td>{{product.date | date: 'dd-MM-yyyy'}}</td>
                       <td>
                         <span class="badge rounded-pill {{product.avaliable ? 'bg-success':'bg-danger'}}">
