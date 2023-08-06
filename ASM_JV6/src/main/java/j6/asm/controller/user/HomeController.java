@@ -51,19 +51,6 @@ public class HomeController {
 //	Index Page :))
 	@RequestMapping("/index.html")
 	public String index(Model m, @RequestParam("cateid") Optional<Integer> cateid) {
-		Accounts acc = session.get("account");
-		if (acc != null) {
-			for (Integer i = 0; i < acc.getAuthorities().size(); i++) {
-				String check = acc.getAuthorities().get(i).getRoleId().getId();
-				if (check.equals("STAF") == true || check.equals("DIRE") == true) {
-					m.addAttribute("au", true);
-					break;
-				} else {
-					m.addAttribute("au", false);
-				}
-			}
-		}
-
 		List<Products> product = productservice.findAll();
 		m.addAttribute("product", product);
 
@@ -76,6 +63,7 @@ public class HomeController {
 		m.addAttribute("pro_cate", pro_cate);
 
 		m.addAttribute("cateid", cateid.orElse(1));
+		m.addAttribute("in", "active");
 
 		return "/user/home/index";
 	}

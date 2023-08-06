@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{/user/layout::dynamic(~{::title},~{::header},~{::.content})}">
+
+<head>
+	<meta charset="UTF-8">
+	<title>J6Team|OTP</title>
+</head>
+
+<body>
+	<header th:insert="~{/user/common/header::header}"></header>
+	<div class="content" >
+		<div class="container" ng-controller="otpCtrl" >
+			<div class="row justify-content-center align-items-center vh-100" >
+				<div class="card col-12 col-md-8 col-lg-7 p-4 m-3">
+					<div class="card-body">
+						<h4 class="card-title text-center">Nhập mã OTP</h4>
+						<div class="card-text text-center mt-5">
+							<form action="" class="otp-form">
+								<input class="otp-field" type="text" name="opt-field[]" maxlength=1>
+								<input class="otp-field" type="text" name="opt-field[]" maxlength=1>
+								<input class="otp-field" type="text" name="opt-field[]" maxlength=1>
+								<input class="otp-field" type="text" name="opt-field[]" maxlength=1>
+								<input class="otp-field" type="text" name="opt-field[]" maxlength=1>
+								<input class="otp-field" type="text" name="opt-field[]" maxlength=1>
+
+								<!-- Store OTP Value -->
+								<input class="otp-value" type="hidden" name="opt-value">
+								<div class="d-block mt-4">
+									<button class="btn btn-primary" type="submit">Xác nhận</button>
+								</div>
+								<div class="d-nlock mt-3">
+								<span >Thời gian hiệu lực: <span id="otpTimer">60</span> s </span>
+								<a class="link" href="">Lấy lại mã</a>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+</body>
+
+</html>
