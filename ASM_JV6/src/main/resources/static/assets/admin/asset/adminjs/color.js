@@ -277,6 +277,33 @@ app.controller("color-form",function($scope,$http){
 
 });
 
+
+app.directive('colorPicker', function () {
+    return {
+      restrict: 'A',
+      link: function (scope, element) {
+        element.spectrum({
+            preferredFormat: "hex",
+            showInput: true,
+            showPalette: true,
+            palette: [
+                ["#000000", "#FF0000", "#FFFFFF"],
+                ["#808080", "#0000FF", "#FFFF00"],
+            ],
+            change: function(color) {
+                scope.form.hex = color.toHexString();
+                scope.$apply();
+            }   
+        });
+        console.log(scope.form.hex);
+        if (scope.form.hex) {
+            element.spectrum('set', scope.form.hex);
+            
+          }
+      }
+    };
+  });
+
 // Update màu sắc sản phẩm controller
 app.controller("color-update",function($scope,$http){
     $scope.$on('$routeChangeSuccess', function(event, current, previous) {
