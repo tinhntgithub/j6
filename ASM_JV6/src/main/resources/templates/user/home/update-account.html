@@ -79,7 +79,7 @@
                             <p class="form-message">
 
                         </div>
-                        <div class="col-4"  ng-controller="userImage">
+                        <div class="col-4" ng-controller="userImage">
                             <div id="contact-form" class="contact-form">
                                 <div class="address-wrapper row">
                                     <div class="col-md-12">
@@ -92,13 +92,14 @@
                                         <div class="address-fname d-flex">
                                             <!-- <img ng-src="{{photo}}" alt="" style="height:300px; width: 300px"> -->
                                             <img th:src="@{|/uploads/accountImg/*{photo}|}"
-                                                style="height:300px; width: 300px"  id="previewImage">
+                                                style="height:300px; width: 300px" id="previewImage">
                                             <input type="hidden" th:field="*{photo}">
                                         </div>
                                     </div>
                                     <div class="col-md-12 mt-2">
                                         <div class="address-fname d-flex">
-                                            <input type="file" accept="image/*" name="newPhoto" id="fileInput" onchange="angular.element(this).scope().upload(this.files)">
+                                            <input type="file" accept="image/*" name="newPhoto" id="fileInput"
+                                                onchange="angular.element(this).scope().upload(this.files)">
                                         </div>
                                     </div>
                                     <!-- <div class="col-md-12 mt-2 " >
@@ -111,8 +112,8 @@
 
                     </div>
                 </form>
-               
-                <div class="row" th:if="${listAddress.size}>0">
+
+                <div class="row">
                     <div class="col-12">
                         <h3 class="mb-20">Danh sách địa chỉ</h3>
                         <th:block th:if="${messageAdr}!=null">
@@ -137,6 +138,11 @@
                                 </thead>
 
                                 <tbody>
+                                    <th:block th:if="${listAddress.size() == 0}">
+                                        <tr>
+                                            <td colspan="2">Không có dữ liệu</td>
+                                        </tr>
+                                    </th:block>
                                     <tr th:each="list,viTri: ${listAddress}" th:object="${list}">
                                         <td>
                                             [[${viTri.index+1}]]
