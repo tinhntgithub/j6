@@ -67,4 +67,9 @@ public class IndexRestController {
 		return ResponseEntity.ok(revenueData);
 	}
 
+	@GetMapping("/rest/revenueDataMonth")
+	public ResponseEntity<List<Object[]>> revenueDataMonth() {
+		List<Object[]> revenueData = orders.getRevenueByMonth();
+		return ResponseEntity.ok(revenueData);
+	}
 }

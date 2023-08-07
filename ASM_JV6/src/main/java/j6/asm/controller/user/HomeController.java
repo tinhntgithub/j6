@@ -58,18 +58,18 @@ public class HomeController {
 	@RequestMapping("/index.html")
 	public String index(Model m, @RequestParam("cateid") Optional<Integer> cateid) {
 		Accounts acc = session.get("account");
-		
-		if (acc != null) {
-			for (Integer i = 0; i < acc.getAuthorities().size(); i++) {
-				String check = acc.getAuthorities().get(i).getRoleId().getId();
-				if (check.equals("STAF") == true || check.equals("DIRE") == true) {
-					m.addAttribute("au", true);
-					break;
-				} else {
-					m.addAttribute("au", false);
-				}
-			}
-		}
+		session.set("account", acc);
+		// if (acc != null) {
+		// 	for (Integer i = 0; i < acc.getAuthorities().size(); i++) {
+		// 		String check = acc.getAuthorities().get(i).getRoleId().getId();
+		// 		if (check.equals("STAF") == true || check.equals("DIRE") == true) {
+		// 			m.addAttribute("au", true);
+		// 			break;
+		// 		} else {
+		// 			m.addAttribute("au", false);
+		// 		}
+		// 	}
+		// }
 
 		List<Products> product = productservice.findAll();
 		m.addAttribute("product", product);

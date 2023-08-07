@@ -59,7 +59,7 @@
 							d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
 					</svg>
 					<span class="text-dark" th:if="${session.account == null}" th:text="#{header.account}"></span>
-					<span class="text-dark" th:unless="${session.account == null}" th:text="|Xin chào, ${session.account.username}|"></span
+					<span class="text-dark " th:unless="${session.account == null}" th:text="|Xin chào, ${session.account.username}|"></span
 						><i class="lnr lnr-chevron-down"></i>
 				</a>
 				<!-- Dropdown Start -->
@@ -73,6 +73,7 @@
 						<li><a href="forgot-password.html" th:text="#{header.forgotpass}">Quên mật khẩu</a></li>
 						<li><a th:href="@{/update_account.html}" th:text="#{header.updateaccount}">Cập nhật tài
 								khoản</a></li>
+						<li th:if="${#request.isUserInRole('STAF')}" ><a th:href="@{/admin}">Quản lý</a></li>
 						<li><a th:href="@{/logout.html}" th:text="#{header.logout}">Đăng xuất</a></li>
 					</th:block>
 				</ul>

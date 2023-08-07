@@ -35,4 +35,11 @@ public interface OrdersDAO extends JpaRepository<Orders, Integer> {
 			"GROUP BY YEAR(b.date)")
 	List<Object[]> getRevenueByYear();
 
+	@Query("SELECT MONTH(b.date) as month, SUM(o.price * o.qty) as revenue " +
+			"FROM Orders b " +
+			"JOIN OrderDetails o ON o.ordersId.id = b.id " +
+			"WHERE YEAR(b.date) = YEAR(GETDATE()) " +
+			"GROUP BY MONTH(b.date)")
+	List<Object[]> getRevenueByMonth();
+
 }

@@ -59,15 +59,14 @@
 								<form th:action="@{/signin.html}" method="post"
 									th:object="${account}">
 									<div class="form-group">
-										<input type="text" class="form-control" path="username"
-											name="username" th:field="*{username}"
+										<input type="text" class="form-control" name="username" path="username"
 											th:placeholder="Username" />
 										<!-- <small class="text-danger" th:if="${#fields.hasErrors('username')}"
 											th:errors="*{username}"></small> -->
 									</div>
 									<div class="form-group">
 										<input type="password" class="form-control" path="password"
-											th:value="*{password}" name="password"
+											name="password"
 											th:placeholder="Password" />
 										<!-- <small class="text-danger" th:if="${#fields.hasErrors('password')}"
 											th:errors="*{password}"></small> -->
@@ -80,8 +79,8 @@
 										nhập</button>
 
 								</form>
-								<a class="return-customer-btn"
-									href="/oauth2/authorization/google">Tài khoản Google</a>
+								<a class="return-customer-btn btn-google "
+									href="/oauth2/authorization/google"><i class='bx bxl-google'></i><p> Đăng nhập với Google</p></a>
 							</div>
 						</div>
 					</div>

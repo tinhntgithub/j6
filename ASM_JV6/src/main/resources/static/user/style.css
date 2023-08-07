@@ -4660,3 +4660,31 @@ a.form-check-label{
 	font-size: 15px;
 	font-weight: 700;
 }
+.btn-google {
+    background-color: #3f79d1;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    text-decoration: none;
+    display: inline-flex;
+    /* Sử dụng display: inline-flex; */
+    height: 45px;
+    transition: background-color 0.3s ease;
+    align-items: center;
+  }
+.btn-google i {
+    font-size: 25px;
+    padding-right: 10px;
+  }
+  .btn-google i,
+  .btn-google p {
+    color: #fff;
+    margin: 0;
+  }
+  
+  .btn-google p {
+    color: #ffffff;
+    vertical-align: middle;
+    display: inline-block;
+  }
+

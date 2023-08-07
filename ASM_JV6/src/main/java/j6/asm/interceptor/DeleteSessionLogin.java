@@ -31,8 +31,11 @@ public class DeleteSessionLogin implements HandlerInterceptor {
 			session.remove("account");
 			System.out.println("[==========| Notification: No session login. |==========]");
 		} else {
-			// Accounts account1 = (Accounts) session.get("account");
+			// Accounts account1 = (Accounts) session.get("account")
+
+
 			String username = request.getUserPrincipal().getName();
+			System.out.println(username+ " =======");
 			Accounts account = accountsService1.findById(username);
 			if (account != null) {
 				session.set("account", account);
@@ -46,7 +49,6 @@ public class DeleteSessionLogin implements HandlerInterceptor {
 				System.out.println("[==========| Notification: Account not found. |==========]");
 			}
 		}
-
 		return true;
 	}
 }

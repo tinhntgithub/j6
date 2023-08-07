@@ -44,24 +44,19 @@
             </svg>
             <strong class="ms-1 h5 text-uppercase">Thống kê theo mặt hàng yêu thích</strong>
           </div>
-          <!-- <div class="col-5 text-end">
-            <div class="row">
-              <input style="width: 80%;float: left;" type="text" class="col-10 form-control"
-                placeholder="Nhập tên sản phẩm cần tìm...." />
-              <a href="#" class="btn btn-danger text-white col-2" style="background-color: orangered;">
-                <i class="mdi mdi-magnify"></i>
-              </a>
-            </div>
-          </div> -->
+        
         </div>
         <div class="table-responsive">
-          <table class="table table-hover table-striped">
+          <table id ="example" class="table table-hover table-striped">
             <thead>
               <tr class="bg-danger">
+               
                 <th>
                   <a href="#" class="text-white" style="text-decoration: none;">
-                   STT
+                    TÊN SẢN PHẨM
+                 
                   </a>
+                </th>
                 <th>
                   <a href="#" class="text-white" style="text-decoration: none;">
                     HÌNH ẢNH
@@ -69,8 +64,9 @@
                 </th>
                 <th>
                   <a href="#" class="text-white" style="text-decoration: none;">
-                    TÊN SẢN PHẨM
-                 >
+                 
+                    GIÁ BÁN
+                  
                   </a>
                 </th>
                 <th>
@@ -82,13 +78,11 @@
                 </th>
               </tr>
             </thead>
-            <tfoot>
-
-            </tfoot>
+           
 
             <tbody>
               <!-- List item start -->
-              <tr dir-paginate="item in reportFavorites  | itemsPerPage: 3">
+              <!-- <tr ng-repeat="item in reportFavorites  ">
                 <td class="h4">{{$index + 1}}</td>
                 <td class="h5">
                   <img class="img-fluid" ng-src="{{url(item[1])}}" style="width: 64px;height: 64px;">
@@ -103,22 +97,25 @@
                   </svg>
                 </td>
 
-              </tr>
+              </tr> -->
               <!-- List item end -->
 
             </tbody>
           </table>
+        
+        
         </div>
         <!-- List content body end -->
         <!-- List content footer -->
-        <div class="product__pagination justify-content-end">
+        <!-- <div class="product__pagination justify-content-end">
           <dir-pagination-controls>
           </dir-pagination-controls>
-        </div>
+        </div> -->
 
         <!-- List content footer end -->
       </div>
     </div>
   </div>
   <!-- List end -->
+
 </body>
