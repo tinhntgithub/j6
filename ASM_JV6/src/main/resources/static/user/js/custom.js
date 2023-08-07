@@ -190,9 +190,7 @@ app.controller("cartCtr", function ($scope, $http,$rootScope, $window) {
          var data = $scope.Cart;
 		 $http.post(url,$scope.quantity).then(resp => {
 				console.log(resp);
-				if(data.status==200){
-					alert("Thêm vào giỏ hàng thành công");
-				}
+					alertSuccess("Thêm vào giỏ hàng thành công");
 		        $rootScope.$emit("list", {});
 		    }
 		).catch(error => {
