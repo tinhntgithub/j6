@@ -168,6 +168,18 @@ app.controller("sale-list", function ($scope, $http) {
 
 });
 
+app.directive('flatpickr', function () {
+    return {
+        restrict: 'A',
+        link: function (scope, element, attrs) {
+            flatpickr(element[0], {
+                enableTime: true,
+                dateFormat: "d-m-Y H:i",
+            });
+        }
+    };
+});
+
 // From giảm giá controller
 app.controller("sale-form", function ($scope, $http) {
     $scope.$on('$routeChangeSuccess', function (event, current, previous) {
@@ -190,7 +202,8 @@ app.controller("sale-form", function ($scope, $http) {
             var url = `${host2}/sales/${key2}`;
             $http.get(url).then(resp => {
                 $scope.form = resp.data;
-
+                $scope.form.createDate = moment($scope.form.createDate, 'YYYY-MM-DDTHH:mm:ss.SSS').format("DD-MM-YYYY HH:mm");
+                $scope.form.endDate = moment($scope.form.endDate, 'YYYY-MM-DDTHH:mm:ss.SSS').format("DD-MM-YYYY HH:mm");
                 form2 = $scope.form;
                 console.log("Success", resp)
             }).catch(error => {
@@ -212,11 +225,17 @@ app.controller("sale-form", function ($scope, $http) {
         $scope.loi3 = '';
     }
     $scope.create = function () {
-        if ($scope.check() == true) {
+
+        if ($scope.check()) {
             var item = angular.copy($scope.form);
+            item.form.code = item.form.code.toUpperCase();
+            item.saleDate = moment().format("YYYY-MM-DD");
+            item.createDate = moment(item.createDate, 'DD-MM-YYYY HH:mm').format("YYYY-MM-DDTHH:mm:ss.SSS");
+            item.endDate = moment(item.endDate, 'DD-MM-YYYY HH:mm').format("YYYY-MM-DDTHH:mm:ss.SSS");
+            console.log(item);
             var url = `${host2}/sales`;
             $http.post(url, item).then(resp => {
-                $scope.items.push(item);
+                // $scope.items.push(item); 
                 console.log("Success", resp)
             }).catch(error => {
                 console.log("Error", error);
@@ -236,6 +255,10 @@ app.controller("sale-form", function ($scope, $http) {
 
         if ($scope.check() == true) {
             var item = angular.copy($scope.form);
+            item.form.code = item.form.code.toUpperCase();
+            item.createDate = moment(item.createDate, 'DD-MM-YYYY HH:mm').format("YYYY-MM-DDTHH:mm:ss.SSS");
+            item.endDate = moment(item.endDate, 'DD-MM-YYYY HH:mm').format("YYYY-MM-DDTHH:mm:ss.SSS");
+            console.log(item);
             var url = `${host2}/sales/${$scope.form.id}`;
 
             $http.put(url, item).then(resp => {
@@ -267,8 +290,8 @@ app.controller("sale-form", function ($scope, $http) {
         if (code == null || code.length <= 0) {
             $scope.loi = '* Không được bỏ trống mã giảm giá';
             loi++;
-        } else if (code.length < 3 || code.length > 6) {
-            $scope.loi = '* Mã giảm giá phải từ 3 đến 6 ký tự';
+        } else if (code.length < 3 || code.length > 20) {
+            $scope.loi = '* Mã giảm giá phải từ 3 đến 20 ký tự';
             loi++;
         } else {
             $scope.loi = '';
@@ -297,13 +320,13 @@ app.controller("sale-form", function ($scope, $http) {
             $scope.loi2 = '';
             loi = 0;
         }
-        if (saleDate == null || saleDate.length <= 0) {
-            $scope.loi3 = '* Ngày giảm giá không được bỏ trống';
-            loi++;
-        } else {
-            $scope.loi3 = '';
-            loi = 0;
-        }
+        // if (saleDate == null || saleDate.length <= 0) {
+        //     $scope.loi3 = '* Ngày giảm giá không được bỏ trống';
+        //     loi++;
+        // } else {
+        //     $scope.loi3 = '';
+        //     loi = 0;
+        // }
 
         if (loi > 0) {
             loi = 0;

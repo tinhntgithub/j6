@@ -67,6 +67,13 @@
                             <i class="mdi mdi-swap-vertical"></i>
                           </a>
                         </th>
+                        <th>
+                          <a href="" class="text-white" style="text-decoration: none;">
+                            <i class="mdi mdi-swap-vertical"></i>
+                            MÃ MÀU
+                            <i class="mdi mdi-swap-vertical"></i>
+                          </a>
+                        </th>
                         <th class="text-white">ACTION</th>
                       </tr>
                     </thead>
@@ -86,6 +93,13 @@
                             <i class="mdi mdi-swap-vertical"></i>
                           </a>
                         </th>
+                        <th>
+                          <a href="" class="text-white" style="text-decoration: none;">
+                            <i class="mdi mdi-swap-vertical"></i>
+                            MÃ MÀU
+                            <i class="mdi mdi-swap-vertical"></i>
+                          </a>
+                        </th>
                         <th class="text-white">ACTION</th>
                       </tr>
                     </tfoot>
@@ -100,6 +114,18 @@
                        <tr ng-repeat="color in items  | filter : search | orderBy : prop |limitTo : pageSize : begin">
                         <td class="h5">MS00{{color.id}}</td>
                         <td class="h5">{{color.name}}</td>
+                        <td class="h5">
+                          <div class="row">
+                            <div class="col-auto">
+                              <div class="color-box border p-2" style="height: 20px; width: 20px ;background-color: {{color.hex}};"></div>
+                            </div>
+                            <div class="col"> 
+                              <div class="color-text">
+                                <p>{{color.hex}}</p>
+                              </div>
+                            </div>
+                          </div>
+                          </td>
                         <td>
                           <a href="#!color-form" class="text-primary" style="font-size: 28px;text-decoration: none;" ng-click="edit(color.id)">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">

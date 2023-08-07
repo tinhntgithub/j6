@@ -48,7 +48,8 @@
                                     <!-- Lặp qua danh sách hình ảnh từ model và hiển thị chúng -->
                                     <div th:each="image : ${productImages}">
                                         <a data-toggle="tab" th:href="'#thumb' + ${image.id}">
-                                            <img th:src="@{/uploads/productImg/__${image.image}__}" alt="Product Image">
+                                            <img th:src="@{/uploads/productDtImg/__${image.name}__}"
+                                                alt="Product Image">
                                         </a>
                                     </div>
                                 </div>
@@ -105,9 +106,14 @@
 
                                 <div class="box-quantity d-flex hot-product2">
                                     <form action="#">
-                                        <input id="quantity" class="quantity mr-15" ng-model="quantity" type="number" min="1"
-                                            max="99">
+                                        <input id="quantity" class="quantity mr-15" ng-model="quantity" type="number"
+                                            min="1" max="99">
                                     </form>
+                                    <style>
+                                        .pro-actions .actions-primary a:hover {
+                                            cursor: pointer;
+                                        }
+                                    </style>
                                     <div class="pro-actions">
                                         <div class="actions-primary">
                                             <a th:attr="ng-click=|addCartQty(*{id})|" title=""
@@ -132,7 +138,7 @@
                                             HẾT HÀNG
                                         </p>
                                     </div>
-                                    
+
 
                                 </div>
                             </div>
@@ -249,7 +255,7 @@
         <!-- Realated Products End Here -->
 
     </div>
-   
+
 
 
 </body>
