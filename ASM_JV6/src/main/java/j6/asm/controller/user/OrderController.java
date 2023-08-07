@@ -125,7 +125,16 @@ public class OrderController {
 	@Transactional // Thêm annotation @Transactional để quản lý giao dịch
 	@RequestMapping("/manageOrders.html")
 	public String ordersManagePage(Model model) throws IOException, ParseException {
-
+		Accounts account = session.get("account");
+		if(account==null) {
+			return "redirect:/index.html";
+		}
+		List<Orders> order_huy = new ArrayList<>();
+		order_huy = orderdao.find_ByHuy(account.getUsername());
+		model.addAttribute("huy", order_huy);
+		List<Orders> order_all = orderdao.find_LoginbyUsername(account.getUsername());
+		
+		model.addAttribute("or", order_all);
 		return "user/order/orders";
 	}
 
