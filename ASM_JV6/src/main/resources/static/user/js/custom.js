@@ -351,5 +351,29 @@ app.controller("checkoutCtrl", function ($scope, $http) {
 
     //alert(this.temp);
 });
-
 // End Orders Controller
+
+//User update image
+app.controller("userImage", function ($scope, $http) {
+    var url = "http://localhost:8080/rest/uploads/accountImg";
+    $scope.upload = function (files) {
+        var form = new FormData();
+        form.append('files', files[0]);
+        $http.post(url, form, {
+            transformRequest: angular.identity,
+            headers: { 'Content-Type': undefined }
+        }).then(resp => {
+            document.querySelector('input[type=hidden][name=photo]').value = resp.data.name;
+            updatePreviewImage(resp.data.name);
+            console.log("Success", resp.data);
+        }).catch(error => {
+            console.log("Errors", error);
+        })
+    }
+
+    function updatePreviewImage(fileName) {
+        var previewImage = document.getElementById('previewImage');
+        previewImage.src = '/uploads/accountImg/' + fileName;
+    }
+
+});

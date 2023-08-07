@@ -94,6 +94,7 @@ public class UpdateAccountController {
 			acc.setFullname(form.getFullname());
 			acc.setEmail(form.getEmail());
 			acc.setPhone(form.getPhone());
+			acc.setPhoto(form.getPhoto());
 			accountsService.update(acc);
 			m.addAttribute("alert", "alert-success");
 			m.addAttribute("message", "Cập nhật thông tin thànhh công");
