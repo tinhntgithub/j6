@@ -95,8 +95,8 @@
                                             <!-- <a href="#" th:class="${colorList.color.id == 1 ? 'paste active' : (colorList.color.id == 2 ? 'black' :
                                             (colorList.color.id == 3 ? 'yellow' : (colorList.color.id == 4 ? 'white' : (colorList.color.id == 5 ? 'red' : 'default-class'))))}"></a> -->
                                             <a th:style="'background-color: ' + ${colorList.color.hex}"
-                                                class="color-link" th:data-qty="${colorList.qty}"
-                                                onclick="updateStockQuantity(event,this)"></a>
+                                                class="color-link" th:data-qty="${colorList.qty}" th:data-id="${colorList.color.id}"
+                                                ng-click="updateStockQuantity($event)"></a>
 
                                             <!-- <a href="#" th:style="'background-color: ' + ${colorList.color.hex}" th:onclick="'updateQuantity(' + ${colorList.color.id} + '); return false;'"></a> -->
                                             <!-- <a href="" th:text="${colorList.qty}"></a> -->
@@ -141,7 +141,7 @@
                                         </p>
                                     </div>
                                 </div>
-                                <script th:inline="javascript">
+                                <!-- <script th:inline="javascript">
                                     document.addEventListener("DOMContentLoaded", function () {
                                         initStockQuantity();
                                     });
@@ -155,21 +155,7 @@
                                         firstLink.classList.add("active");
                                     }
 
-                                    function updateStockQuantity(event, link) {
-                                        event.preventDefault();
-                                        var clickedQty = link.getAttribute("data-qty");
-                                        console.log("qty: " + clickedQty);
-                                        var stockQtySpan = document.getElementById("stockQuantity");
-                                        stockQtySpan.textContent = clickedQty;
-
-                                        var activeLinks = document.querySelectorAll(".color-link.active");
-                                        activeLinks.forEach(function (activeLink) {
-                                            activeLink.classList.remove("active");
-                                        });
-
-                                        link.classList.add("active");
-                                    }
-                                </script>
+                                </script> -->
                             </div>
                         </div>
                     </div>

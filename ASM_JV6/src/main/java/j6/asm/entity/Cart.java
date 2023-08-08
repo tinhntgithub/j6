@@ -41,7 +41,7 @@ public class Cart implements Serializable {
 	private Products proCart;
 
 	@Column(name = "[quantity]")
-	private Integer qty=1;
+	private Integer qty;
 
 	@Column(name = "[price]")
 	private Double price;

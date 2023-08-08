@@ -24,7 +24,9 @@ import org.springframework.web.client.RestTemplate;
 
 import j6.asm.entity.Accounts;
 import j6.asm.entity.Cart;
+import j6.asm.entity.ProductColor;
 import j6.asm.entity.Products;
+import j6.asm.service.ProductColorService;
 import j6.asm.service.ProductsService;
 import j6.asm.service.SessionService;
 import j6.asm.service.impl.CartServiceImp;
@@ -41,6 +43,9 @@ public class CartRestController {
 	ProductsService daoProduct;
 	@Autowired
 	SessionService session;
+
+	@Autowired
+	ProductColorService pdColorService;
 
 	RestTemplate resp = new RestTemplate();
 
@@ -60,6 +65,7 @@ public class CartRestController {
 		return ResponseEntity.ok(cart.getCarts(acc));
 	}
 
+	// thêm giỏ hàng khi ở trang chủ, ...
 	@PostMapping("/Cart/create/{id}")
 	public ResponseEntity<List<Cart>> addToCart(@PathVariable("id") Optional<Integer> id,
 			@RequestBody() Optional<Integer> qty, HttpServletResponse resp) throws IOException {
@@ -77,6 +83,27 @@ public class CartRestController {
 		} else {
 			return ResponseEntity.noContent().build();
 		}
+		return ResponseEntity.ok(cart.getCarts(acc));
+	}
+
+	// thêm vào giỏ hàng tại sản phẩm chi tiết
+	@PostMapping("/rest/cart/{pdid}/{colorid}")
+	public ResponseEntity<List<Cart>> addToCart2(@PathVariable("pdid") Integer pdid,
+			@PathVariable("colorid") Integer colorid,
+			@RequestBody() Optional<Integer> qty, HttpServletResponse resp) throws IOException {
+		Accounts acc = session.get("account");
+		if (acc == null) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();// 500
+		}
+
+		Products pd = daoProduct.findById(pdid);
+		ProductColor productColor = pdColorService.getOne(colorid, pd.getId());
+		if (qty.isPresent()) {
+			cart.add2(qty.get(), acc, productColor);
+		} else {
+			return ResponseEntity.noContent().build();
+		}
+
 		return ResponseEntity.ok(cart.getCarts(acc));
 	}
 
