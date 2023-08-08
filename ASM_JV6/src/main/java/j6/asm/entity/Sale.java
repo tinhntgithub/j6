@@ -44,10 +44,10 @@ public class Sale implements Serializable {
 	private Integer amount;
 	
 	@Column(name = "[createdate]")
-	private Date createDate = new Date();
+	private Date createDate;
 	
 	@Column(name = "[enddate]")
-	private Date endDate = new Date();
+	private Date endDate;
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "saleId")
