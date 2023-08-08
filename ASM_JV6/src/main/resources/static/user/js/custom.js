@@ -282,6 +282,20 @@ app.controller("pushCart", function ($scope, $http, $rootScope) {
         })
     });
 
+    $scope.selectedIDs = [];
+    // $scope.selectAll = false;
+
+    $scope.updateSelectedIDs = function(listCart, isSelected) {
+        if (isSelected) {
+            $scope.selectedIDs.push(listCart);
+        } else {
+            var index = $scope.selectedIDs.indexOf(listCart);
+            if (index !== -1) {
+                $scope.selectedIDs.splice(index, 1);
+            }
+        }
+        console.log($scope.selectedIDs);
+    };
     var url = `${host}Cart/listCart`;
     $scope.url = function (filename) {
         return `${host}uploads/productImg/${filename}`;
@@ -295,9 +309,14 @@ app.controller("pushCart", function ($scope, $http, $rootScope) {
             $scope.total = "99+";
         }
         $scope.getTotalTempoary = function () {
+            var temparr = $scope.Cart;
+            var temp2 = angular.copy($scope.selectedIDs);
+            if(temp2.length > 0){
+                temparr = temp2;
+            }
             var total = 0;
-            for (var i = 0; i < $scope.Cart.length; i++) {
-                var cart = $scope.Cart[i];
+            for (var i = 0; i < temparr.length; i++) {
+                var cart = temparr[i];
                 total += (cart.price * cart.qty);
             }
             return total;
@@ -335,6 +354,17 @@ app.controller("pushCart", function ($scope, $http, $rootScope) {
 
     }
 
+    $scope.loadCheckoutList = function(){
+        var url = `${host}rest/cart/savetemplist`;
+        var data = angular.copy($scope.selectedIDs)
+        $http.post(url, data).then(resp => {
+            console.log(resp.data);
+        }
+        ).catch(error => {
+            console.log(error);
+        });
+    }
+
     // $scope.checkedItem = function (listCart) {
     //     console.clear();
     //     itemChecked.push(listCart);
@@ -354,7 +384,7 @@ app.controller("checkoutCtrl", function ($scope, $http) {
     $scope.payFromCart = [];
 
     $scope.loadCartProduct = function () {
-        var url = `${host}Cart/listCart`;
+        var url = `${host}rest/cart/gettemplist`;
         $http.get(url).then((resp) => {
             // Access the itemChecked array from SharedService
             $scope.payFromCart = resp.data;
