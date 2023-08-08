@@ -94,7 +94,9 @@
                                             <!-- Kiểm tra nếu màu sắc hiện tại là màu mặc định (active) thì thêm class 'active' -->
                                             <!-- <a href="#" th:class="${colorList.color.id == 1 ? 'paste active' : (colorList.color.id == 2 ? 'black' :
                                             (colorList.color.id == 3 ? 'yellow' : (colorList.color.id == 4 ? 'white' : (colorList.color.id == 5 ? 'red' : 'default-class'))))}"></a> -->
-                                            <a href="" th:style="'background-color: ' + ${colorList.color.hex}"></a>
+                                            <a th:style="'background-color: ' + ${colorList.color.hex}"
+                                                class="color-link" th:data-qty="${colorList.qty}"
+                                                onclick="updateStockQuantity(event,this)"></a>
 
                                             <!-- <a href="#" th:style="'background-color: ' + ${colorList.color.hex}" th:onclick="'updateQuantity(' + ${colorList.color.id} + '); return false;'"></a> -->
                                             <!-- <a href="" th:text="${colorList.qty}"></a> -->
@@ -132,15 +134,42 @@
                                     <!-- Hiển thị còn hàng và giá trị mặc định -->
                                     <div class="pro-ref mt-20">
                                         <p id="quantityInfo" th:if="${listColor != null && listColor.size() > 0}">
-                                            CÒN HÀNG - Số lượng tồn kho: <span th:text="${listColor.get(0).qty}"></span>
+                                            CÒN HÀNG - Số lượng tồn kho: <span id="stockQuantity"></span>
                                         </p>
                                         <p id="outOfStockMsg" th:if="${listColor == null || listColor.size() == 0}">
                                             HẾT HÀNG
                                         </p>
                                     </div>
-
-
                                 </div>
+                                <script th:inline="javascript">
+                                    document.addEventListener("DOMContentLoaded", function () {
+                                        initStockQuantity();
+                                    });
+
+                                    function initStockQuantity() {
+                                        var initQty = document.querySelector(".color-link").getAttribute("data-qty");
+                                        var stockQtySpan = document.getElementById("stockQuantity");
+                                        stockQtySpan.textContent = initQty;
+
+                                        var firstLink = document.querySelector(".color-link");
+                                        firstLink.classList.add("active");
+                                    }
+
+                                    function updateStockQuantity(event, link) {
+                                        event.preventDefault();
+                                        var clickedQty = link.getAttribute("data-qty");
+                                        console.log("qty: " + clickedQty);
+                                        var stockQtySpan = document.getElementById("stockQuantity");
+                                        stockQtySpan.textContent = clickedQty;
+
+                                        var activeLinks = document.querySelectorAll(".color-link.active");
+                                        activeLinks.forEach(function (activeLink) {
+                                            activeLink.classList.remove("active");
+                                        });
+
+                                        link.classList.add("active");
+                                    }
+                                </script>
                             </div>
                         </div>
                     </div>
