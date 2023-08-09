@@ -1,6 +1,7 @@
 package j6.asm.service.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,6 +37,11 @@ public class AddressServiceImp implements AddressService {
 	@Override
 	public void delete(Integer id) {
 		dao.deleteById(id);
+	}
+
+	@Override
+	public Optional<List<Address>> findByUsername(String username) {
+		return dao.findByUsername(username);
 	}
 
 }

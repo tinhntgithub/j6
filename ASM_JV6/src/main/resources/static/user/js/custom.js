@@ -305,14 +305,13 @@ app.controller("pushCart", function ($scope, $http, $rootScope) {
         for (var i = 0; i < $scope.Cart.length; i++) {
             $scope.Cart[i].isSelected = $scope.selectAll;
             if ($scope.selectAll) {
-                $scope.selectedIDs.push($scope.Cart[i].id); // Thêm ID vào mảng selectedIDs
+                $scope.selectedIDs.push($scope.Cart[i]); // Thêm ID vào mảng selectedIDs
             }
         }
-        
-     
+
         $scope.calculateTotalAmount();
     };
-    
+
     $scope.calculateTotalAmount = function () {
         var total = 0;
 
@@ -406,6 +405,7 @@ app.controller("pushCart", function ($scope, $http, $rootScope) {
     $scope.loadCheckoutList = function () {
         var url = `${host}rest/cart/savetemplist`;
         var data = angular.copy($scope.selectedIDs)
+
         $http.post(url, data).then(resp => {
             console.log(resp.data);
         }
@@ -425,6 +425,25 @@ app.controller("pushCart", function ($scope, $http, $rootScope) {
 
 // Orders Controller
 app.controller("checkoutCtrl", function ($scope, $http) {
+
+    $scope.currentUser ={};
+
+    $scope.getCurrentUser = function () {
+        var url = `${host}rest/accounts/current`;
+        var url2 = `${host}rest/address/`;
+        $http.get(url).then((resp) => {
+            $scope.currentUser =resp.data;
+            $http.get(url2 +  $scope.currentUser.username).then((resp) => {
+                $scope.currentUser.address = resp.data;
+                console.log("Success o", $scope.currentUser);
+            }).catch((error) => {
+                console.log("Error", error);
+            });
+
+        }).catch((error) => {
+            console.log("Error", error);
+        });
+    }
 
     $scope.delelteProductFormCart = function () {
 
@@ -465,6 +484,7 @@ app.controller("checkoutCtrl", function ($scope, $http) {
         return $scope.getSubtotal() - $scope.getDiscount();
     };
 
+    $scope.getCurrentUser();
     $scope.loadCartProduct();
 
     //alert(this.temp);

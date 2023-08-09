@@ -73,7 +73,9 @@ public class OrderController {
 	// Checkout page
 	@RequestMapping("/checkout.html")
 	public String checkoutPage(Model model) {
-		// Lấy thông tin sản phẩm từ giỏ hàng
+		Accounts account = session.get("account");
+		model.addAttribute("userInfo", account);
+		
 
 		return "user/order/checkout";
 	}

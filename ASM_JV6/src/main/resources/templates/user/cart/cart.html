@@ -37,10 +37,8 @@
                                 <table class="table table-hover">
                                     <thead style="background-color:orangered;">
                                         <tr class="text-white">
-                                            <th>
-
-                                                <input type="checkbox" id="checkAllId" ng-click="checkAll()" th:onclick="checkAll()"
-                                                    th:onchange="toggleDeleteButton()">Tất cả</th>
+                                            <th> <input type="checkbox" id="checkAllId" ng-click="checkAll()"
+                                                th:onclick="checkAll()" th:onchange="toggleDeleteButton()"></th>
                                             <th class="product-thumbnail">Sản phẩm</th>
                                             <th class="product-name">Thông số</th>
                                             <th class="product-price">Đơn giá</th>
@@ -55,19 +53,18 @@
                                     </thead>
                                     <tbody id="cart-tableBody">
                                         <tr ng-repeat='listCart in Cart'>
-                                          
                                             <td>
                                                 <input class="checkbox" type="checkbox" id="{{listCart.id}}"
                                                     ng-model="listCart.isSelected"
                                                     ng-change="updateSelectedIDs(listCart)">
                                             </td>
-                                        
+
                                             <td class="product-info">
                                                 <div style="display: flex; align-items: center;">
                                                     <a><img ng-src="{{url(listCart.proCart.img)}}" alt="cart-image"
                                                             style="width: 50px; height: 50px;"></a>
                                                     <a href="#"
-                                                        style="margin-left: 10px; width: 200px;">{{listCart.proCart.name}}</a>
+                                                        style="margin-left: 10px; width: 150px;">{{listCart.proCart.name}}</a>
                                                 </div>
                                             </td>
                                             <td>
@@ -129,7 +126,6 @@
                                 <div class="col-12 wc-proceed-to-checkout text-center">
                                     <a href="checkout.html" ng-click="loadCheckoutList()" class="w-100">THANH TOÁN</a>
                                 </div>
-                                <strong class="col-7">{{ totalAmount | currency : '' :0 | replace: ',':'.' }} VNĐ</strong>
                                 <!-- <div class="col-12 mt-2">
                                     <div class="row p-2">
                                         <h6><i class="fa fa-tags" aria-hidden="true"></i> <strong>Phiếu giảm
