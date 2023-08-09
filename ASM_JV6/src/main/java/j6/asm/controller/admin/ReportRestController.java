@@ -1,4 +1,4 @@
-package dtn.asm.controller.admin;
+package j6.asm.controller.admin;
 
 import java.sql.Date;
 import java.util.List;
@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import dtn.asm.service.AccountsService;
-import dtn.asm.service.FavoritesService;
-import dtn.asm.service.ProductsService;
+import j6.asm.service.AccountsService;
+import j6.asm.service.FavoritesService;
+import j6.asm.service.ProductsService;
 
 @CrossOrigin("*")
 @RestController

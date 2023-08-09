@@ -10,7 +10,7 @@ public interface ProductImgService {
 	List<ProductImg> findAll();
 
 	List<ProductImg> findByImgPro(Integer id);
-
+	
 	ProductImg findById(Integer id);
 
 	void create(ProductImg entity);

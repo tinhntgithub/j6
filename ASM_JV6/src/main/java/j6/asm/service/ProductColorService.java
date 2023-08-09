@@ -9,9 +9,11 @@ import j6.asm.entity.ProductColor;
 public interface ProductColorService {
 	List<ProductColor> findAll();
 
-	List<ProductColor> getColorId(Integer id);
+	List<ProductColor> findByPd(Integer pdid);
 
 	ProductColor findById(Integer id);
+
+	ProductColor getOne(Integer id, Integer idd);
 
 	void create(ProductColor entity);
 
@@ -22,5 +24,7 @@ public interface ProductColorService {
 	Boolean checkOrder(Integer id);
 	
 	Boolean checkExitsProduct(Integer id,Integer idd);
+
+	List<ProductColor> getColorId(Integer id);
 
 }

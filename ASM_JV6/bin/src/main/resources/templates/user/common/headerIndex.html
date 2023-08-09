@@ -1,205 +1,226 @@
 <html xmlns="http://www.thymeleaf.org">
-    <header th:fragment="header">
-               <!-- Banner Popup Start -->
-       <div class="popup_banner">
-        <!--<span class="popup_off_banner text-danger">×</span>-->
-        <div class="banner_popup_area">
-                <img th:src="@{/user/img/banner/pop-banner.jpg}" alt="">
-        </div>
-    </div>
-    <!-- Banner Popup End -->
-    <!-- Main Header Area Start Here -->
-    <header>
-        <!-- Header Top Start Here -->
-        <div class="header-top-area" style="background-color:white;">
-            <div class="container">
-                <!-- Header Top Start -->
-                <div th:replace="~{/user/common/header-top::navbar}" >
-                   
-                </div>
-                <!-- Header Top End -->
-            </div>
-            <!-- Container End -->
-        </div>
-        <!-- Header Top End Here -->
-        <!-- Header Middle Start Here -->
-        <div class="header-middle ptb-15">
-            <div class="container">
-                <div class="row align-items-center no-gutters">
-                    <div class="col-lg-3 col-md-12">
-                        <div class="logo mb-all-30">
-                            <a href="index.html"><img th:src="@{/user/img/logo/logo.png}" alt="logo-image"></a>
-                        </div>
-                    </div>
-                    <!-- Categorie Search Box Start Here -->
-                    <div class="col-lg-5 col-md-8 ml-auto mr-auto col-10">
-                        <div class="categorie-search-box">
-                            <form action="#">
-                                <div class="form-group">
-                                    <select class="bootstrap-select">
-                                        <option><span class="text-dark" th:text="#{menu.catego}"></span><i class="lnr lnr-chevron-down"></i></option>
-                                        <option th:each="c:${cate}" th:utext="${c.name}"></option>
-                                    </select>
-                                </div>
-                                <input type="text" name="search" th:placeholder="#{menu.search}">
-                                <button><i class="lnr lnr-magnifier"></i></button>
-                            </form>
-                        </div>
-                    </div>
-                    <!-- Categorie Search Box End Here -->
-                    <!-- Cart Box Start Here -->
-                    <div class="col-lg-4 col-md-12">
-                        <div class="cart-box mt-all-30 " ng-controller="pushCart" >
-                            <ul class="d-flex justify-content-lg-end justify-content-center align-items-center">
-                                <li><a href="cart.html"><i class="lnr lnr-cart"></i><span class="my-cart"><span class="total-pro">{{total}}</span>
-                                    <span th:text="#{menu.cart}">Giỏ hàng</span>
-                                </span>
-                                </a>
-                                    <ul class="ht-dropdown cart-box-width">
-                                        <li ng-if="Cart.length>0">
-                                            <!-- Cart Box Start -->
-                                            <div class="single-cart-box" ng-repeat='listCart in Cart'>
-                                                <div class="cart-img">
-                                                    <a th:href="@{/product.html?id={{listCart.proCart.id}}}"><img src="{{url(listCart.proCart.img)}}" alt="cart-image"></a>
-                                                    <span class="pro-quantity">{{listCart.qty}} X</span>
-                                                </div>
-                                                <div class="cart-content">
-                                                    <span>{{listCart.proCart.name}}</span>
-                                                    <h6><a href="product.html"></a></h6>
-                                                    <span class="cart-price">{{listCart.price | currency : '' :0 |replace: ',':'.'}} VNĐ</span>
-                                                    <span>Màu sắc: {{listCart.colorCart.color.name}}</span>
-                                                </div>
-                                                <a class="del-icone" href="#" ng-click="deleteCart(listCart.id,listCart.proCart.name)"><i class="ion-close" ></i></a>
-                                            </div>
-                                            <!-- Cart Box End -->
-                                            <!-- Cart Footer Inner Start -->
-                                            <div class="cart-footer">
-                                                  <div class="cart-actions text-center mb-2">
-                                                    <a class="cart-checkout w-100" href="cart.html">XEM GIỎ HÀNG</a>
-                                                </div>
-                                                <div class="cart-actions text-center">
-                                                    <a class="cart-checkout w-100" href="checkout.html">THANH TOÁN</a>
-                                                </div>
-                                            </div>
-                                            <!-- Cart Footer Inner End -->
-                                        </li>
-                                        <li ng-if="Cart.length == 0">
-                                            <div class="text-center mt-4 mb-4">Giỏ hàng trống</div>
+<header th:fragment="header">
+	<!-- Banner Popup Start -->
+	<div class="popup_banner">
+		<!--<span class="popup_off_banner text-danger">×</span>-->
+		<div class="banner_popup_area">
+			<img th:src="@{/user/img/banner/pop-banner.jpg}" alt="">
+		</div>
+	</div>
+	<!-- Banner Popup End -->
+	<!-- Main Header Area Start Here -->
+	<header>
+		<!-- Header Top Start Here -->
+		<div class="header-top-area" style="background-color:white;">
+			<div class="container">
+				<!-- Header Top Start -->
+				<div th:replace="~{/user/common/header-top::navbar}">
 
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li><a href="product_favorite.html"><i class="lnr lnr-heart"></i><span class="my-cart"><span>Mặt hàng</span><span>yêu thích (0)</span></span></a>
-                                </li>
-                                <li><a href="#"><i class="lnr lnr-user"></i><span class="my-cart"><span> <strong>Sign In </strong>with</span><span> Google Account</span></span></a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!-- Cart Box End Here -->
-                </div>
-                <!-- Row End -->
-            </div>
-            <!-- Container End -->
-        </div>
-        <!-- Header Middle End Here -->
-        <!-- Header Bottom Start Here -->
-        <div class="header-bottom  header-sticky" style="background-color:black;">
-            <div class="container">
-                <div class="row align-items-center">
-                     <div class="col-xl-3 col-lg-4 col-md-6 vertical-menu d-none d-lg-block">
-                        <span class="categorie-title text-white" style="background-color: rgb(255, 68, 0);" th:text="#{menu.category}">Danh mục sản phẩm </span>
-                    </div>                       
-                    <div class="col-xl-9 col-lg-8 col-md-12">
-                        <nav class="d-none d-lg-block">
-                            <ul class="header-bottom-list d-flex">
-                                <li class="active"><a href="index.html" th:text="#{menu.home}">TRANG CHỦ</a></li>
-                                <li><a href="shop.html" th:text="#{menu.product}">SẢN PHẨM</a></li>
-                                <li><a href="about.html" th:text="#{menu.about}">GIỚI THIỆU</a></li>
-                                <li><a href="blog.html" th:text="#{menu.blog}">TIN TỨC</a></li>
-                                <li><a href="contact.html" th:text="#{menu.contact}">LIÊN HỆ</a></li>
-                                <li ><a href="#"><span th:text="#{menu.manager}"></span><i class="fa fa-angle-down"></i></a>
-                                    <!-- Home Version Dropdown Start -->
-                                    <ul class="ht-dropdown">
-                                        <li><a href="orders.html" th:text="#{menu.order}">Đơn hàng của bạn</a></li>
-                                        <li><a href="/DTNsBike/admin/index.html" th:text="#{menu.admin}">Trang quản trị</a></li>
-                                    </ul>
-                                    <!-- Home Version Dropdown End -->
-                                </li>
-                            </ul>
-                        </nav>
-                        <div class="mobile-menu d-block d-lg-none">
-                            <nav>
-                                <ul>
-                                    <li style="background-color:orangered;"><a class="text-white" href="index.html">TRANG CHỦ</a></li>
-                                    <li><a href="index.html">TRANG CHỦ</a></li>
-                                    <li><a href="shop.html">SẢN PHẨM</a></li>
-                                    <li><a href="about.html">GIỚI THIỆU</a></li>
-                                    <li><a href="blog.html">TIN TỨC</a></li>
-                                    <li><a href="contact.html">LIÊN HỆ</a></li>
-                                     <li ><a href="#">QUẢN LÝ<i class="fa fa-angle-down"></i></a>
-                                    <!-- Home Version Dropdown Start -->
-                                    <ul class="ht-dropdown">
-                                        <li><a href="orders.html">Đơn hàng của bạn</a></li>
-                                        <li><a href="/admin/index.html">Trang quản trị</a></li>
-                                    </ul>
-                                    <!-- Home Version Dropdown End -->
-                                </li>
-                                </ul>
-                            </nav>
-                        </div>
-                    </div>
-                </div>
-                <!-- Row End -->
-            </div>
-            <!-- Container End -->
-        </div>
-        <!-- Header Bottom End Here -->
-    </header>
-    <!-- Main Header Area End Here -->
-    <!-- Categorie Menu & Slider Area Start Here -->
-    <div class="main-page-banner pb-50 off-white-bg">
-        <div class="container">
-            <div class="row">
-                <!-- Vertical Menu Start Here -->
-                <div class="col-xl-3 col-lg-4 d-none d-lg-block">
-                    <div class="vertical-menu mb-all-30">
-                        <nav>
-                            <ul class="vertical-menu-list">
-                                 <li th:each="c:${cate}">
-	                                 <a th:href="@{|/shop.html?cateid=${c.id}|}">
-		                                 <span>
-		                                     <img th:src="@{/user/img/vertical-menu/bike2.png}" alt="menu-icon">
-		                                 </span>[[${c.name}]]
-	                                 </a>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
-                </div>
-                <!-- Vertical Menu End Here -->
-                <!-- Slider Area Start Here -->
-                <div class="col-xl-9 col-lg-8 slider_box">
-                    <div class="slider-wrapper theme-default">
-                        <!-- Slider Background  Image Start-->
-                        <div id="slider" class="nivoSlider">
-                            <a href="#"><img class="img-fluid" th:src="@{/user/img/slider/bn1.jpg}" data-thumb="@{/user/img/slider/bn1.jpg}" alt="" title="#htmlcaption"></a>
-                            <a href="#"><img class="img-fluid" th:src="@{/user/img/slider/bn2.jpg}" data-thumb="@{/user/img/slider/bn2.jpg}" alt="" title="#htmlcaption2"></a>
-                            <a href="#"><img class="img-fluid" th:src="@{/user/img/slider/bn3.jpg}" data-thumb="@{/user/img/slider/bn3.jpg}" alt="" title="#htmlcaption3"></a>
-                            <a href="#"><img class="img-fluid" th:src="@{/user/img/slider/bn4.jpg}" data-thumb="@{/user/img/slider/bn4.jpg}" alt="" title="#htmlcaption4"></a>
-                            <a href="#"><img class="img-fluid" th:src="@{/user/img/slider/bn5.jpg}" data-thumb="@{/user/img/slider/bn5.jpg}" alt="" title="#htmlcaption5"></a>
-                            <a href="#"><img class="img-fluid" th:src="@{/user/img/slider/bn6.jpg}" data-thumb="@{/user/img/slider/bn6.jpg}" alt="" title="#htmlcaption6"></a>
-                            <a href="#"><img class="img-fluid" th:src="@{/user/img/slider/bn7.jpg}" data-thumb="@{/user/img/slider/bn7.jpg}" alt="" title="#htmlcaption7"></a>
-                        </div>
-                        <!-- Slider Background  Image Start-->
-                    </div>
-                </div>
-                <!-- Slider Area End Here -->
-            </div>
-            <!-- Row End -->
-        </div>
-        <!-- Container End -->
-    </div>
-    <!-- Categorie Menu & Slider Area End Here -->
-    </header>
+				</div>
+				<!-- Header Top End -->
+			</div>
+			<!-- Container End -->
+		</div>
+		<!-- Header Top End Here -->
+		<!-- Header Middle Start Here -->
+		<div class="header-middle ptb-15">
+			<div class="container">
+				<div class="row align-items-center no-gutters">
+					<div class="col-lg-3 col-md-12">
+						<div class="logo mb-all-30">
+							<a href="index.html"><img th:src="@{/user/img/logo/logo.png}" alt="logo-image"></a>
+						</div>
+					</div>
+					<!-- Categorie Search Box Start Here -->
+					<div class="col-lg-5 col-md-8 ml-auto mr-auto col-10">
+						<div class="categorie-search-box">
+							<form action="#">
+								<div class="form-group">
+									<select class="bootstrap-select">
+										<option><span class="text-dark" th:text="#{menu.catego}"></span><i
+												class="lnr lnr-chevron-down"></i></option>
+										<option th:each="c:${cate}" th:utext="${c.name}"></option>
+									</select>
+								</div>
+								<input type="text" name="search" th:placeholder="#{menu.search}">
+								<button><i class="lnr lnr-magnifier"></i></button>
+							</form>
+						</div>
+					</div>
+					<!-- Categorie Search Box End Here -->
+					<!-- Cart Box Start Here -->
+					<div class="col-lg-4 col-md-12">
+						<div class="cart-box mt-all-30 " ng-controller="pushCart">
+							<ul class="d-flex justify-content-lg-start align-items-center justify-content-center">
+								<li><a href="cart.html"><i class="lnr lnr-cart"></i><span class="my-cart"><span
+												class="total-pro">{{total}}</span>
+											<span th:text="#{menu.cart}">Giỏ hàng</span>
+										</span>
+									</a>
+									<ul class="ht-dropdown cart-box-width">
+										<li ng-if="Cart.length>0">
+											<!-- Cart Box Start -->
+											<div class="single-cart-box" ng-repeat='listCart in Cart'>
+												<div class="cart-img">
+													<a th:href="@{/product.html?id={{listCart.proCart.id}}}"><img
+															src="{{url(listCart.proCart.img)}}" alt="cart-image"></a>
+													<span class="pro-quantity">{{listCart.qty}} X</span>
+												</div>
+												<div class="cart-content">
+													<span>{{listCart.proCart.name}}</span>
+													<h6><a href="product.html"></a></h6>
+													<span class="cart-price">{{listCart.price | currency : '' :0
+														|replace: ',':'.'}} VNĐ</span>
+													<span>Màu sắc: {{listCart.colorCart.color.name}}</span>
+												</div>
+												<a class="del-icone" href="#"
+													ng-click="deleteCart(listCart.id,listCart.proCart.name)"><i
+														class="ion-close"></i></a>
+											</div>
+											<!-- Cart Box End -->
+											<!-- Cart Footer Inner Start -->
+											<div class="cart-footer">
+												<div class="cart-actions text-center mb-2">
+													<a class="cart-checkout w-100" href="cart.html">XEM GIỎ HÀNG</a>
+												</div>
+												<div class="cart-actions text-center">
+													<a class="cart-checkout w-100" href="checkout.html">THANH TOÁN</a>
+												</div>
+											</div>
+											<!-- Cart Footer Inner End -->
+										</li>
+										<li ng-if="Cart.length == 0">
+											<div class="text-center mt-4 mb-4">Giỏ hàng trống</div>
+
+										</li>
+									</ul>
+								</li>
+								<li><a href="product_favorite.html"><i class="lnr lnr-heart"></i><span
+											class="my-cart"><span>Mặt hàng</span><span>yêu thích (0)</span></span></a>
+								</li>
+								<li th:if="${session.account == null}"><a href="#"><i class="lnr lnr-user"></i><span
+											class="my-cart"><span> <strong>Sign In </strong>with</span><span> Google
+												Account</span></span></a>
+								</li>
+							</ul>
+						</div>
+					</div>
+					<!-- Cart Box End Here -->
+				</div>
+				<!-- Row End -->
+			</div>
+			<!-- Container End -->
+		</div>
+		<!-- Header Middle End Here -->
+		<!-- Header Bottom Start Here -->
+		<div class="header-bottom  header-sticky" style="background-color:black;">
+			<div class="container">
+				<div class="row align-items-center">
+					<div class="col-xl-3 col-lg-4 col-md-6 vertical-menu d-none d-lg-block">
+						<span class="categorie-title text-white" style="background-color: rgb(255, 68, 0);"
+							th:text="#{menu.category}">Danh mục sản phẩm </span>
+					</div>
+					<div class="col-xl-9 col-lg-8 col-md-12">
+						<nav class="d-none d-lg-block">
+							<ul class="header-bottom-list d-flex">
+								<li th:class="${in}"><a href="index.html" th:text="#{menu.home}">TRANG CHỦ</a></li>
+								<li th:class="${sp}"><a href="shop.html" th:text="#{menu.product}">SẢN PHẨM</a></li>
+								<li th:class="${ab}"><a href="about.html" th:text="#{menu.about}">GIỚI THIỆU</a></li>
+								<li th:class="${bl}"><a href="blog.html" th:text="#{menu.blog}">TIN TỨC</a></li>
+								<li th:class="${ct}"><a href="contact.html" th:text="#{menu.contact}">LIÊN HỆ</a></li>
+								<li th:if="${session.account !=  null}"><a href="#">QUẢN LÝ<i
+												class="fa fa-angle-down"></i></a>
+										<!-- Home Version Dropdown Start -->
+										<ul class="ht-dropdown">
+										<li><a href="manageOrders.html" th:text="#{menu.order}">Đơn hàng của bạn</a>
+										<li><a href="admin/index.html" th:text="#{menu.admin}" th:if="${au}">Trang quản trị</a></li>
+									</ul>
+										<!-- Home Version Dropdown End -->
+									</li>
+							</ul>
+						</nav>
+						<div class="mobile-menu d-block d-lg-none">
+							<nav>
+								<ul>
+									<li  ><a 
+											href="index.html">TRANG CHỦ</a></li>
+									<li><a href="shop.html">SẢN PHẨM</a></li>
+									<li><a href="about.html">GIỚI THIỆU</a></li>
+									<li><a href="blog.html">TIN TỨC</a></li>
+									<li><a href="contact.html">LIÊN HỆ</a></li>
+								<li th:if="${session.account !=  null}"><a href="#">QUẢN LÝ<i
+												class="fa fa-angle-down"></i></a>
+										<!-- Home Version Dropdown Start -->
+										<ul class="ht-dropdown">
+										<li><a href="manageOrders.html" th:text="#{menu.order}">Đơn hàng của bạn</a>
+										<li><a href="admin/index.html" th:text="#{menu.admin}" th:if="${au}">Trang quản trị</a></li>
+									</ul>
+										<!-- Home Version Dropdown End -->
+									</li>
+								</ul>
+							</nav>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- Row End -->
+		</div>
+		<!-- Container End -->
+		</div>
+		<!-- Header Bottom End Here -->
+	</header>
+	<!-- Main Header Area End Here -->
+	<!-- Categorie Menu & Slider Area Start Here -->
+	<div class="main-page-banner pb-50 off-white-bg">
+		<div class="container">
+			<div class="row">
+				<!-- Vertical Menu Start Here -->
+				<div class="col-xl-3 col-lg-4 d-none d-lg-block">
+					<div class="vertical-menu mb-all-30">
+						<nav>
+							<ul class="vertical-menu-list">
+								<li th:each="c:${cate}">
+									<a th:href="@{|/shop.html?cateid=${c.id}|}">
+										<span>
+											<img th:src="@{/user/img/vertical-menu/bike2.png}" alt="menu-icon">
+										</span>[[${c.name}]]
+									</a>
+								</li>
+							</ul>
+						</nav>
+					</div>
+				</div>
+				<!-- Vertical Menu End Here -->
+				<!-- Slider Area Start Here -->
+				<div class="col-xl-9 col-lg-8 slider_box">
+					<div class="slider-wrapper theme-default">
+						<!-- Slider Background  Image Start-->
+						<div id="slider" class="nivoSlider">
+							<a href="#"><img class="img-fluid" th:src="@{/user/img/slider/bn1.jpg}"
+									data-thumb="@{/user/img/slider/bn1.jpg}" alt="" title="#htmlcaption"></a>
+							<a href="#"><img class="img-fluid" th:src="@{/user/img/slider/bn2.jpg}"
+									data-thumb="@{/user/img/slider/bn2.jpg}" alt="" title="#htmlcaption2"></a>
+							<a href="#"><img class="img-fluid" th:src="@{/user/img/slider/bn3.jpg}"
+									data-thumb="@{/user/img/slider/bn3.jpg}" alt="" title="#htmlcaption3"></a>
+							<a href="#"><img class="img-fluid" th:src="@{/user/img/slider/bn4.jpg}"
+									data-thumb="@{/user/img/slider/bn4.jpg}" alt="" title="#htmlcaption4"></a>
+							<a href="#"><img class="img-fluid" th:src="@{/user/img/slider/bn5.jpg}"
+									data-thumb="@{/user/img/slider/bn5.jpg}" alt="" title="#htmlcaption5"></a>
+							<a href="#"><img class="img-fluid" th:src="@{/user/img/slider/bn6.jpg}"
+									data-thumb="@{/user/img/slider/bn6.jpg}" alt="" title="#htmlcaption6"></a>
+							<a href="#"><img class="img-fluid" th:src="@{/user/img/slider/bn7.jpg}"
+									data-thumb="@{/user/img/slider/bn7.jpg}" alt="" title="#htmlcaption7"></a>
+						</div>
+						<!-- Slider Background  Image Start-->
+					</div>
+				</div>
+				<!-- Slider Area End Here -->
+			</div>
+			<!-- Row End -->
+		</div>
+		<!-- Container End -->
+	</div>
+	<!-- Categorie Menu & Slider Area End Here -->
+</header>
+
 </html>

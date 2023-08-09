@@ -118,12 +118,19 @@ public class ProductsServiceImp implements ProductsService {
 	@Override
 	public Boolean check(Integer id) {
 		Products pr = this.findById(id);
-		return daoOrder.findByProductsId(pr).isEmpty() && daoPrC.findByProducts(pr).isEmpty()
-				&& daoPrI.findByImgPro(pr).isEmpty() && daoFav.findByProductsId(pr).isEmpty();
+		return daoOrder.findByProductsId(pr).isEmpty() && daoFav.findByProductsId(pr).isEmpty();
 	}
 
 	@Override
 	public Integer getCount() {
 		return dao.getCount();
+	}
+	
+	@Override
+	public List<Products> getByKeyword(String keyword) {
+		if(keyword != null) {
+			return dao.getByKeyword(keyword);
+		}
+		return (List<Products>) dao.findAll();
 	}
 }

@@ -26,20 +26,20 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "Productcolor", uniqueConstraints = { @UniqueConstraint(columnNames = { "productId", "colorId" }) })
 public class ProductColor implements Serializable {
-	 static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "[id]")
-	 Integer id;
+	private Integer id;
 
 	@ManyToOne
 	@JoinColumn(name = "[productid]")
-	 Products products;
+	private Products products;
 
 	@ManyToOne
 	@JoinColumn(name = "[colorid]")
-	 Color color;
+	private Color color;
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "colorId")

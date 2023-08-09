@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import j6.asm.dao.CategoriesDAO;
 import j6.asm.dao.FavoritesDAO;
 import j6.asm.dao.ProductsDAO;
+import j6.asm.entity.Accounts;
 import j6.asm.entity.Categories;
 import j6.asm.entity.Favorites;
 import j6.asm.entity.ProductColor;
@@ -47,10 +48,9 @@ public class HomeController {
 	@Autowired
 	ProductColorService colorService;
 
-	// Index Page :))
+//	Index Page :))
 	@RequestMapping("/index.html")
 	public String index(Model m, @RequestParam("cateid") Optional<Integer> cateid) {
-
 		List<Products> product = productservice.findAll();
 		m.addAttribute("product", product);
 
@@ -63,11 +63,27 @@ public class HomeController {
 		m.addAttribute("pro_cate", pro_cate);
 
 		m.addAttribute("cateid", cateid.orElse(1));
+		m.addAttribute("in", "active");
 
 		return "/user/home/index";
 	}
+	
+	@RequestMapping(path = { "/", "/search" })
+	public String search(Model m, String keyword) {
+		if (keyword != null) {
+			List<Products> product = productservice.getByKeyword(keyword);
+			System.err.println("a");
+			m.addAttribute("product", product);
+		} else {
+			List<Products> product = productservice.findAll();
+			System.err.println("h");
+			m.addAttribute("product", product);
+		}
+		return "user/home/shop";
+	}
 
-	// About page
+
+//	About page
 	@RequestMapping("/about.html")
 	public String about(Model m) {
 
@@ -75,7 +91,7 @@ public class HomeController {
 		return "/user/home/about";
 	}
 
-	// Contact page
+//	Contact page
 	@RequestMapping("/contact.html")
 	public String contact(Model m) {
 
@@ -83,34 +99,34 @@ public class HomeController {
 		return "/user/home/contact";
 	}
 
-	// Product page
+//	Product page
 	@RequestMapping("/shop.html")
-    public String shopPage(Model m, @RequestParam("cateid") Optional<Integer> cateid,
-            @RequestParam("p") Optional<Integer> p) {
+	public String shopPage(Model m, @RequestParam("cateid") Optional<Integer> cateid,
+			@RequestParam("p") Optional<Integer> p) {
 
-        List<Categories> categories = cateDAO.listCateInProduct();
-        if (!categories.isEmpty()) {
-            m.addAttribute("cate", categories);
-        }
+		List<Categories> categories = cateDAO.listCateInProduct();
+		if (!categories.isEmpty()) {
+			m.addAttribute("cate", categories);
+		}
 
-        Pageable pageable = PageRequest.of(p.orElse(0), 6);
+		Pageable pageable = PageRequest.of(p.orElse(0), 6);
 
-        if (cateid.isPresent()) {
-            Page<Products> page = productservice.listProduct_InCategoriesPage(cateid.get(), pageable);
-            m.addAttribute("product", page);
-        } else {
-            Page<Products> page = productservice.findAllPage(pageable);
-            m.addAttribute("product", page);
-        }
+		if (cateid.isPresent()) {
+			Page<Products> page = productservice.listProduct_InCategoriesPage(cateid.get(), pageable);
+			m.addAttribute("product", page);
+		} else {
+			Page<Products> page = productservice.findAllPage(pageable);
+			m.addAttribute("product", page);
+		}
 
-        List<Favorites> favorites = favoritesDAO.findAll();
-        m.addAttribute("kt", 0);
-        m.addAttribute("favorites", favorites);
-        m.addAttribute("sp", "active");
-        return "/user/home/shop";
-    }
+		List<Favorites> favorites = favoritesDAO.findAll();
+		m.addAttribute("kt", 0);
+		m.addAttribute("favorites", favorites);
+		m.addAttribute("sp", "active");
+		return "/user/home/shop";
+	}
 
-	// Product details page
+//	Product details page
 	@RequestMapping("/product.html")
 	public String product(Model m, @RequestParam("id") Integer id) {
 		Products product = productservice.findById(id);

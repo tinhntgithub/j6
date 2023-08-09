@@ -53,8 +53,21 @@ public class ProductColorServiceImp implements ProductColorService {
 		return !dao.getProductColors(id, idd).isEmpty();
 	}
 
+	
+
+	@Override
+	public List<ProductColor> findByPd(Integer id) {
+		return dao.findByPd(id);
+	}
+
+	@Override
+	public ProductColor getOne(Integer id, Integer idd) {
+		return dao.getOne(id, idd);
+	}
+
 	@Override
 	public List<ProductColor> getColorId(Integer id) {
 		return dao.getColorId(id);
 	}
+
 }

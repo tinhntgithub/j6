@@ -13,27 +13,27 @@ public class ProductImgServiceImp implements ProductImgService {
 
 	@Autowired
 	ProductImgDAO dao;
-
+	
 	@Override
 	public List<ProductImg> findAll() {
 		return dao.findAll();
 	}
-
+	
 	@Override
 	public ProductImg findById(Integer id) {
 		return dao.getById(id);
 	}
-
+	
 	@Override
 	public void create(ProductImg entity) {
 		dao.save(entity);
 	}
-
+	
 	@Override
 	public void update(ProductImg entity) {
 		dao.save(entity);
 	}
-
+	
 	@Override
 	public void delete(Integer id) {
 		dao.deleteById(id);
@@ -43,4 +43,5 @@ public class ProductImgServiceImp implements ProductImgService {
 	public List<ProductImg> findByImgPro(Integer imgPro) {
 		return dao.findByImgId(imgPro);
 	}
+
 }

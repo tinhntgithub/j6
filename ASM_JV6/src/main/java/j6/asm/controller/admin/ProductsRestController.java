@@ -18,11 +18,15 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
+import j6.asm.dao.ProductImgDAO;
 import j6.asm.entity.Brand;
 import j6.asm.entity.Categories;
 import j6.asm.entity.PriceHistory;
+import j6.asm.entity.ProductColor;
+import j6.asm.entity.ProductImg;
 import j6.asm.entity.Products;
 import j6.asm.service.PriceHistoryService;
+import j6.asm.service.ProductColorService;
 import j6.asm.service.ProductsService;
 
 @CrossOrigin("*")
@@ -33,6 +37,11 @@ public class ProductsRestController {
 	ProductsService product;
 	@Autowired
 	PriceHistoryService priceService;
+	@Autowired
+	ProductImgDAO pdimgdao;
+
+	@Autowired
+	ProductColorService pcs;
 
 	@GetMapping("/rest/products")
 	public ResponseEntity<List<Products>> getAll(Model m) {
@@ -107,6 +116,21 @@ public class ProductsRestController {
 	public ResponseEntity<Void> delete(@PathVariable("id") Integer id) {
 		if (product.findById(id) == null) {
 			return ResponseEntity.notFound().build();
+		}
+		 //xóa tất cả ảnh chi tiết
+        List<ProductImg> list = pdimgdao.findByPdid(id);
+        if(list != null){
+            for (ProductImg pdimg : list) {
+                pdimgdao.delete(pdimg);
+            }
+        }
+
+		// xóa màu đi theo sp
+		List<ProductColor> list2 = pcs.findByPd(id);
+		if(list2 != null){
+			for (ProductColor productColor : list2) {
+				pcs.delete(productColor.getId());
+			}
 		}
 		product.delete(id);
 		return ResponseEntity.ok().build();

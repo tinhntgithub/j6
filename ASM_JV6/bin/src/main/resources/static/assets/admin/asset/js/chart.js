@@ -349,7 +349,35 @@ $(function() {
       options: doughnutPieOptions
     });
   }
+  
+  var ctx1 = $("#worldwide-sales").get(0).getContext("2d");
+     var myChart1 = new Chart(ctx1, {
+         type: "bar",
+         data: {
+             labels: ["2016", "2017", "2018", "2019", "2020", "2021", "2022"],
+             datasets: [{
+                 label: "VNĐ",
+                 data: [15, 30, 55, 65, 60, 80, 95],
+                 backgroundColor: "rgba(0, 156, 255, .7)"
+             }
+             ]
+         },
+         options: {
+             responsive: true
+         }
+     });
 });
 
-
+$(document).ready(function () {
+	$('#example').DataTable({
+		dom: 'Bfrtip',
+		buttons: [
+			'copy', 'csv', 'excel', 'pdf', 'print'
+		],
+		searching: false,
+		paging: false,
+		info: false,
+    sorting: true
+	});
+  });
      

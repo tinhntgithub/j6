@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "ProductImg")
+@Table(name = "Productimg") 
 public class ProductImg implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -33,6 +33,6 @@ public class ProductImg implements Serializable {
 	private Products imgPro;
 
 	@Column(name = "[image]")
-	private String image;
+	private String name;
 
 }
