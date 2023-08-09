@@ -58,9 +58,10 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 			cart1.setQty(cart1.getQty() + qty);
 			cartService.update(cart1);
 		} else {
-			if (qty > 1) {
-				cart1.setQty(qty);
+			if (qty < 1) {
+				cart1.setQty(1);
 			}
+			cart1.setQty(qty);
 			cart1.setProCart(productColor.getProducts());
 			cart1.setColorCart(productColor);
 			cart1.setPrice(productColor.getProducts().getPrice()
