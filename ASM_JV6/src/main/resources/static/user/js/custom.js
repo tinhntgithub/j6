@@ -238,22 +238,6 @@ app.controller("cartCtr", function ($scope, $http, $rootScope, $window) {
             $rootScope.$emit("list", {});
         }
         ).catch(error => {
-=======
-        var url = `${host}Cart/create/${id}`
-        var urlLogin = "http://" + $window.location.host + "/login.html";
-        var data = $scope.Cart;
-        $http.post(url, $scope.quantity).then(resp => {
-            console.log(resp);
-            if (data.status == 200) {
-                alert("Thêm vào giỏ hàng thành công");
-            }
-            $rootScope.$emit("list", {});
-        }
-        ).catch(error => {
-            if (error.status == 500) {
-                $window.location.href = urlLogin;
-            }
->>>>>>> duylk
             console.log(error);
         });
     }
