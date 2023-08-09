@@ -70,62 +70,10 @@
         <label style="visibility: hidden;" id="start">{{dateNow | date:'yyyy-MM-dd'}}</label>
 
         <div class="table-responsive">
-          <table class="table table-hover table-striped">
-            <thead>
-              <tr class="bg-primary">
-                <th>STT</th>
-                <th>
-                  TÊN KHÁCH HÀNG
-                </th>
-                <th>
-                  THỜI GIAN MUA
-                </th>
-                <th>
-
-                  TỔNG SẢN PHẨM MUA
-
-                </th>
-                <th>
-
-                  TỔNG SỐ TIỀN
-
-                  </a>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <!-- List item start -->
-              <tr dir-paginate ="item in reportCustomer | itemsPerPage: 3">
-                <td class="h4">{{$index + 1}}</td>
-                <td class="h4">{{item[0]}}</td>
-                <td class="h4">{{item[1] | date:'dd-MM-yyyy'}}</td>
-                <td class="h4">{{item[2]}}</td>
-                <td class="h4 text-primary">{{item[3] | customCurrency}}</td>
-              </tr>
-              <!-- List item end -->
-            </tbody>
+          <table  id="example2" class="table table-hover table-striped">
+           
           </table>
-
-
         </div>
-
-        <!-- List content body end -->
-        <!-- Pagination controls here -->
-        <div class="product__pagination justify-content-end">
-          <dir-pagination-controls >
-          </dir-pagination-controls>
-        </div>
-        
-        <!-- Pagination controls here -->
-
-      
-       
-        <!-- <div class="card-footer" style="background-color: white;">
-          <div class="text-danger text-end">
-            <h5>TỔNG DOANH THU:</h5> 5,000,000 vnđ
-          </div>
-        </div> -->
-        <!-- List content footer end -->
       </div>
     </div>
   </div>

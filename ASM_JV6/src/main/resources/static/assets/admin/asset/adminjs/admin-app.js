@@ -191,7 +191,7 @@ app.controller("index", function ($scope, $http) {
         });
     };
     $scope.getRevenueData1 = function () {
-        var url = `${host}/revenueData`;
+        var url = `${host}/revenueDataMonth`;
         $http.get(url).then(function (response) {
             // Lấy dữ liệu từ API response
             var data = response.data;
@@ -220,7 +220,7 @@ app.controller("index", function ($scope, $http) {
                     plugins: {
                         title: {
                             display: true,
-                            text: 'Bảng 1.2 BIỂU ĐỒ DOANH THU NĂM', // Đặt tiêu đề ở đây
+                            text: 'Bảng 1.2 BIỂU ĐỒ DOANH THU THÁNG', // Đặt tiêu đề ở đây
                             position: 'bottom',
                             fontSize: 16
                         }

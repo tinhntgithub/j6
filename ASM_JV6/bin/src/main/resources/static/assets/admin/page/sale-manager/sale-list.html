@@ -96,6 +96,13 @@
                                                 <i class="mdi mdi-swap-vertical"></i>
                                             </a>
                                         </th>
+                                        <th>
+                                            <a ng-click="sortBy('endDate')" href="" class="text-white" style="text-decoration: none;">
+                                                <i class="mdi mdi-swap-vertical"></i>
+                                                NGÀY KẾT THÚC
+                                                <i class="mdi mdi-swap-vertical"></i>
+                                            </a>
+                                        </th>
                                         <th class="text-white">ACTION</th>
                                     </tr>
                                 </thead>
@@ -143,6 +150,13 @@
                                                 <i class="mdi mdi-swap-vertical"></i>
                                             </a>
                                         </th>
+                                        <th>
+                                            <a ng-click="sortBy('endDate')" href="" class="text-white" style="text-decoration: none;">
+                                                <i class="mdi mdi-swap-vertical"></i>
+                                                NGÀY KẾT THÚC
+                                                <i class="mdi mdi-swap-vertical"></i>
+                                            </a>
+                                        </th>
                                         <th class="text-white">ACTION</th>
                                     </tr>
                                 </tfoot>
@@ -162,7 +176,8 @@
                                         <td class="h5">{{sale.value}}</td>
                                         <td class="h5">{{sale.saleDate | date:'dd-MM-yyyy'}}</td>
                                         <td class="h5">{{sale.amount}}</td>
-                                        <td class="h5">{{sale.createDate | date:'dd-MM-yyyy'}}</td>
+                                        <td class="h5">{{sale.createDate | date:'dd-MM-yyyy HH:mm:ss'}}</td>
+                                        <td class="h5">{{sale.endDate | date:'dd-MM-yyyy HH:mm:ss'}}</td>
                                         <td>
                                             <a href="#!sale-form" class="text-primary" ng-click="edit(sale.id)"
                                                 style="font-size: 28px;text-decoration: none;">

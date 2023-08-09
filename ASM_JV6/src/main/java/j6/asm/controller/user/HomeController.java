@@ -3,13 +3,14 @@ package j6.asm.controller.user;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -48,9 +49,23 @@ public class HomeController {
 	@Autowired
 	ProductColorService colorService;
 
-//	Index Page :))
+	// Index Page :))
 	@RequestMapping("/index.html")
 	public String index(Model m, @RequestParam("cateid") Optional<Integer> cateid) {
+		Accounts acc = session.get("account");
+		session.set("account", acc);
+		// if (acc != null) {
+		// 	for (Integer i = 0; i < acc.getAuthorities().size(); i++) {
+		// 		String check = acc.getAuthorities().get(i).getRoleId().getId();
+		// 		if (check.equals("STAF") == true || check.equals("DIRE") == true) {
+		// 			m.addAttribute("au", true);
+		// 			break;
+		// 		} else {
+		// 			m.addAttribute("au", false);
+		// 		}
+		// 	}
+		// }
+
 		List<Products> product = productservice.findAll();
 		m.addAttribute("product", product);
 
@@ -68,7 +83,7 @@ public class HomeController {
 		return "/user/home/index";
 	}
 
-//	About page
+	// About page
 	@RequestMapping("/about.html")
 	public String about(Model m) {
 
@@ -76,7 +91,7 @@ public class HomeController {
 		return "/user/home/about";
 	}
 
-//	Contact page
+	// Contact page
 	@RequestMapping("/contact.html")
 	public String contact(Model m) {
 
@@ -84,7 +99,7 @@ public class HomeController {
 		return "/user/home/contact";
 	}
 
-//	Product page
+	// Product page
 	@RequestMapping("/shop.html")
 	public String shopPage(Model m, @RequestParam("cateid") Optional<Integer> cateid,
 			@RequestParam("p") Optional<Integer> p) {
@@ -111,7 +126,7 @@ public class HomeController {
 		return "/user/home/shop";
 	}
 
-//	Product details page
+	// Product details page
 	@RequestMapping("/product.html")
 	public String product(Model m, @RequestParam("id") Integer id) {
 		Products product = productservice.findById(id);
@@ -127,6 +142,12 @@ public class HomeController {
 		m.addAttribute("listColor", color);
 
 		return "/user/home/product";
+	}
+
+	@RequestMapping("/error1")
+	public String error1(Model model) {
+
+		return "/user/common/404";
 	}
 
 }

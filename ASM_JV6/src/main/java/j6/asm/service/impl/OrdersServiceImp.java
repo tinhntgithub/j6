@@ -30,6 +30,10 @@ public class OrdersServiceImp implements OrdersService {
 	}
 
 	@Override
+	public List<Object[]> getRevenueByMonth() {
+		return dao.getRevenueByMonth();
+	}
+	@Override
 	public List<Orders> findAllOrderDone() {
 		return dao.findAllById2(3);
 	}

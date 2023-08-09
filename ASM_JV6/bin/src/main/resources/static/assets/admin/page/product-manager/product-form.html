@@ -1,65 +1,67 @@
 <body ng-controller="product-form">
-        <!--  -->
-        <div class="row pt-3 ps-2" style="background-color: white;">
-          <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a href="../../index.html"
-                  style="text-decoration: none;color: orangered;">Trang chủ</a></li>
-              <li class="breadcrumb-item"><a href="#" style="text-decoration: none;color: orangered;">Sản phẩm</a>
-              </li>
-              <li class="breadcrumb-item active" aria-current="page"><strong>Cập nhật sản phẩm</strong></li>
-            </ol>
-          </nav>
-        </div>
-        <!-- Breadcrumb end-->
-        <div class="row mt-2">
-          <div class="card" style="height: 80px;">
-            <div class="card-body p-3 text-end">
-                  <a href="#!product-list" class="btn btn-danger btn-rounded text-white">
-                    <div class="d-flex">
-                      <i class="mdi mdi-format-list-bulleted-type"></i>
-                      <strong class="mt-1 ms-1"> Danh sách sản phẩm</strong>
-                    </div>
-                  </a>
-            </div>
+  <!--  -->
+  <div class="row pt-3 ps-2" style="background-color: white;">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="../../index.html" style="text-decoration: none;color: orangered;">Trang
+            chủ</a></li>
+        <li class="breadcrumb-item"><a href="#" style="text-decoration: none;color: orangered;">Sản phẩm</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page"><strong>Cập nhật sản phẩm</strong></li>
+      </ol>
+    </nav>
+  </div>
+  <!-- Breadcrumb end-->
+  <div class="row mt-2">
+    <div class="card" style="height: 80px;">
+      <div class="card-body p-3 text-end">
+        <a href="#!product-list" class="btn btn-danger btn-rounded text-white">
+          <div class="d-flex">
+            <i class="mdi mdi-format-list-bulleted-type"></i>
+            <strong class="mt-1 ms-1"> Danh sách sản phẩm</strong>
           </div>
-       </div>
-        <!--  -->
+        </a>
+      </div>
+    </div>
+  </div>
+  <!--  -->
 
-<!-- thân -->
-    <div class="row mt-2">
-      <div class="card">
-        <div class="card-body">
-          <h4 class="card-title">CẬP NHẬT SẢN PHẨM</h4>
-          <form class="form-sample">
-            <p class="card-description">
-              Lưu ý: Những trường (*) là bắt buộc.
-            </p>
-            <div class="row">
-              <div class="col-6">
-                <div class="col-md-12">
-                  <div class="form-group row">
-                    <label class="col-sm-3 col-form-label">(<strong class="text-danger">*</strong>) Tên sản phẩm:</label>
-                    <div class="col-sm-9">
-                      <input ng-model="form.name" type="text" class="form-control" placeholder="Nhập tên sản phẩm...." />
-                       <h5 class="mt-2 text-danger" ng-show="loi != 0 && loi != null"style="font-size: 12px;">{{loi}}</h5>
-                    </div>
+  <!-- thân -->
+  <div class="row mt-2">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">CẬP NHẬT SẢN PHẨM</h4>
+        <form class="form-sample">
+          <p class="card-description">
+            Lưu ý: Những trường (*) là bắt buộc.
+          </p>
+          <div class="row">
+            <div class="col-6">
+              <div class="col-md-12">
+                <div class="form-group row">
+                  <label class="col-sm-3 col-form-label">(<strong class="text-danger">*</strong>) Tên sản phẩm:</label>
+                  <div class="col-sm-9">
+                    <input ng-model="form.name" type="text" class="form-control" placeholder="Nhập tên sản phẩm...." />
+                    <h5 class="mt-2 text-danger" ng-show="loi != 0 && loi != null" style="font-size: 12px;">{{loi}}</h5>
                   </div>
                 </div>
-                
+              </div>
 
-                <div class="col-md-12">
-                  <div class="form-group row">
-                    <label class="col-sm-3 col-form-label">(<strong class="text-danger">*</strong>) Giá sản phẩm:</label>
-                    <div class="col-sm-9">
-                      <input placeholder="Nhập giá sản phẩm..." ng-model="form.price" type="number" class="form-control" value="0" min="0" max="999999999"/>
-                      <h5 class="mt-2 text-danger" ng-show="loi1 != 0 && loi1 != null"style="font-size: 12px;">{{loi1}}</h5>
-                    </div>
+
+              <div class="col-md-12">
+                <div class="form-group row">
+                  <label class="col-sm-3 col-form-label">(<strong class="text-danger">*</strong>) Giá sản phẩm:</label>
+                  <div class="col-sm-9">
+                    <input placeholder="Nhập giá sản phẩm..." ng-model="form.price" type="number" class="form-control"
+                      value="0" min="0" max="999999999" />
+                    <h5 class="mt-2 text-danger" ng-show="loi1 != 0 && loi1 != null" style="font-size: 12px;">{{loi1}}
+                    </h5>
                   </div>
                 </div>
-                
+              </div>
 
-                <div class="col-md-12">
+
+              <!-- <div class="col-md-12">
                   <div class="form-group row">
                     <label class="col-sm-3 col-form-label">(<strong class="text-danger">*</strong>) Số lượng:</label>
                     <div class="col-sm-9">
@@ -67,123 +69,272 @@
                       <h5 class="mt-2 text-danger" ng-show="loi2 != 0 && loi2 != null"style="font-size: 12px;">{{loi2}}</h5>
                     </div>
                   </div>
-                </div>
-                 <div class="col-md-12">
-                  <div class="form-group row">
-                    <label class="col-sm-3 col-form-label">(<strong class="text-danger">*</strong>) Giảm giá (%):</label>
-                    <div class="col-sm-9">
-                      <input placeholder="Nhập giảm giá..." ng-model="form.sale" type="number" class="form-control" value="0" min="0" max="99" />
-                      <h5 class="mt-2 text-danger" ng-show="loi3 != 0 && loi3 != null"style="font-size: 12px;">{{loi3}}</h5>
-                    </div>
-                  </div>
-                </div>
-
-
-                <div class="col-md-12">
-                  <div class="form-group row">
-                    <label class="col-sm-3 col-form-label">(<strong class="text-danger">*</strong>) Xuất xứ:</label>
-                    <div class="col-sm-9">
-                      <input ng-model="form.madein" type="text" class="form-control" placeholder="Nhập xuất xứ ..."/>
-                      <h5 class="mt-2 text-danger" ng-show="loi4 != 0 && loi4 != null"style="font-size: 12px;">{{loi4}}</h5>
-                    </div>
-                  </div>
-                </div>
-            
-             
-                <div class="col-md-12">
-                  <div class="form-group row">
-                    <label class="col-sm-3 col-form-label">(<strong class="text-danger">*</strong>) Mô tả:</label>
-                    <div class="col-sm-9">
-                      <textarea class="form-control" rows="7" placeholder="Nhập mô tả ..." ng-model="form.description"></textarea>
-                    </div>
+                </div> -->
+              <div class="col-md-12">
+                <div class="form-group row">
+                  <label class="col-sm-3 col-form-label">(<strong class="text-danger">*</strong>) Giảm giá (%):</label>
+                  <div class="col-sm-9">
+                    <input placeholder="Nhập giảm giá..." ng-model="form.sale" type="number" class="form-control"
+                      value="0" min="0" max="99" />
+                    <h5 class="mt-2 text-danger" ng-show="loi3 != 0 && loi3 != null" style="font-size: 12px;">{{loi3}}
+                    </h5>
                   </div>
                 </div>
               </div>
-             
-              <div class="col-6">
-                <div class="col-12 text-center">
-                  <img ng-src="{{url(form.img)}}" class="img-fluid" style="width:250px;">
-                  <p class="text-danger"><em>* Hình ảnh sản phẩm</em></p>
-                  <label class="btn btn-danger text-white ">
-                    Chọn hình <input type="file" hidden accept="image/*" multiple onchange="angular.element(this).scope().upload(this.files)">
-                </label>
-                </div>
 
-                <div class="col-md-12 mt-4">
-                  <div class="form-group row">
-                    <label class="col-sm-3 col-form-label">(<strong class="text-danger">*</strong>) Danh mục:</label>
-                    <div class="col-sm-9">
-                      <select ng-model="form.catePro.id" class="form-select" aria-label="Default select example">
-                        <option ng-repeat="c in cates" ng-value="c.id">{{c.name}}</option>
-                      </select>
-                      <h5 class="mt-2 text-danger" ng-show="loi5 != 0 && loi5 != null"style="font-size: 12px;">{{loi5}}</h5>
-                    </div>
+
+              <div class="col-md-12">
+                <div class="form-group row">
+                  <label class="col-sm-3 col-form-label">(<strong class="text-danger">*</strong>) Xuất xứ:</label>
+                  <div class="col-sm-9">
+                    <input ng-model="form.madein" type="text" class="form-control" placeholder="Nhập xuất xứ ..." />
+                    <h5 class="mt-2 text-danger" ng-show="loi4 != 0 && loi4 != null" style="font-size: 12px;">{{loi4}}
+                    </h5>
                   </div>
                 </div>
+              </div>
 
-                <div class="col-md-12">
-                  <div class="form-group row">
-                    <label class="col-sm-3 col-form-label">(<strong class="text-danger">*</strong>) Thương hiệu:</label>
-                    <div class="col-sm-9">
-                      <select ng-model="form.brandPro.id" class="form-select" aria-label="Default select example">
-                         <option ng-repeat="b in brands" ng-value="b.id">{{b.nameString}}</option>
-                      </select>
-                      <h5 class="mt-2 text-danger" ng-show="loi6 != 0 && loi6 != null"style="font-size: 12px;">{{loi6}}</h5>
-                    </div>
+
+              <div class="col-md-12">
+                <div class="form-group row">
+                  <label class="col-sm-3 col-form-label">(<strong class="text-danger">*</strong>) Mô tả:</label>
+                  <div class="col-sm-9">
+                    <textarea class="form-control" rows="7" placeholder="Nhập mô tả ..."
+                      ng-model="form.description"></textarea>
                   </div>
                 </div>
-
-                <div class="col-md-12">
-                  <div class="form-group row">
-                    <label class="col-sm-3 col-form-label">(<strong class="text-danger">*</strong>) Trạng thái:</label>
-                    <div class="col-9 d-flex">
-                      <div class="form-check form-check-inline">
-                        <input ng-model="form.avaliable" class="ms-2 form-check-input" type="radio" name="available"
-                          id="inlineRadio4" ng-value="true">
-                        <label class="form-check-label" for="inlineRadio4"
-                          style="font-size: 15px;">Kinh doanh</label>
-                      </div>
-                      <div class="form-check form-check-inline">
-                        <input ng-model="form.avaliable" class="ms-2 form-check-input" type="radio" name="available"
-                          id="inlineRadio3" ng-value="false">
-                        <label class="form-check-label" for="inlineRadio3"
-                          style="font-size: 15px;">Ngừng kinh doanh</label>
-                      </div>
-                    </div>
-                    <div class="col-3"></div>
-                    <div class="col-9">
-                         <h5 class="mt-2 text-danger" ng-show="loi7 != 0 && loi7 != null"style="font-size: 12px;">{{loi7}}</h5>
-                    </div>
-                    </div>
+              </div>
+              <div class="col-md-12 mt-4">
+                <div class="form-group row">
+                  <label class="col-sm-3 col-form-label">(<strong class="text-danger">*</strong>) Danh mục:</label>
+                  <div class="col-sm-9">
+                    <select ng-model="form.catePro.id" class="form-select" aria-label="Default select example">
+                      <option ng-repeat="c in cates" ng-value="c.id">{{c.name}}</option>
+                    </select>
+                    <h5 class="mt-2 text-danger" ng-show="loi5 != 0 && loi5 != null" style="font-size: 12px;">{{loi5}}
+                    </h5>
                   </div>
                 </div>
+              </div>
+
+              <div class="col-md-12">
+                <div class="form-group row">
+                  <label class="col-sm-3 col-form-label">(<strong class="text-danger">*</strong>) Thương hiệu:</label>
+                  <div class="col-sm-9">
+                    <select ng-model="form.brandPro.id" class="form-select" aria-label="Default select example">
+                      <option ng-repeat="b in brands" ng-value="b.id">{{b.nameString}}</option>
+                    </select>
+                    <h5 class="mt-2 text-danger" ng-show="loi6 != 0 && loi6 != null" style="font-size: 12px;">{{loi6}}
+                    </h5>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-12">
+                <div class="form-group row">
+                  <label class="col-sm-3 col-form-label">(<strong class="text-danger">*</strong>) Trạng thái:</label>
+                  <div class="col-9 d-flex">
+                    <div class="form-check form-check-inline">
+                      <input ng-model="form.avaliable" class="ms-2 form-check-input" type="radio" name="available"
+                        id="inlineRadio4" ng-value="true">
+                      <label class="form-check-label" for="inlineRadio4" style="font-size: 15px;">Kinh doanh</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input ng-model="form.avaliable" class="ms-2 form-check-input" type="radio" name="available"
+                        id="inlineRadio3" ng-value="false">
+                      <label class="form-check-label" for="inlineRadio3" style="font-size: 15px;">Ngừng kinh
+                        doanh</label>
+                    </div>
+                  </div>
+                  <div class="col-3"></div>
+                  <div class="col-9">
+                    <h5 class="mt-2 text-danger" ng-show="loi7 != 0 && loi7 != null" style="font-size: 12px;">{{loi7}}
+                    </h5>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-12">
+                <label class="col-form-label">(<strong class="text-danger">*</strong>) Màu sản phẩm:</label>
+
+                <div class="row mb-3 d-flex justify-content-center form-group">
+                  <!-- <div class="col-1"></div>
+                  <div class="col-2">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="color-checkbox" name="color" value="Red">
+                    </div>
+                  </div>
+                  <div class="col-1">
+                    <label class="form-text">Xanh</label>
+                  </div>
+                  <div class="col-2">
+                    <div class="color-square" style="width: 30px; height: 30px; background-color: blue;"></div>
+                  </div>
+                  <div class="col-3">
+                    <div class="form-text">
+                      <input type="number" class="form-control" placeholder="Số lượng">
+                    </div>
+                  </div> -->
+
+                  <div class="col-md-12 text-center" style="height: 400px; overflow: auto;">
+                    <table class="table table-sm" >
+                      <thead>
+                        <tr>
+                          <th>Chọn</th>
+                          <th>Mã màu</th>
+                          <th>Tên màu</th>
+                          <th>Số lượng sản phẩm</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr ng-repeat="cl in colorlist">
+                          <td>
+                            <input class="form-check-input" type="checkbox" id="{{cl.id}}" name="color" ng-model="cl.isChecked" ng-change="toggleInput(cl)">
+                          </td>
+                          <td>
+                            <div class="row d-flex flex-row mb-3 mt-3 justify-content-center">
+                              <div
+                                style="width: 30px; height: 30px; background-color: {{cl.hex}};"></div>
+                                <p>{{cl.hex}}</p>
+                            </div>
+
+                          </td>
+                          <td>
+                            <p><strong>{{cl.name}}</strong></p>
+                          </td>
+                          <td>
+                            <div class="form-text">
+                              <input ng-attr-id="{{cl.id}}input" type="number" class="form-control" ng-model="cl.quantity"  ng-disabled="!cl.isChecked">
+                            </div> 
+                          </td>
+                        </tr>
+                        
+                      </tbody>
+                      <tfoot>
+                        <tr>
+                          <th>
+                            <button class="btn btn-secondary mt-1">Thêm màu mới</button>
+                          </th>
+                        </tr>
+                        
+                      </tfoot>
+                    </table>
+                    
+                  </div>
+
+                </div>
+
+
               </div>
             </div>
+            <div class="col-6">
+              <div class="col-12 text-center">
+                <img ng-src="{{url(form.img)}}" class="img-fluid" style="width:250px;">
+                <p class="text-danger"><em>* Hình ảnh sản phẩm</em></p>
+                <label class="btn btn-danger text-white ">Chọn hình
+                  <input type="file" hidden accept="image/*" multiple
+                    onchange="angular.element(this).scope().upload(this.files)">
+                </label>
+              </div>
 
-              <div class="text-end mb-4" ng-init="showButton">
-                    <button type="submit" ng-show="showButton" class="btn btn-inverse-success btn-fw" id="btnThem" ng-click="create()">
-                        <div class="d-flex">
-                          <i class="mdi mdi-plus-circle"></i>
-                          <strong class="mt-1 ms-1 h6">Thêm mới</strong>
-                        </div>
-                    </button>
-                    <button ng-hide="showButton" class="btn btn-inverse-primary btn-fw" ng-click="update()">
-                      <div class="d-flex">
-                        <i class="mdi mdi-content-save"></i>
-                        <strong class="mt-1 ms-1 h6">Cập nhật</strong>
-                      </div>
-                    </button>
-                    <button class="btn btn-inverse-warning btn-fw" ng-click="reset()">
-                      <div class="d-flex">
-                        <i class="mdi mdi-refresh"></i>
-                        <strong class="mt-1 ms-1 h6">Làm mới</strong>
-                      </div>
-                    </button>
-                   </div>
-          </form>
-        </div>
+
+
+              <style>
+                .detail-img-label {
+                  display: inline-block;
+                  width: 100px;
+                  height: 100px;
+                  border: 1px dashed #ccc;
+                  text-align: center;
+                  vertical-align: middle;
+                  line-height: 100px;
+                  cursor: pointer;
+                }
+
+                .detail-img {
+                  max-width: 100%;
+                  max-height: 100%;
+                  object-fit: cover;
+                }
+
+                .image-container {
+                  position: relative;
+                  display: inline-block;
+                }
+
+                .delete-btn {
+                  position: absolute;
+                  top: -10px;
+                  right: -10px;
+                  border-radius: 50%;
+                  width: 30px;
+                  height: 30px;
+                  line-height: 30px;
+                  text-align: center;
+                  padding: 0;
+                }
+              </style>
+
+              <!-- Additional product detail images -->
+
+              <div class="col-12">
+                <label class="col-form-label">(<strong class="text-danger">*</strong>) Ảnh chi tiết:</label>
+              </div>
+              <div class="col-12 text-center mb-4"><label class="btn btn-danger text-white ">Chọn (các) hình
+                  <input type="file" hidden accept="image/*" multiple
+                    onchange="angular.element(this).scope().imgdts(this.files)">
+                </label></div>
+              <div class="row col-12">
+                <div class="col-4 text-center mb-3 position-relative" ng-repeat="dt in imgdt">
+                  <label for="detailImg1" class="detail-img-label">
+                    <div class="image-container">
+                      <img ng-src="{{urldt(dt.name)}}" class="img-fluid detail-img" alt="Ảnh chi tiết">
+                      <button type="button" class="btn btn-danger btn-sm delete-btn" ng-click="deleteImage(dt.name)">
+                        X
+                      </button>
+                    </div>
+                  </label>
+                </div>
+
+              </div>
+
+
+
+
+
+            </div>
+          </div>
+
+          <div class="text-end mb-4" ng-init="showButton">
+            <button type="submit" ng-show="showButton" class="btn btn-inverse-success btn-fw" id="btnThem"
+              ng-click="create()">
+              <div class="d-flex">
+                <i class="mdi mdi-plus-circle"></i>
+                <strong class="mt-1 ms-1 h6">Thêm mới</strong>
+              </div>
+            </button>
+            <button ng-hide="showButton" class="btn btn-inverse-primary btn-fw" ng-click="update()">
+              <div class="d-flex">
+                <i class="mdi mdi-content-save"></i>
+                <strong class="mt-1 ms-1 h6">Cập nhật</strong>
+              </div>
+            </button>
+            <button class="btn btn-inverse-warning btn-fw" ng-click="reset()">
+              <div class="d-flex">
+                <i class="mdi mdi-refresh"></i>
+                <strong class="mt-1 ms-1 h6">Làm mới</strong>
+              </div>
+            </button>
+          </div>
+        </form>
       </div>
-
     </div>
-<!-- thân end -->
+
+  </div>
+
+  <script>
+      function handleCheck(checkbox){
+        console.log(checkbox);
+    }
+  </script>
+  <!-- thân end -->
 </body>
