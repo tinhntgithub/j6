@@ -234,9 +234,6 @@ app.controller("cartCtr", function ($scope, $http, $rootScope, $window) {
             $rootScope.$emit("list", {});
         }
         ).catch(error => {
-            if (error.status == 500) {
-                $window.location.href = urlLogin;
-            }
             console.log(error);
         });
     }
