@@ -15,6 +15,7 @@ public interface OrderDetailsDAO extends JpaRepository<OrderDetails, Integer> {
 
 	List<OrderDetails> findByProductsId(Products productsId);
 
+	// @Query("select o from OrderDetails o where o.ordersId.id = ?1")
 	List<OrderDetails> findByOrdersId(Orders ordersId);
 
 	List<OrderDetails> findByColorId(ProductColor colorId);

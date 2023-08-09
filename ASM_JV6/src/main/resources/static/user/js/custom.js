@@ -204,11 +204,13 @@ app.controller("cartCtr", function ($scope, $http,$rootScope, $window) {
     
     //Favorites
     $scope.like = function(id){
-		var urlLike = `http://localhost:8080/favorites/like/${id}`;//${id}
+        alertSuccess(id);
+		var urlLike = `http://localhost:8080/rest/favorites/like/${id}`;//${id}
 		var urlLogin = "http://" + $window.location.host + "/login.html";
 		$http.post(urlLike).then(resp => {
 			console.log("Data form server: ",resp);
-			alert(resp.data);
+			//alertSú(resp.data);
+            alertSuccess("Thêm sản phẩm vào mục yêu thích thành công");
 		}).catch(err => {
 			console.log("Error code: ", err.status);
 			if(err.status == 424){
@@ -375,3 +377,72 @@ app.controller("userImage", function ($scope, $http) {
     }
 
 });
+
+// start product favorites controller
+app.controller("favoritesCtrl", function ($scope, $http,$rootScope, $window) {
+    
+    $scope.favoriteProductsList = [];
+
+    $scope.loadFavoriteProducts = function() {
+        var url = `${host}rest/favorites/like/all`;
+        $http.get(url).then((resp) => {
+            $scope.favoriteProductsList = resp.data;
+            alertSuccess("Lấy tất cả sản phẩm yêu thích thành công");
+            console.log("Success", $scope.favoriteProductsList);
+        }).catch((error) => {
+            alertDanger("Lấy tất cả sản phẩm yêu thích thất bại");
+            console.log("Error", error);
+        });
+    }
+
+    $scope.unLikeFavoriteProducts = function(id) {
+        var url = `${host}rest/favorites/unLike/${id}`;
+        
+        $http.delete(url).then(() => {
+            alertSuccess("Bỏ thích sản phẩm thành công, Favorite Id: " + id);
+            console.log("Success");
+        }).catch((error) => {
+            alertDanger("Bỏ thích sản phẩm thất bại");
+            console.log("Error", error);
+        });
+    }
+
+    $scope.addCart = function (id) {
+        var url = `${host}Cart/create/${id}`;
+        var urlLogin = "http://" + $window.location.host + "/login.html";
+        $http.get(url).then(resp => {
+			console.log(resp);
+            alertSuccess("Thêm vào giỏ hàng thành công");
+            $rootScope.$emit("list", {});
+        }
+        ).catch(error => {
+            if(error.status == 500){
+				$window.location.href = urlLogin;
+			}
+		    console.log(error);
+        });
+        
+    }
+    // $scope.quantity=1;
+    // $scope.addCartQty = function (id) {
+    // 	 var url = `${host}Cart/create/${id}`
+    //      var urlLogin = "http://" + $window.location.host + "/login.html";
+    //      var data = $scope.Cart;
+	// 	 $http.post(url,$scope.quantity).then(resp => {
+	// 			console.log(resp);
+	// 				alertSuccess("Thêm vào giỏ hàng thành công");
+	// 	        $rootScope.$emit("list", {});
+	// 	    }
+	// 	).catch(error => {
+	// 		if(error.status == 500){
+	// 			$window.location.href = urlLogin;
+	// 		}
+	// 	    console.log(error);
+	// 	});
+    // }
+
+
+    $scope.loadFavoriteProducts();
+
+});
+// end product favorites controller

@@ -1,15 +1,18 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{/user/layout::dynamic(~{::title},~{::header},~{::.content})}">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+    th:replace="~{/user/layout::dynamic(~{::title},~{::header},~{::.content})}">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>J6TEAM | Mặt hàng yêu thích</title>
 </head>
+
 <body>
     <header th:insert="~{/user/common/header::header}"></header>
     <div class="content">
-           <!-- Breadcrumb Start -->
+        <!-- Breadcrumb Start -->
         <div class="breadcrumb-area mt-30">
             <div class="container">
                 <div class="breadcrumb">
@@ -24,7 +27,7 @@
         <!-- Breadcrumb End -->
         <!-- Wish List Start -->
         <div class="cart-main-area wish-list ptb-20 ptb-sm-60 mb-3">
-            <div class="container">
+            <div class="container" ng-controller="favoritesCtrl">
                 <div class="row">
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <!-- Form Start -->
@@ -37,31 +40,34 @@
                                             <th>Hình ảnh</th>
                                             <th>Sản phẩm</th>
                                             <th>
-                                               <a href="#" class="text-white">
+                                                <a href="#" class="text-white">
                                                     <i class="fa fa-cart-plus" aria-hidden="true"></i> Thêm vào giỏ hàng
-                                               </a>
+                                                </a>
                                             </th>
-                                             <th>Bỏ thích</th>
+                                            <th>Bỏ thích</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                           
+                                        <tr ng-repeat="product in favoriteProductsList">
                                             <td>
-                                                <a href="#"><img th:src="@{/user/img/products/6.jpg}" alt="cart-image" width="72px;"></a>
+                                                <a href=""><img
+                                                        th:src="@{/user/img/products/{{product.productsId.img}}}"
+                                                        alt="cart-image" width="72px;"></a>
                                             </td>
-                                            <td><a href="#" class="text-dark">Vestibulum suscipit</a></td>
-                                            <td><a href="#" class="btn btn-danger">Thêm ngay</a></td>
-                                             <td> <a href="#" class="text-dark"><i class="fa fa-times" aria-hidden="true"></i></a></td>
-                                        </tr>
-                                        <tr>
-                                           
                                             <td>
-                                               <a href="#"><img th:src="@{/user/img/products/22.jpg}" alt="cart-image" width="72px;"></a>
+                                                <a href="" class="text-dark">{{product.productsId.name}}</a>
                                             </td>
-                                            <td><a href="#" class="text-dark">Vestibulum dictum magna</a></td>
-                                            <td><a href="#" class="btn btn-danger">Thêm ngay</a></td>
-                                             <td> <a href="#" class="text-dark"><i class="fa fa-times" aria-hidden="true"></i></a></td>
+                                            <td>
+                                                <a href="" class="btn btn-danger"
+                                                    ng-click="addCart(product.productsId.id)">Thêm
+                                                    ngay {{product.productsId.id}}</a>
+                                            </td>
+                                            <td>
+                                                <a href="" class="text-dark">
+                                                    <i ng-click="unLikeFavoriteProducts(product.id)" class="fa fa-times"
+                                                        aria-hidden="true"> Bỏ thích</i>
+                                                </a>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -71,21 +77,22 @@
                         <!-- Form End -->
                     </div>
                 </div>
-                 <div class="row mt-3">
-                               <!-- Cart Button Start -->
-                               <div class="col-md-10 col-sm-12"></div>
-                                <div class="col-md-2 col-sm-12">
-                                    <div class="buttons-cart">
-<!--                                         <input type="submit" value="Cập nhật giỏ hàng"> -->
-                                        <a href="shop.html">Tiếp tục mua hàng</a>
-                                    </div>
-                                </div>
-                                <!-- Cart Button Start -->
-                            </div>
+                <div class="row mt-3">
+                    <!-- Cart Button Start -->
+                    <div class="col-md-10 col-sm-12"></div>
+                    <div class="col-md-2 col-sm-12">
+                        <div class="buttons-cart">
+                            <!--                                         <input type="submit" value="Cập nhật giỏ hàng"> -->
+                            <a href="shop.html">Tiếp tục mua hàng</a>
+                        </div>
+                    </div>
+                    <!-- Cart Button Start -->
+                </div>
                 <!-- Row End -->
             </div>
         </div>
         <!-- Wish List End -->
     </div>
 </body>
+
 </html>

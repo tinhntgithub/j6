@@ -3,6 +3,8 @@ package j6.asm.controller.user;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+
+import javax.mail.Session;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.math.NumberUtils;
@@ -10,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,6 +25,7 @@ import j6.asm.dao.ProductsDAO;
 import j6.asm.entity.Accounts;
 import j6.asm.entity.Favorites;
 import j6.asm.entity.Products;
+import j6.asm.service.SessionService;
 
 @CrossOrigin(origins = { "*" })
 @RestController
@@ -43,14 +47,43 @@ public class FavoritesRestController {
 	@Autowired
 	HttpServletResponse resp;
 
-	@GetMapping("all")
+	@Autowired
+	SessionService session;
+
+	@GetMapping("/like/all")
 	public ResponseEntity<List<Favorites>> getAll() {
-		List<Favorites> list = fvrDao.findAll();
+		Accounts account = session.get("account");
+		List<Favorites> list = fvrDao.findByUserFvr(account);
 		if (list.isEmpty() || list == null) {
 			return ResponseEntity.noContent().build();
 		}
 		return ResponseEntity.ok(list);
 	}
+
+	@DeleteMapping("/unLike/{id}")
+	public void delteteFavorites(@PathVariable("id") Integer id) {
+		Accounts account = session.get("account");
+		List<Favorites> favorites = fvrDao.findByUserFvr(account);
+		System.out.println(favorites.get(0).getId());
+		if (favorites == null || favorites.isEmpty()) {
+			return;
+		}
+		if (!favorites.get(0).getId().equals(id)) {
+			return;
+		}
+		fvrDao.delete(favorites.get(0));
+	}
+
+	// @GetMapping("like/{id}")
+	// public ResponseEntity<List<Favorites>> getUsersFavorites() {
+	// Accounts account = session.get("account");
+
+	// List<Favorites> list = fvrDao.findByUserFvr(account);
+	// if (list.isEmpty() || list == null) {
+	// return ResponseEntity.noContent().build();
+	// }
+	// return ResponseEntity.ok(list);
+	// }
 
 	@PostMapping("like/{id}")
 	public ResponseEntity<Object> likeByID(@PathVariable("id") String id) throws IOException {

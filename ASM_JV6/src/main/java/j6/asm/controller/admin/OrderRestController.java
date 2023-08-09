@@ -30,47 +30,51 @@ public class OrderRestController {
 	OrderDetailsService ordersService;
 	@Autowired
 	StatusService statusService;
-	
-//	Đơn hàng đang chờ Restful API
+
+	// Đơn hàng đang chờ Restful API
 	@GetMapping("/rest/order-wait")
 	public ResponseEntity<List<Orders>> getAll() {
 		return ResponseEntity.ok(orderService.findOrderWait());
 	}
-//	Đơn hàng đang giao :))
+
+	// Đơn hàng đang giao :))
 	@GetMapping("/rest/order-delivered")
 	public ResponseEntity<List<Orders>> getAllOrder2() {
 		return ResponseEntity.ok(orderService.findAllOrderDelivired());
 	}
-//	Đơn hàng đã hủy
+
+	// Đơn hàng đã hủy
 	@GetMapping("/rest/order-cancel")
-	public ResponseEntity<List<Orders>> getAllOrder3(){
+	public ResponseEntity<List<Orders>> getAllOrder3() {
 		return ResponseEntity.ok(orderService.findAllOrderCancel());
 	}
-//	Đơn hàng đã giao api restful ahihi :))
+
+	// Đơn hàng đã giao api restful ahihi :))
 	@GetMapping("/rest/order-done")
-	public ResponseEntity<List<Orders>> getAllOrder4(){
+	public ResponseEntity<List<Orders>> getAllOrder4() {
 		return ResponseEntity.ok(orderService.findAllOrderDone());
 	}
-	
+
 	@GetMapping("/rest/order/{id}")
 	public ResponseEntity<Orders> getOrder(@PathVariable("id") Integer id) {
 		return ResponseEntity.ok(orderService.findById(id));
 	}
+
 	@PutMapping("/rest/order/{id}/{status}")
-	public void updateOrders(@PathVariable("id") Integer id,@PathVariable("status") Integer status) {
+	public void updateOrders(@PathVariable("id") Integer id, @PathVariable("status") Integer status) {
 		Orders ord = orderService.findById(id);
 		ord.setStatusId(statusService.findById(status));
 		orderService.update(ord);
 	}
-	
+
 	@GetMapping("/rest/order-details/{id}")
 	public ResponseEntity<List<OrderDetails>> getOrderDetails(@PathVariable("id") Integer id) {
 		return ResponseEntity.ok(ordersService.getOrderDetails(id));
 	}
+
 	@GetMapping("/rest/orders-details/{id}")
 	public Double getAmount(@PathVariable("id") Integer id) {
 		return ordersService.getAmount(id);
 	}
-	
 
 }
