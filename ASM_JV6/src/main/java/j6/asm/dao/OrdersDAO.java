@@ -21,11 +21,14 @@ public interface OrdersDAO extends JpaRepository<Orders, Integer> {
 	@Query("SELECT count(o) FROM Orders o WHERE o.statusId.id = 3")
 	Integer getCount();
 
-	@Query(value = "select * from Orders a where a.username=?1 and a.statusid != 4", nativeQuery = true)
+	@Query(value = "select * from Orders a where a.username=?1 and a.statusid = 1 or a.statusid =2", nativeQuery = true)
 	List<Orders> find_LoginbyUsername(String username);
 
 	@Query(value = "select * from Orders a where a.statusid = 4 and a.username=?1", nativeQuery = true)
 	List<Orders> find_ByHuy(String username);
+
+	@Query(value = "select * from Orders a where a.statusid = 3 and a.username=?1", nativeQuery = true)
+	List<Orders> find_ByNhan(String username);
 
 	@Query("select a from Orders a where a.userOrder.username=?1")
 	Orders find_ByUsername(String username);

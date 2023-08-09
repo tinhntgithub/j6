@@ -70,6 +70,13 @@ alertResetAndEdit = function (message) {
         onClick: function () { } // Callback after click
     }).showToast();
 }
+// Lắng nghe sự kiện khi click vào ô checkbox trên cùng
+function checkAll() {
+    var checkboxes = document.querySelectorAll('#cart-tableBody input[type="checkbox"]');
+    checkboxes.forEach(function (checkbox) {
+        checkbox.checked = $('#checkAllId').is(':checked');
+    }, $('#checkAllId'));
+}
 // End Alert
 //Start Delete Address
 function deleteAddress(adr, id) {
@@ -208,7 +215,7 @@ app.controller("cartCtr", function ($scope, $http, $rootScope, $window) {
 
     $scope.addCart = function (id) {
         var url = `${host}Cart/create/${id}`;
-        var urlLogin = "http://" + $window.location.host + "/login.html";
+        var urlLogin = "http://" + $window.location.host + "/signin.html";
         $http.get(url).then(resp => {
             console.log(resp);
             alertSuccess("Thêm vào giỏ hàng thành công");
@@ -216,6 +223,7 @@ app.controller("cartCtr", function ($scope, $http, $rootScope, $window) {
         }
         ).catch(error => {
             if (error.status == 500) {
+                alertDanger("Vui lòng đăng nhập");
                 $window.location.href = urlLogin;
             }
             console.log(error);
@@ -224,9 +232,9 @@ app.controller("cartCtr", function ($scope, $http, $rootScope, $window) {
     }
     $scope.quantity = 1;
     $scope.addCartQty = function (id) {
-       
+
         var url = `${host}rest/cart/${id}/${$scope.colorid}`
-        var urlLogin = "http://" + $window.location.host + "/login.html";
+        var urlLogin = "http://" + $window.location.host + "/signin.html";
         console.log($scope.colorid, $scope.quantity, id);
         $http.post(url, $scope.quantity).then(resp => {
             console.log(resp);
@@ -234,6 +242,7 @@ app.controller("cartCtr", function ($scope, $http, $rootScope, $window) {
             $rootScope.$emit("list", {});
         }
         ).catch(error => {
+            alertDanger("Vui lòng đăng nhập");
             console.log(error);
         });
     }
@@ -242,14 +251,16 @@ app.controller("cartCtr", function ($scope, $http, $rootScope, $window) {
     //Favorites
     $scope.like = function (id) {
         var urlLike = `http://localhost:8080/favorites/like/${id}`;//${id}
-        var urlLogin = "http://" + $window.location.host + "/login.html";
+        var urlLogin = "http://" + $window.location.host + "/signin.html";
         $http.post(urlLike).then(resp => {
             console.log("Data form server: ", resp);
             alert(resp.data);
+            alertSuccess("Đã thêm vào sản phẩm yêu thích")
         }).catch(err => {
             console.log("Error code: ", err.status);
             if (err.status == 424) {
                 alert("Mã sản phẩm không hợp lệ.");
+                alertSuccess("LỖI")
             } else if (err.status == 500) {
                 $window.location.href = urlLogin;
             }
@@ -258,7 +269,12 @@ app.controller("cartCtr", function ($scope, $http, $rootScope, $window) {
 })
 
 var itemChecked = [];
-
+function checkAll() {
+    var checkboxes = document.querySelectorAll('#cart-tableBody input[type="checkbox"]');
+    checkboxes.forEach(function (checkbox) {
+        checkbox.checked = $('#checkAllId').is(':checked');
+    }, $('#checkAllId'));
+}
 app.controller("pushCart", function ($scope, $http, $rootScope) {
 
     $rootScope.$on("list", function () {
@@ -281,9 +297,39 @@ app.controller("pushCart", function ($scope, $http, $rootScope) {
 
     $scope.selectedIDs = [];
     // $scope.selectAll = false;
+    $scope.selectAll = false;
 
-    $scope.updateSelectedIDs = function(listCart, isSelected) {
-        if (isSelected) {
+    $scope.checkAll = function () {
+        $scope.selectAll = !$scope.selectAll;
+        $scope.selectedIDs = []; // Xóa tất cả các ID đã chọn trước đó
+        for (var i = 0; i < $scope.Cart.length; i++) {
+            $scope.Cart[i].isSelected = $scope.selectAll;
+            if ($scope.selectAll) {
+                $scope.selectedIDs.push($scope.Cart[i].id); // Thêm ID vào mảng selectedIDs
+            }
+        }
+        
+     
+        $scope.calculateTotalAmount();
+    };
+    
+    $scope.calculateTotalAmount = function () {
+        var total = 0;
+
+        for (var i = 0; i < $scope.Cart.length; i++) {
+            if ($scope.Cart[i].isSelected) {
+                total += $scope.Cart[i].proCart.price * $scope.Cart[i].qty;
+            }
+        }
+
+        $scope.totalAmount = total;
+    };
+
+
+
+
+    $scope.updateSelectedIDs = function (listCart) {
+        if (listCart.isSelected) {
             $scope.selectedIDs.push(listCart);
         } else {
             var index = $scope.selectedIDs.indexOf(listCart);
@@ -293,6 +339,7 @@ app.controller("pushCart", function ($scope, $http, $rootScope) {
         }
         console.log($scope.selectedIDs);
     };
+
     var url = `${host}Cart/listCart`;
     $scope.url = function (filename) {
         return `${host}uploads/productImg/${filename}`;
@@ -306,18 +353,23 @@ app.controller("pushCart", function ($scope, $http, $rootScope) {
             $scope.total = "99+";
         }
         $scope.getTotalTempoary = function () {
-            var temparr = $scope.Cart;
-            var temp2 = angular.copy($scope.selectedIDs);
-            if(temp2.length > 0){
-                temparr = temp2;
-            }
             var total = 0;
-            for (var i = 0; i < temparr.length; i++) {
-                var cart = temparr[i];
-                total += (cart.price * cart.qty);
+
+            if ($scope.selectAll) {
+                for (var i = 0; i < $scope.Cart.length; i++) {
+                    total += $scope.Cart[i].proCart.price * $scope.Cart[i].qty;
+                }
+            } else {
+                var temparr = angular.copy($scope.selectedIDs);
+                for (var i = 0; i < temparr.length; i++) {
+                    var cart = temparr[i];
+                    total += cart.price * cart.qty;
+                }
             }
+
             return total;
-        }
+        };
+
     }).catch(error => {
         console.log("Errors", error);
     });
@@ -351,7 +403,7 @@ app.controller("pushCart", function ($scope, $http, $rootScope) {
 
     }
 
-    $scope.loadCheckoutList = function(){
+    $scope.loadCheckoutList = function () {
         var url = `${host}rest/cart/savetemplist`;
         var data = angular.copy($scope.selectedIDs)
         $http.post(url, data).then(resp => {

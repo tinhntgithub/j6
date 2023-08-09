@@ -22,12 +22,14 @@ import j6.asm.dao.ProductsDAO;
 import j6.asm.entity.Accounts;
 import j6.asm.entity.Favorites;
 import j6.asm.entity.Products;
+import j6.asm.service.SessionService;
 
 @CrossOrigin(origins = { "*" })
 @RestController
 @RequestMapping("/rest/favorites")
 public class FavoritesRestController {
-
+@Autowired
+	SessionService session;
 	@Autowired
 	FavoritesDAO fvrDao;
 
@@ -62,8 +64,12 @@ public class FavoritesRestController {
 		if (req.getUserPrincipal() == null) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();// 500
 		} else {
-			username = req.getUserPrincipal().getName();
+			Accounts acc = session.get("account");
+			session.set("account", acc);
+			// username = req.getUserPrincipal().getName();
+			username = acc.getUsername();
 			accounts = accDao.findById(username).get();
+			System.out.println("USERNAME : "+ username);
 		}
 		if (NumberUtils.isParsable(id)) {
 			idConvert = Integer.valueOf(id);

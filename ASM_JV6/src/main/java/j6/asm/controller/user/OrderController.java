@@ -130,11 +130,12 @@ public class OrderController {
 			return "redirect:/index.html";
 		}
 		List<Orders> order_huy = new ArrayList<>();
+		List<Orders> order_all = orderdao.find_LoginbyUsername(account.getUsername());
+		List<Orders> list_nhan = orderdao.find_ByNhan(account.getUsername());
 		order_huy = orderdao.find_ByHuy(account.getUsername());
 		model.addAttribute("huy", order_huy);
-		List<Orders> order_all = orderdao.find_LoginbyUsername(account.getUsername());
-		
 		model.addAttribute("or", order_all);
+		model.addAttribute("nhan",list_nhan);
 		return "user/order/orders";
 	}
 
@@ -157,15 +158,17 @@ public class OrderController {
 		Accounts account = session.get("account");
 		List<Orders> order_all = new ArrayList<>();
 		List<Orders> order_huy = new ArrayList<>();
+		List<Orders> order_nhan = new ArrayList<>();
 		if (account != null) {
 			order_all = orderdao.find_LoginbyUsername(account.getUsername());
 			order_huy = orderdao.find_ByHuy(account.getUsername());
-
+			order_nhan = orderdao.find_ByNhan(account.getUsername());
 			// Lấy thông tin sản phẩm trong giỏ hàng
 
 		}
 		model.addAttribute("huy", order_huy);
 		model.addAttribute("or", order_all);
+		model.addAttribute("nhan", order_nhan);
 		return "user/order/orders";
 	}
 

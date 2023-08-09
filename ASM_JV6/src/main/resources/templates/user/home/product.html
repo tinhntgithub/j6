@@ -190,7 +190,22 @@
                         <div class="tab-content" id="nav-tabContent">
                             <div class="tab-pane fade" id="nav-contact" role="tabpanel"
                                 aria-labelledby="nav-contact-tab">
-
+                            <div class="row">
+                                <div class="col-6">
+                                    <span class="mb-20 pro-desc-details mt-5"  >Thương Hiệu: </span>
+                                    <br>
+                                    <span class="mb-20 pro-desc-details mt-5"  >   Ngày Sản Xuất:</span>
+                                    <br>
+                                    <span class="mb-20 pro-desc-details mt-5"  >    Nơi Sản Xuất:</span>                  
+                                </div>
+                                <div class="col-6">
+                                  <span class="mb-20 pro-desc-details mt-5" th:text="${item.brandPro.nameString}"> </span>
+                                  <br>
+                                  <span class="mb-20 pro-desc-details mt-5" th:text="${item.date}"></span>
+                                  <br>
+                                  <span class="mb-20 pro-desc-details mt-5" th:text="${item.madein}"></span>
+                                </div>
+                            </div>
                             </div>
                             <div class="tab-pane fade show active" id="nav-home" role="tabpanel"
                                 aria-labelledby="nav-home-tab">
