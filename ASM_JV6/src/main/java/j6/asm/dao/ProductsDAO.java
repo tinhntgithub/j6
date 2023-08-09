@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import j6.asm.entity.Brand;
 import j6.asm.entity.Categories;
@@ -27,16 +28,13 @@ public interface ProductsDAO extends JpaRepository<Products, Integer> {
 	@Query("SELECT count(o) FROM Products o WHERE o.avaliable = true")
 	Integer getCount();
 
-	@Query("SELECT DISTINCT p FROM Products p " +
-			"JOIN p.productColors pc " +
-			"WHERE p.catePro.id = ?1 AND p.price BETWEEN ?2 AND ?3 AND pc.qty > 0")
+	@Query("SELECT DISTINCT p FROM Products p " + "JOIN p.productColors pc "
+			+ "WHERE p.catePro.id = ?1 AND p.price BETWEEN ?2 AND ?3 AND pc.qty > 0")
 	List<Products> findProductsInCategoryWithinPriceRange(int categoryId, double minPrice, double maxPrice);
 
-	@Query("SELECT p.name, p.img, COUNT(od.productsId) AS NumberOfSales " +
-			"FROM Products p " +
-			"JOIN OrderDetails od ON od.productsId.id = p.id " +
-			"JOIN Orders o ON o.id = od.ordersId.id " +
-			"GROUP BY p.name, p.img ORDER BY NumberOfSales DESC")
+	@Query("SELECT p.name, p.img, COUNT(od.productsId) AS NumberOfSales " + "FROM Products p "
+			+ "JOIN OrderDetails od ON od.productsId.id = p.id " + "JOIN Orders o ON o.id = od.ordersId.id "
+			+ "GROUP BY p.name, p.img ORDER BY NumberOfSales DESC")
 	List<Object[]> findProductReport();
 
 	@Query("SELECT p FROM Products p ORDER BY p.name ASC")
@@ -56,14 +54,14 @@ public interface ProductsDAO extends JpaRepository<Products, Integer> {
 
 	@Query("SELECT p FROM Products p ORDER BY p.date ASC")
 	Page<Products> findAllProductsSortedByOldest(Pageable pageable);
-	
-	@Query("SELECT p FROM Products p " +
-	"JOIN p.productColors c " + 
-	"WHERE c.qty > 0 AND p.price >= ?1 AND p.price <= ?2")
-Page<Products> findByCategoryAndPrice(int lowerPrice, int upperPrice, Pageable pageable);
 
+	@Query("SELECT p FROM Products p " + "JOIN p.productColors c "
+			+ "WHERE c.qty > 0 AND p.price >= ?1 AND p.price <= ?2")
+	Page<Products> findByCategoryAndPrice(int lowerPrice, int upperPrice, Pageable pageable);
 
 	@Query(value = "select p from Products p where p.id = ?1")
 	Products findByProductId(int id);
 
+	@Query(value = "select * from Products where name like %?1%", nativeQuery = true)
+	List<Products> getByKeyword(@Param("keyword") String keyword);
 }

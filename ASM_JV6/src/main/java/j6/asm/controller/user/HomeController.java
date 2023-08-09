@@ -49,9 +49,10 @@ public class HomeController {
 	@Autowired
 	ProductColorService colorService;
 
-	// Index Page :))
+//	Index Page :))
 	@RequestMapping("/index.html")
 	public String index(Model m, @RequestParam("cateid") Optional<Integer> cateid) {
+<<<<<<< HEAD
 		Accounts acc = session.get("account");
 		session.set("account", acc);
 		// if (acc != null) {
@@ -66,6 +67,8 @@ public class HomeController {
 		// 	}
 		// }
 
+=======
+>>>>>>> duylk
 		List<Products> product = productservice.findAll();
 		m.addAttribute("product", product);
 
@@ -82,8 +85,23 @@ public class HomeController {
 
 		return "/user/home/index";
 	}
+	
+	@RequestMapping(path = { "/", "/search" })
+	public String search(Model m, String keyword) {
+		if (keyword != null) {
+			List<Products> product = productservice.getByKeyword(keyword);
+			System.err.println("a");
+			m.addAttribute("product", product);
+		} else {
+			List<Products> product = productservice.findAll();
+			System.err.println("h");
+			m.addAttribute("product", product);
+		}
+		return "user/home/shop";
+	}
 
-	// About page
+
+//	About page
 	@RequestMapping("/about.html")
 	public String about(Model m) {
 
@@ -91,7 +109,7 @@ public class HomeController {
 		return "/user/home/about";
 	}
 
-	// Contact page
+//	Contact page
 	@RequestMapping("/contact.html")
 	public String contact(Model m) {
 
@@ -99,7 +117,7 @@ public class HomeController {
 		return "/user/home/contact";
 	}
 
-	// Product page
+//	Product page
 	@RequestMapping("/shop.html")
 	public String shopPage(Model m, @RequestParam("cateid") Optional<Integer> cateid,
 			@RequestParam("p") Optional<Integer> p) {
@@ -126,7 +144,7 @@ public class HomeController {
 		return "/user/home/shop";
 	}
 
-	// Product details page
+//	Product details page
 	@RequestMapping("/product.html")
 	public String product(Model m, @RequestParam("id") Integer id) {
 		Products product = productservice.findById(id);

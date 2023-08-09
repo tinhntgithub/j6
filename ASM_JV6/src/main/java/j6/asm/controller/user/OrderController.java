@@ -74,7 +74,10 @@ public class OrderController {
 	@RequestMapping("/checkout.html")
 	public String checkoutPage(Model model) {
 		// Lấy thông tin sản phẩm từ giỏ hàng
-
+		Accounts account = session.get("account");
+		model.addAttribute("fullName", account.getFullname());
+		model.addAttribute("Phone", account.getPhone());
+		model.addAttribute("address", account.getAddress());
 		return "user/order/checkout";
 	}
 
@@ -126,14 +129,22 @@ public class OrderController {
 	@RequestMapping("/manageOrders.html")
 	public String ordersManagePage(Model model) throws IOException, ParseException {
 		Accounts account = session.get("account");
+<<<<<<< HEAD
 		if(account==null) {
+=======
+		if (account == null) {
+>>>>>>> duylk
 			return "redirect:/index.html";
 		}
 		List<Orders> order_huy = new ArrayList<>();
 		order_huy = orderdao.find_ByHuy(account.getUsername());
 		model.addAttribute("huy", order_huy);
 		List<Orders> order_all = orderdao.find_LoginbyUsername(account.getUsername());
+<<<<<<< HEAD
 		
+=======
+
+>>>>>>> duylk
 		model.addAttribute("or", order_all);
 		return "user/order/orders";
 	}

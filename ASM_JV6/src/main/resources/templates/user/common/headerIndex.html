@@ -34,16 +34,33 @@
 					<!-- Categorie Search Box Start Here -->
 					<div class="col-lg-5 col-md-8 ml-auto mr-auto col-10">
 						<div class="categorie-search-box">
+<<<<<<< HEAD
 							<form action="#">
+=======
+							<!-- tìm-->
+							<form th:action="@{/search}" method="get">
+>>>>>>> duylk
 								<div class="form-group">
 									<select class="bootstrap-select">
 										<option><span class="text-dark" th:text="#{menu.catego}"></span><i
 												class="lnr lnr-chevron-down"></i></option>
+<<<<<<< HEAD
 										<option th:each="c:${cate}" th:utext="${c.name}"></option>
 									</select>
 								</div>
 								<input type="text" name="search" th:placeholder="#{menu.search}">
 								<button><i class="lnr lnr-magnifier"></i></button>
+=======
+										<option th:each="c:${cate}">
+											<a th:href="@{|/shop.html?cateid=${c.id}|}"> <b
+													th:utext="${c.name}"></b></a>
+										</option>
+									</select>
+								</div>
+
+								<input type="text" th:value="${keyword}" name="keyword" th:placeholder="#{menu.search}">
+								<button type="submit" <i class="lnr lnr-magnifier"></i></button>
+>>>>>>> duylk
 							</form>
 						</div>
 					</div>
@@ -98,7 +115,11 @@
 								<li><a href="product_favorite.html"><i class="lnr lnr-heart"></i><span
 											class="my-cart"><span>Mặt hàng</span><span>yêu thích (0)</span></span></a>
 								</li>
+<<<<<<< HEAD
 								<li th:if="${session.account == null}"><a href="/oauth2/authorization/google"><i class="lnr lnr-user"></i><span
+=======
+								<li th:if="${session.account == null}"><a href="#"><i class="lnr lnr-user"></i><span
+>>>>>>> duylk
 											class="my-cart"><span> <strong>Sign In </strong>with</span><span> Google
 												Account</span></span></a>
 								</li>
@@ -133,10 +154,17 @@
 										<!-- Home Version Dropdown Start -->
 										<ul class="ht-dropdown">
 										<li><a href="manageOrders.html" th:text="#{menu.order}">Đơn hàng của bạn</a>
+<<<<<<< HEAD
 										<li><a href="admin/index.html" th:text="#{menu.admin}"  th:if="${#request.isUserInRole('STAF')} OR ${#request.isUserInRole('DIRE')}">Trang quản trị</a></li>
 							</ul>
 							<!-- Home Version Dropdown End -->
 							</li>
+=======
+										<li><a href="admin/index.html" th:text="#{menu.admin}" th:if="${au}">Trang quản trị</a></li>
+									</ul>
+										<!-- Home Version Dropdown End -->
+									</li>
+>>>>>>> duylk
 							</ul>
 						</nav>
 						<div class="mobile-menu d-block d-lg-none">

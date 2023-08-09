@@ -167,6 +167,7 @@ app.filter('replace', [function () {
 
 //Cart Controller
 app.controller("cartCtr", function ($scope, $http, $rootScope, $window) {
+<<<<<<< HEAD
     $scope.colorid = "";
 
     $scope.initializeStockQuantity = function () {
@@ -206,6 +207,8 @@ app.controller("cartCtr", function ($scope, $http, $rootScope, $window) {
     };
 
 
+=======
+>>>>>>> duylk
     $scope.addCart = function (id) {
         var url = `${host}Cart/create/${id}`;
         var urlLogin = "http://" + $window.location.host + "/login.html";
@@ -224,6 +227,7 @@ app.controller("cartCtr", function ($scope, $http, $rootScope, $window) {
     }
     $scope.quantity = 1;
     $scope.addCartQty = function (id) {
+<<<<<<< HEAD
        
         var url = `${host}rest/cart/${id}/${$scope.colorid}`
         var urlLogin = "http://" + $window.location.host + "/login.html";
@@ -234,6 +238,22 @@ app.controller("cartCtr", function ($scope, $http, $rootScope, $window) {
             $rootScope.$emit("list", {});
         }
         ).catch(error => {
+=======
+        var url = `${host}Cart/create/${id}`
+        var urlLogin = "http://" + $window.location.host + "/login.html";
+        var data = $scope.Cart;
+        $http.post(url, $scope.quantity).then(resp => {
+            console.log(resp);
+            if (data.status == 200) {
+                alert("Thêm vào giỏ hàng thành công");
+            }
+            $rootScope.$emit("list", {});
+        }
+        ).catch(error => {
+            if (error.status == 500) {
+                $window.location.href = urlLogin;
+            }
+>>>>>>> duylk
             console.log(error);
         });
     }
@@ -306,6 +326,7 @@ app.controller("pushCart", function ($scope, $http, $rootScope) {
             $scope.total = "99+";
         }
         $scope.getTotalTempoary = function () {
+<<<<<<< HEAD
             var temparr = $scope.Cart;
             var temp2 = angular.copy($scope.selectedIDs);
             if(temp2.length > 0){
@@ -314,6 +335,11 @@ app.controller("pushCart", function ($scope, $http, $rootScope) {
             var total = 0;
             for (var i = 0; i < temparr.length; i++) {
                 var cart = temparr[i];
+=======
+            var total = 0;
+            for (var i = 0; i < $scope.Cart.length; i++) {
+                var cart = $scope.Cart[i];
+>>>>>>> duylk
                 total += (cart.price * cart.qty);
             }
             return total;
@@ -349,6 +375,7 @@ app.controller("pushCart", function ($scope, $http, $rootScope) {
             }
         }
 
+<<<<<<< HEAD
     }
 
     $scope.loadCheckoutList = function(){
@@ -360,6 +387,8 @@ app.controller("pushCart", function ($scope, $http, $rootScope) {
         ).catch(error => {
             console.log(error);
         });
+=======
+>>>>>>> duylk
     }
 
     // $scope.checkedItem = function (listCart) {
@@ -378,6 +407,10 @@ app.controller("checkoutCtrl", function ($scope, $http) {
 
     }
 
+    $scope.coupon = {
+        code: null
+    };
+
     $scope.payFromCart = [];
 
     $scope.loadCartProduct = function () {
@@ -392,6 +425,31 @@ app.controller("checkoutCtrl", function ($scope, $http) {
             console.log("Error", error);
         });
     };
+
+    $scope.apply_vourcher_code = function () {
+        console.log("apply_vourcher_code")
+        var item = angular.copy($scope.coupon);
+        console.log($scope.coupon);
+
+        $http.get(`/cart/${item.code}`).then(resp => {
+            if (resp.data.id != null) {
+                $scope.coupon = {};
+                $scope.coupon = resp.data;
+                console.log("ADD THÀNH CÔNG: " + $scope.coupon.value)
+                alertSuccess("THÊM VOUCHER THÀNH CÔNG.");
+                $scope.getDiscount = function () {
+                    // You can calculate the discount here based on your business logic
+                    return $scope.coupon.value;
+                };
+            }
+        }).catch(error => {
+            if (error.data.type === 'coupon_code') {
+                console.warn("Lổi ở apply")
+                alertDanger("THÊM VOUCHER THẤT BẠI.");
+            }
+
+        })
+    }
 
     // Function to calculate the subtotal
     $scope.getSubtotal = function () {
@@ -417,6 +475,7 @@ app.controller("checkoutCtrl", function ($scope, $http) {
 
     //alert(this.temp);
 });
+
 // End Orders Controller
 
 //User update image

@@ -351,4 +351,5 @@ app.controller("checkoutCtrl", function ($scope, $http) {
 
     //alert(this.temp);
 });
+
 // End Orders Controller

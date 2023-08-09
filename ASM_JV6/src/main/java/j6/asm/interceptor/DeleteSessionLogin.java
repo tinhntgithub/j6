@@ -39,6 +39,7 @@ public class DeleteSessionLogin implements HandlerInterceptor {
 			Accounts account = accountsService1.findById(username);
 			if (account != null) {
 				session.set("account", account);
+<<<<<<< HEAD
 				System.out.println("[==========| Notification: Login by " + account.getFullname() + ". |==========]");
 			} 
 			// else if (account1 != null) {
@@ -46,6 +47,22 @@ public class DeleteSessionLogin implements HandlerInterceptor {
 			// 	System.out.println("[==========| Notification: Login by " + account1.getFullname() + ". |==========]");
 			// }
 			 else {
+=======
+				System.out.println("[==========| Notification: Login by " + username + ". |==========]");
+				Accounts acc = session.get("account");
+				if (acc != null) {
+					for (Integer i = 0; i < acc.getAuthorities().size(); i++) {
+						String check = acc.getAuthorities().get(i).getRoleId().getId();
+						if (check.equals("STAF") == true || check.equals("DIRE") == true) {
+							request.setAttribute("au", true);
+							break;
+						} else {
+							request.setAttribute("au", false);
+						}
+					}
+				}
+			} else {
+>>>>>>> duylk
 				System.out.println("[==========| Notification: Account not found. |==========]");
 			}
 		}

@@ -48,8 +48,12 @@
                                     <!-- Lặp qua danh sách hình ảnh từ model và hiển thị chúng -->
                                     <div th:each="image : ${productImages}">
                                         <a data-toggle="tab" th:href="'#thumb' + ${image.id}">
+<<<<<<< HEAD
                                             <img th:src="@{/uploads/productDtImg/__${image.name}__}"
                                                 alt="Product Image">
+=======
+                                            <img th:src="@{/uploads/productDtImg/__${image.name}__}" alt="Product Image">
+>>>>>>> duylk
                                         </a>
                                     </div>
                                 </div>
