@@ -7,7 +7,9 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -23,6 +25,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import j6.asm.dao.AccountDAO;
 import j6.asm.dao.AddressDAO;
 import j6.asm.dao.CartDAO;
 import j6.asm.dao.OrderDetailsDAO;
@@ -70,14 +73,36 @@ public class OrderController {
 	@Autowired
 	AddressDAO addressDAO;
 
+	@Autowired
+	AccountDAO accountDao;
+
 	// Checkout page
 	@RequestMapping("/checkout.html")
 	public String checkoutPage(Model model) {
 		// Lấy thông tin sản phẩm từ giỏ hàng
 		Accounts account = session.get("account");
+
 		model.addAttribute("fullName", account.getFullname());
 		model.addAttribute("Phone", account.getPhone());
-		model.addAttribute("address", account.getAddress());
+		String name = account.getUsername();
+
+		List<Address> add = addressDAO.findByacc(name);
+		model.addAttribute("addresss", add);
+//		try {
+//			List<Address> add = addressDAO.findByacc(name);
+//			model.addAttribute("addresss", add);
+////
+////			for (Address addres : add) {
+////				System.out.println(addres.getAddress());
+////				String[] u = new String[] { addres.getAddress()};
+////				model.addAttribute("addresss", addres.getAddress());
+////			}
+//		} catch (Exception e) {
+//			System.err.println();
+//			e.printStackTrace();
+//		}
+	
+		// model.addAttribute("address", account.getAddress());
 		return "user/order/checkout";
 	}
 
@@ -99,8 +124,7 @@ public class OrderController {
 		Status status = statusdao.getById(1);
 
 		Orders orders = new Orders(null, account, date, null, "Kiên Giang", account.getFullname(), account.getPhone(),
-				status,
-				null);
+				status, null);
 
 		orderdao.save(orders); // Lưu đối tượng Orders và OrderDetails trong cùng một giao dịch
 
@@ -108,8 +132,8 @@ public class OrderController {
 
 		for (Cart cartProduct : cart) {
 			Products product = productsDAO.findByProductId(cartProduct.getProCart().getId());
-			orderDetails = new OrderDetails(null, orders, product, cartProduct.getPrice(),
-					cartProduct.getQty(), cartProduct.getColorCart());
+			orderDetails = new OrderDetails(null, orders, product, cartProduct.getPrice(), cartProduct.getQty(),
+					cartProduct.getColorCart());
 			orderdetaildao.save(orderDetails);
 			cartDAO.delete(cartProduct);
 		}

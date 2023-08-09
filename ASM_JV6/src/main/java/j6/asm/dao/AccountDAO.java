@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import j6.asm.entity.Accounts;
+import j6.asm.entity.Address;
 
 public interface AccountDAO extends JpaRepository<Accounts, String> {
     @Query(value = "select * from Accounts where Email like ?1", nativeQuery = true)
@@ -50,5 +51,6 @@ public interface AccountDAO extends JpaRepository<Accounts, String> {
             "WHERE o.StatusId = 3 " +
             "GROUP BY a.Fullname, o.CreateDate", nativeQuery = true)
     List<Object[]> getReportAllCustomer();
+
 
 }

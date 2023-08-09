@@ -58,10 +58,8 @@
                                     <div class="country-select clearfix mb-3">
                                         <label>Địa chỉ của bạn <span class="required">*</span></label>
                                         <select class="wide">
-                                            <option value="1">[[address]]</option>
-                                            <option value="2">Địa chỉ 2 :))</option>
-                                            <option value="3">Địa chỉ 3 :))</option>
-                                            <option value="4">Địa chỉ 4 :))</option>
+                                            <option th:each="b : ${addresss}" th:value="${b.id}" th:utext="${b.address}" ></option>
+                                            
                                         </select>
                                     </div>
                                 </div>

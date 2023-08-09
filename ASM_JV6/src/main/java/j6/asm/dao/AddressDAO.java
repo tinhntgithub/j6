@@ -12,4 +12,9 @@ import j6.asm.entity.Address;
 public interface AddressDAO extends JpaRepository<Address, Integer> {
 	@Query("Select a from Address a where a.userAr=?1")
 	List<Address> findByUsername(Accounts acc,Pageable page);
+	
+
+    @Query(value="select * from Address where username = ?1",nativeQuery = true)
+    List<Address> findByacc(String username);
+
 }
