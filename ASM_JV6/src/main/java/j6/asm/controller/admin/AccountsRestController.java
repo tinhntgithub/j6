@@ -48,6 +48,21 @@ public class AccountsRestController {
 		return ResponseEntity.ok(account.findAll());
 	}
 
+	@GetMapping("/rest/accounts/current")
+	public ResponseEntity<Accounts> getCurrent() {
+		Accounts account = session.get("account");
+		return ResponseEntity.ok(account);
+	}
+
+	@GetMapping("/rest/address/{username}")
+	public ResponseEntity<List<Address>> getAddresses(@PathVariable("username") String username) {
+		Optional<List<Address>> addresses = addServ.findByUsername(username);
+		if (!addresses.isPresent()) {
+			return ResponseEntity.notFound().build();
+		}
+		return ResponseEntity.ok(addresses.get());
+	}
+
 	@GetMapping("/rest/accounts/{id}")
 	public ResponseEntity<Accounts> getOne(@PathVariable("id") String id) {
 		if (account.findById(id) == null) {
@@ -78,9 +93,9 @@ public class AccountsRestController {
 
 	@PostMapping("/rest/accounts")
 	public ResponseEntity<Accounts> post(@RequestBody Accounts data) {
-//		if(account.findById(data.getId()) != null) {
-//			return ResponseEntity.badRequest().build();
-//		}
+		// if(account.findById(data.getId()) != null) {
+		// return ResponseEntity.badRequest().build();
+		// }
 		if (data.getPhoto() == null) {
 			data.setPhoto("default.jpg");
 		}

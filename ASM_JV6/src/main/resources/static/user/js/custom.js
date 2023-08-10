@@ -305,7 +305,7 @@ app.controller("pushCart", function ($scope, $http, $rootScope) {
         for (var i = 0; i < $scope.Cart.length; i++) {
             $scope.Cart[i].isSelected = $scope.selectAll;
             if ($scope.selectAll) {
-                $scope.selectedIDs.push($scope.Cart[i].id); // Thêm ID vào mảng selectedIDs
+                $scope.selectedIDs.push($scope.Cart[i]); // Thêm ID vào mảng selectedIDs
             }
         }
 
@@ -406,6 +406,7 @@ app.controller("pushCart", function ($scope, $http, $rootScope) {
     $scope.loadCheckoutList = function () {
         var url = `${host}rest/cart/savetemplist`;
         var data = angular.copy($scope.selectedIDs)
+
         $http.post(url, data).then(resp => {
             console.log(resp.data);
         }
@@ -425,6 +426,28 @@ app.controller("pushCart", function ($scope, $http, $rootScope) {
 
 // Orders Controller
 app.controller("checkoutCtrl", function ($scope, $http) {
+
+    $scope.currentUser = {};
+    $scope.addrList = [];
+    $scope.addrSelected = "";
+
+    $scope.getCurrentUser = function () {
+        var url = `${host}rest/accounts/current`;
+        var url2 = `${host}rest/address/`;
+        $http.get(url).then((resp) => {
+            $scope.currentUser = resp.data;
+            $http.get(url2 + $scope.currentUser.username).then((resp) => {
+                $scope.addrList = resp.data;
+                console.log("Success o", $scope.currentUser);
+            }).catch((error) => {
+                console.log("Error", error);
+            });
+
+        }).catch((error) => {
+            console.log("Error", error);
+        });
+    }
+
     $scope.checkout = function () {
         alertSuccess("Thanh toán thành công");
     }
@@ -455,8 +478,10 @@ app.controller("checkoutCtrl", function ($scope, $http) {
     $scope.loadCartProduct = function () {
         var url = `${host}rest/cart/gettemplist`;
         $http.get(url).then((resp) => {
-            // Access the itemChecked array from SharedService
             $scope.payFromCart = resp.data;
+            //xử lý nếu resp.data rỗng thì thay bằng toàn bộ card
+            //...
+            //
             alertSuccess("Lấy API thành công");
             console.log("Success", $scope.payFromCart);
         }).catch((error) => {
@@ -464,6 +489,49 @@ app.controller("checkoutCtrl", function ($scope, $http) {
             console.log("Error", error);
         });
     };
+
+    $scope.voucher = {};
+
+    $scope.apply_vourcher_code = function () {
+        var url = `${host}rest/sales/checkcode/`;
+        var item = angular.copy($scope.voucher);
+        console.log($scope.voucher);
+        $http.get(url + item.code).then(resp => {
+            $scope.voucher = resp.data;
+            console.log($scope.voucher);
+            $scope.getDiscount = function () {
+                var sub = $scope.getSubtotal();
+                return $scope.voucher.value * sub / 100;
+            };
+        }).catch(error => {
+            console.log("Error", error)
+
+        })
+    }
+
+    $scope.handleCheckout = function () {
+        var url = `${host}rest/order/neworder`;
+        var data = angular.copy($scope.currentUser);
+        data.voucher = angular.copy($scope.voucher.id);
+        if (data.voucher == undefined) {
+            data.voucher = 0;
+        }
+        data.list = angular.copy($scope.payFromCart);
+        data.address = angular.copy($scope.addrSelected);
+        if (!data.address) {
+            data.address = data.newAddress;
+            if(!data.address){
+                data.address = null;
+            }
+        }
+        console.log(data)
+        $http.post(url, data).then(resp => {
+            console.log(resp.data);
+        }).catch(error => {
+            console.log(error);
+        });
+
+    }
 
     // Function to calculate the subtotal
     $scope.getSubtotal = function () {
@@ -474,9 +542,8 @@ app.controller("checkoutCtrl", function ($scope, $http) {
         return subtotal;
     };
 
-    // Function to calculate the discount (assuming discount is 0 for now)
+
     $scope.getDiscount = function () {
-        // You can calculate the discount here based on your business logic
         return 0;
     };
 
@@ -484,6 +551,7 @@ app.controller("checkoutCtrl", function ($scope, $http) {
     $scope.getTotal = function () {
         return $scope.getSubtotal() - $scope.getDiscount();
     };
+
     $scope.getCurrentUser();
     $scope.loadCartProduct();
 

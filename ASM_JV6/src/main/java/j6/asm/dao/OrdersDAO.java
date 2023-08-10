@@ -45,4 +45,7 @@ public interface OrdersDAO extends JpaRepository<Orders, Integer> {
 			"GROUP BY MONTH(b.date)")
 	List<Object[]> getRevenueByMonth();
 
+	@Query(value = "select * from Orders a join OrderDetails od on a.Id = od.OrderId where od.Id = ?1", nativeQuery = true)
+	Orders findByOrderDtId(Integer id);
+
 }

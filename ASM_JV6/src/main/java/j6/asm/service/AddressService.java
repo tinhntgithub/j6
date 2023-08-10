@@ -17,4 +17,6 @@ public interface AddressService {
 	void update(Address entity);
 
 	void delete(Integer id);
+	
+	Optional<List<Address>> findByUsername(String username);
 }

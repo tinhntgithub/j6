@@ -44,4 +44,9 @@ public class AddressServiceImp implements AddressService {
 		dao.deleteById(id);
 	}
 
+	@Override
+	public Optional<List<Address>> findByUsername(String username) {
+		return dao.findByUsername(username);
+	}
+
 }
