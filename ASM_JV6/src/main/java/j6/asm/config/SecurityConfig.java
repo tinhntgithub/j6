@@ -52,7 +52,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 						"/compareEmail.html")
 				.permitAll()
 
-				.antMatchers("/admin/**").hasAnyRole("DIRE", "STAF").antMatchers("/cart.html", "/changepass.html",
+				.antMatchers("/admin/**").hasAnyRole("DIRE", "STAF")
+				.antMatchers("/cart.html", "/changepass.html",
 						"/update_account.html", "/update_account.html/**", "/checkout.html", "/orders.html")
 				.authenticated();
 

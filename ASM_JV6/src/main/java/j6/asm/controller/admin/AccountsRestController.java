@@ -1,6 +1,7 @@
 package j6.asm.controller.admin;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -22,7 +23,9 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import j6.asm.dao.AccountDAO;
 import j6.asm.entity.Accounts;
+import j6.asm.entity.Address;
 import j6.asm.service.AccountsService;
+import j6.asm.service.AddressService;
 import j6.asm.service.SessionService;
 
 @CrossOrigin("*")
@@ -37,6 +40,8 @@ public class AccountsRestController {
 	AccountDAO accountDAO;
 	@Autowired
 	HttpServletRequest request;
+	@Autowired
+	AddressService addServ;
 
 	@GetMapping("/rest/accounts")
 	public ResponseEntity<List<Accounts>> getAll(Model m) {
@@ -109,6 +114,20 @@ public class AccountsRestController {
 		obj.put("fullname", acc.getFullname());
 		obj.put("photo", acc.getPhoto());
 		return obj;
+	}
+	@GetMapping("/rest/address/{username}")
+	public ResponseEntity<List<Address>> getAddresses(@PathVariable("username") String username) {
+		Optional<List<Address>> addresses = addServ.findByUsername(username);
+		System.out.println(username +"---------------------------------------------");
+		if (!addresses.isPresent()) {
+			return ResponseEntity.notFound().build();
+		}
+		return ResponseEntity.ok(addresses.get());
+	}
+	@GetMapping("/rest/accounts/current")
+	public ResponseEntity<Accounts> getCurrent() {
+		Accounts account = session.get("account");
+		return ResponseEntity.ok(account);
 	}
 
 }

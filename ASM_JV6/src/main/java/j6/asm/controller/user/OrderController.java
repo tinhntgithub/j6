@@ -144,6 +144,7 @@ public class OrderController {
 	public String orderDetailsPage(Model m, @RequestParam("id") Integer id) {
 		Accounts account = session.get("account");
 		List<OrderDetails> details = orderdetaildao.find_Order_details(id);
+		
 		m.addAttribute("details", details);
 
 		// thông tin khách hàng

@@ -308,11 +308,11 @@ app.controller("pushCart", function ($scope, $http, $rootScope) {
                 $scope.selectedIDs.push($scope.Cart[i].id); // Thêm ID vào mảng selectedIDs
             }
         }
-        
-     
+
+
         $scope.calculateTotalAmount();
     };
-    
+
     $scope.calculateTotalAmount = function () {
         var total = 0;
 
@@ -425,11 +425,31 @@ app.controller("pushCart", function ($scope, $http, $rootScope) {
 
 // Orders Controller
 app.controller("checkoutCtrl", function ($scope, $http) {
-
+    $scope.checkout = function () {
+        alertSuccess("Thanh toán thành công");
+    }
     $scope.delelteProductFormCart = function () {
 
     }
+    $scope.currentUser = {};
+    $scope.selectedAddress = ''; 
+    $scope.getCurrentUser = function () {
+        var url = `${host}rest/accounts/current`;
+        var url2 = `${host}rest/address/`;
+        $http.get(url).then((resp) => {
+            $scope.currentUser = resp.data;
+            $http.get(url2 + $scope.currentUser.username).then((resp) => {
+                $scope.currentUser.address = resp.data;
+                
+                console.log("Success o", resp.data);
+            }).catch((error) => {
+                console.log("Error", error);
+            });
 
+        }).catch((error) => {
+            console.log("Error", error);
+        });
+    }
     $scope.payFromCart = [];
 
     $scope.loadCartProduct = function () {
@@ -464,7 +484,7 @@ app.controller("checkoutCtrl", function ($scope, $http) {
     $scope.getTotal = function () {
         return $scope.getSubtotal() - $scope.getDiscount();
     };
-
+    $scope.getCurrentUser();
     $scope.loadCartProduct();
 
     //alert(this.temp);
