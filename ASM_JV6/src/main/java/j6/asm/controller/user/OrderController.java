@@ -75,7 +75,6 @@ public class OrderController {
 	public String checkoutPage(Model model) {
 		Accounts account = session.get("account");
 		model.addAttribute("userInfo", account);
-		
 
 		return "user/order/checkout";
 	}
@@ -83,39 +82,46 @@ public class OrderController {
 	@RequestMapping("/orders.html")
 	public String ordersPage(Model model) throws IOException, ParseException {
 		Accounts account = session.get("account");
-		//List<Cart> cart = cartDAO.findByUserCart(account);
+		// List<Cart> cart = cartDAO.findByUserCart(account);
 		// Pageable pageable = PageRequest.of(0, 10);
 		// List<Address> addresses = addressDAO.findByUsername(account, pageable);
 		// List<OrderDetails> listOrderDetails = new ArrayList<>();
 
 		// LocalDateTime now = LocalDateTime.now();
-		// DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-ddHH:mm:ss.SSS");
+		// DateTimeFormatter formatter =
+		// DateTimeFormatter.ofPattern("yyyy-MM-ddHH:mm:ss.SSS");
 		// String dateString = now.format(formatter);
 
-		// SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-ddHH:mm:ss.SSS");
+		// SimpleDateFormat inputFormat = new
+		// SimpleDateFormat("yyyy-MM-ddHH:mm:ss.SSS");
 		// Date date = inputFormat.parse(dateString);
 
 		// Status status = statusdao.getById(1);
 
-		// Orders orders = new Orders(null, account, date, null, "Kiên Giang", account.getFullname(), account.getPhone(),
-		// 		status,
-		// 		null);
+		// Orders orders = new Orders(null, account, date, null, "Kiên Giang",
+		// account.getFullname(), account.getPhone(),
+		// status,
+		// null);
 
-		// orderdao.save(orders); // Lưu đối tượng Orders và OrderDetails trong cùng một giao dịch
+		// orderdao.save(orders); // Lưu đối tượng Orders và OrderDetails trong cùng một
+		// giao dịch
 
 		// OrderDetails orderDetails;
 
 		// for (Cart cartProduct : cart) {
-		// 	Products product = productsDAO.findByProductId(cartProduct.getProCart().getId());
-		// 	orderDetails = new OrderDetails(null, orders, product, cartProduct.getPrice(),
-		// 			cartProduct.getQty(), cartProduct.getColorCart());
-		// 	orderdetaildao.save(orderDetails);
-		// 	cartDAO.delete(cartProduct);
+		// Products product =
+		// productsDAO.findByProductId(cartProduct.getProCart().getId());
+		// orderDetails = new OrderDetails(null, orders, product,
+		// cartProduct.getPrice(),
+		// cartProduct.getQty(), cartProduct.getColorCart());
+		// orderdetaildao.save(orderDetails);
+		// cartDAO.delete(cartProduct);
 		// }
 
 		// orders.setOrderDetails(listOrderDetails);
 
-		// orderdao.save(orders); // Lưu đối tượng Orders và OrderDetails trong cùng một giao dịch
+		// orderdao.save(orders); // Lưu đối tượng Orders và OrderDetails trong cùng một
+		// giao dịch
 
 		List<Orders> order_all = orderdao.find_LoginbyUsername(account.getUsername());
 		model.addAttribute("or", order_all.get(0));
@@ -128,7 +134,7 @@ public class OrderController {
 	@RequestMapping("/manageOrders.html")
 	public String ordersManagePage(Model model) throws IOException, ParseException {
 		Accounts account = session.get("account");
-		if(account==null) {
+		if (account == null) {
 			return "redirect:/index.html";
 		}
 		List<Orders> order_huy = new ArrayList<>();
@@ -137,7 +143,7 @@ public class OrderController {
 		order_huy = orderdao.find_ByHuy(account.getUsername());
 		model.addAttribute("huy", order_huy);
 		model.addAttribute("or", order_all);
-		model.addAttribute("nhan",list_nhan);
+		model.addAttribute("nhan", list_nhan);
 		return "user/order/orders";
 	}
 
@@ -149,8 +155,26 @@ public class OrderController {
 		m.addAttribute("details", details);
 
 		// thông tin khách hàng
-		List<Orders> order_all = orderdao.find_LoginbyUsername(account.getUsername());
-		m.addAttribute("or", order_all.get(0));
+		Orders order = orderdao.findByOrderDtId(details.get(0).getId());
+		m.addAttribute("or", order);
+
+		// giảm giá
+		Double subtotal = 0.0; // tổng giá tiền
+
+		for (OrderDetails odtail : details) {
+			subtotal += odtail.getPrice() * odtail.getQty();
+		}
+		Double giamgia = 0.0;
+		if (order.getSaleId() != null) {
+			giamgia = subtotal * order.getSaleId().getValue() / 100;//
+		}
+
+		Double total = subtotal - giamgia;
+
+		m.addAttribute("giamgia", giamgia); // số tiền giảm
+		m.addAttribute("total", total);
+		m.addAttribute("subtotal", subtotal);
+
 		return "user/order/order-details";
 	}
 

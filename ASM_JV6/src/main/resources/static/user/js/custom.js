@@ -494,11 +494,11 @@ app.controller("checkoutCtrl", function ($scope, $http) {
         if (data.voucher == undefined) {
             data.voucher = 0;
         }
-        data.address = angular.copy($scope.addrSelected);
         data.list = angular.copy($scope.payFromCart);
-        if (data.address) {
+        data.address = angular.copy($scope.addrSelected);
+        if (!data.address) {
             data.address = data.newAddress;
-            if(data.address){
+            if(!data.address){
                 data.address = null;
             }
         }

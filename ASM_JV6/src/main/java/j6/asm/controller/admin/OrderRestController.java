@@ -35,6 +35,7 @@ import j6.asm.entity.Address;
 import j6.asm.entity.Cart;
 import j6.asm.entity.OrderDetails;
 import j6.asm.entity.Orders;
+import j6.asm.entity.ProductColor;
 import j6.asm.entity.Products;
 import j6.asm.entity.Sale;
 import j6.asm.entity.Status;
@@ -42,6 +43,7 @@ import j6.asm.service.AddressService;
 import j6.asm.service.CartService;
 import j6.asm.service.OrderDetailsService;
 import j6.asm.service.OrdersService;
+import j6.asm.service.ProductColorService;
 import j6.asm.service.SaleService;
 import j6.asm.service.SessionService;
 import j6.asm.service.StatusService;
@@ -70,6 +72,8 @@ public class OrderRestController {
 	ProductsDAO productsDAO;
 	@Autowired
 	StatusDAO statusDao;
+	@Autowired
+	ProductColorService productColorService;
 
 	// Đơn hàng đang chờ Restful API
 	@GetMapping("/rest/order-wait")
@@ -190,6 +194,10 @@ public class OrderRestController {
 			orderDetails.setQty(cartProduct.getQty());
 
 			ordersService.create(orderDetails);
+			ProductColor productColor = cartProduct.getColorCart();
+			productColor.setQty(productColor.getQty() - cartProduct.getQty());
+			productColorService.update(productColor);
+			
 			cartService.delete(cartProduct.getId());
 		}
 
