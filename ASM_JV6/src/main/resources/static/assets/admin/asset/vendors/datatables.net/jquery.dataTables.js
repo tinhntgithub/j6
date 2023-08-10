@@ -3,7 +3,7 @@
  */
 
 /**
- * @summary     DataTables
+ * @summary     ataTablesD
  * @description Paginate, search and order HTML tables
  * @version     1.11.3
  * @file        jquery.dataTables.js

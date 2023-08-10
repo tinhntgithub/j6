@@ -47,7 +47,7 @@
        
         </div>
         <div class="table-responsive">
-          <table class="table table-hover table-striped">
+          <table id="example1" class="table table-hover table-striped">
             <thead>
               <tr class="bg-success">
                 <th>
@@ -87,7 +87,7 @@
 
             <tbody>
               <!-- List item start -->
-              <tr dir-paginate="item in reportOrder  | itemsPerPage: 3">
+              <!-- <tr dir-paginate="item in reportOrder  | itemsPerPage: 3">
 
                 <td class="h4">{{$index + 1}}</td>
                 <td class="h5">
@@ -99,7 +99,7 @@
                   {{item[2]}}
                 </td>
 
-              </tr>
+              </tr> -->
               <!-- List item end -->
 
             </tbody>
@@ -108,10 +108,10 @@
         <!-- List content body end -->
         <!-- List content footer -->
         <!-- Pagination controls here -->
-        <div class="product__pagination justify-content-end">
+        <!-- <div class="product__pagination justify-content-end">
           <dir-pagination-controls>
           </dir-pagination-controls>
-        </div>
+        </div> -->
 
         <!-- Pagination controls here -->
         <!-- List content footer end -->

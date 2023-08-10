@@ -287,7 +287,7 @@ public class AccountController {
 				+ "                            </table>\r\n" + "                        </td>\r\n"
 				+ "                    </tr>\r\n" + "                    <tr align=\"center\">\r\n"
 				+ "                        <td style=\"padding: 40px 0 30px 0;\">\r\n"
-				+ "                            <a href=\"http://localhost:8080/login.html"
+				+ "                            <a href=\"http://localhost:8080/signin.html"
 				+ "\" style=\"background-color: rgb(241, 75, 75);color:white;\r\n"
 				+ "                                text-decoration: none;padding: 15px 50px 15px 50px;border-radius: 30px;\r\n"
 				+ "                                box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;                                \r\n"

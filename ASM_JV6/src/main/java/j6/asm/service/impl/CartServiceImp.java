@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import j6.asm.dao.CartDAO;
 import j6.asm.entity.Accounts;
 import j6.asm.entity.Cart;
+import j6.asm.entity.ProductColor;
 import j6.asm.entity.Products;
 import j6.asm.service.CartService;
 @Service
@@ -42,9 +43,17 @@ public class CartServiceImp implements CartService {
 		dao.deleteById(id);
 	}
 	
+	@Override
 	public Optional<Cart> findByUsernameAndProduct(Accounts acc,Products pro) {
 		return dao.findByUserCartAndProCart(acc,pro);
 	}
+
+	@Override
+	public Optional<Cart> findByUsernameAndProductColor(Accounts acc,ProductColor pro) {
+		return dao.findByUsernameAndProductColor(acc,pro);
+	}
+
+	@Override
 	public List<Cart> findByUsername(Accounts acc) {
 		return dao.findByUserCart(acc);
 	}

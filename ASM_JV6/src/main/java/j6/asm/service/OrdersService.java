@@ -19,7 +19,7 @@ public interface OrdersService {
 	List<Orders> findAllOrderDone();
 
 	List<Object[]> getRevenueByYear();
-
+	List<Object[]> getRevenueByMonth();
 
 	Orders findById(Integer id);
 

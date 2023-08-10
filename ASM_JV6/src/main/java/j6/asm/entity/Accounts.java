@@ -23,11 +23,11 @@ public class Accounts implements Serializable {
 
 	@Id
 	@Column(name = "[username]")
-	@NotBlank(message = "{NotBlank.Account.username}")
+	@NotBlank(message = "Vui lòng nhập tên người dùng")
 	String username;
 
 	@Column(name = "[password]")
-	@NotBlank(message = "{NotBlank.Account.password}")
+	@NotBlank(message = "Vui l\u00F2ng nh\u1EADp m\u1EADt kh\u1EA9u")
 	String password;
 
 	@Column(name = "[fullname]")

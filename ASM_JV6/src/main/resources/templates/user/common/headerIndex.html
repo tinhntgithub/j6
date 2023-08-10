@@ -133,10 +133,10 @@
 										<!-- Home Version Dropdown Start -->
 										<ul class="ht-dropdown">
 										<li><a href="manageOrders.html" th:text="#{menu.order}">Đơn hàng của bạn</a>
-										<li><a href="admin/index.html" th:text="#{menu.admin}" th:if="${au}">Trang quản trị</a></li>
-									</ul>
-										<!-- Home Version Dropdown End -->
-									</li>
+										<li><a href="admin/index.html" th:text="#{menu.admin}"  th:if="${#request.isUserInRole('STAF')} OR ${#request.isUserInRole('DIRE')}">Trang quản trị</a></li>
+							</ul>
+							<!-- Home Version Dropdown End -->
+							</li>
 							</ul>
 						</nav>
 						<div class="mobile-menu d-block d-lg-none">

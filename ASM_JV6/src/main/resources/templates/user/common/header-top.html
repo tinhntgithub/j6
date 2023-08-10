@@ -9,7 +9,7 @@
 					class="bi bi-geo-alt-fill" viewBox="0 0 16 16">
 					<path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z" />
 				</svg>
-				<span class="text-dark" >số 22, P. Thường Thạnh, Q. Cái Răng, TP Cần Thơ</span>
+				<span class="text-dark">số 22, P. Thường Thạnh, Q. Cái Răng, TP Cần Thơ</span>
 			</li>
 			<li style="font-size: 13px;">
 				<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor"
@@ -59,13 +59,13 @@
 							d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
 					</svg>
 					<span class="text-dark" th:if="${session.account == null}" th:text="#{header.account}"></span>
-					<span class="text-dark" th:unless="${session.account == null}" th:text="|Xin chào, ${session.account.username}|"></span
-						><i class="lnr lnr-chevron-down"></i>
+					<span class="text-dark " th:unless="${session.account == null}"
+						th:text="|Xin chào, ${session.account.username}|"></span><i class="lnr lnr-chevron-down"></i>
 				</a>
 				<!-- Dropdown Start -->
 				<ul class="ht-dropdown">
 					<th:block th:if="${session.account == null}">
-						<li><a href="login.html" th:text="#{header.login}">Đăng nhập</a></li>
+						<li><a href="signin.html" th:text="#{header.login}">Đăng nhập</a></li>
 						<li><a href="register.html" th:text="#{header.register}">Đăng ký</a></li>
 					</th:block>
 					<th:block th:unless="${session.account == null}">
@@ -73,6 +73,10 @@
 						<li><a href="forgot-password.html" th:text="#{header.forgotpass}">Quên mật khẩu</a></li>
 						<li><a th:href="@{/update_account.html}" th:text="#{header.updateaccount}">Cập nhật tài
 								khoản</a></li>
+						<li><a href="admin/index.html" th:text="#{menu.admin}"
+								th:if="${#request.isUserInRole('STAF')} OR ${#request.isUserInRole('DIRE')}">Trang quản
+								trị</a></li>
+
 						<li><a th:href="@{/logout.html}" th:text="#{header.logout}">Đăng xuất</a></li>
 					</th:block>
 				</ul>

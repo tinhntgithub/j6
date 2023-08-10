@@ -31,28 +31,24 @@ public class DeleteSessionLogin implements HandlerInterceptor {
 			session.remove("account");
 			System.out.println("[==========| Notification: No session login. |==========]");
 		} else {
+			// Accounts account1 = (Accounts) session.get("account")
+
+
 			String username = request.getUserPrincipal().getName();
+			System.out.println(username+ " =======");
 			Accounts account = accountsService1.findById(username);
 			if (account != null) {
 				session.set("account", account);
-				System.out.println("[==========| Notification: Login by " + username + ". |==========]");
-				Accounts acc = session.get("account");
-				if (acc != null) {
-					for (Integer i = 0; i < acc.getAuthorities().size(); i++) {
-						String check = acc.getAuthorities().get(i).getRoleId().getId();
-						if (check.equals("STAF") == true || check.equals("DIRE") == true) {
-							request.setAttribute("au", true);
-							break;
-						} else {
-							request.setAttribute("au", false);
-						}
-					}
-				}
-			} else {
+				System.out.println("[==========| Notification: Login by " + account.getFullname() + ". |==========]");
+			} 
+			// else if (account1 != null) {
+			// 	session.set("account", account1);
+			// 	System.out.println("[==========| Notification: Login by " + account1.getFullname() + ". |==========]");
+			// }
+			 else {
 				System.out.println("[==========| Notification: Account not found. |==========]");
 			}
 		}
-
 		return true;
 	}
 }

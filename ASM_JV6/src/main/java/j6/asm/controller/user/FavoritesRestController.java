@@ -1,8 +1,11 @@
 package j6.asm.controller.user;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.mail.Session;
 import javax.servlet.http.HttpServletRequest;
@@ -50,7 +53,7 @@ public class FavoritesRestController {
 	@Autowired
 	SessionService session;
 
-	@GetMapping("/like/all")
+	@GetMapping("like/all")
 	public ResponseEntity<List<Favorites>> getAll() {
 		Accounts account = session.get("account");
 		List<Favorites> list = fvrDao.findByUserFvr(account);
@@ -60,30 +63,27 @@ public class FavoritesRestController {
 		return ResponseEntity.ok(list);
 	}
 
-	@DeleteMapping("/unLike/{id}")
+	@DeleteMapping("unLike/{id}")
 	public void delteteFavorites(@PathVariable("id") Integer id) {
-		Accounts account = session.get("account");
-		List<Favorites> favorites = fvrDao.findByUserFvr(account);
-		System.out.println(favorites.get(0).getId());
-		if (favorites == null || favorites.isEmpty()) {
+		try {
+			Accounts account = session.get("account");
+			Favorites favoriteToDelete = fvrDao.findByUserFvr(account).get(id);
+
+			if (favoriteToDelete == null) {
+				return;
+			}
+
+			fvrDao.delete(favoriteToDelete);
+
+			Map<String, String> response = new HashMap<>();
+			response.put("message", "Favorite deleted successfully");
+
+			return;
+		} catch (Exception e) {
+			e.printStackTrace();
 			return;
 		}
-		if (!favorites.get(0).getId().equals(id)) {
-			return;
-		}
-		fvrDao.delete(favorites.get(0));
 	}
-
-	// @GetMapping("like/{id}")
-	// public ResponseEntity<List<Favorites>> getUsersFavorites() {
-	// Accounts account = session.get("account");
-
-	// List<Favorites> list = fvrDao.findByUserFvr(account);
-	// if (list.isEmpty() || list == null) {
-	// return ResponseEntity.noContent().build();
-	// }
-	// return ResponseEntity.ok(list);
-	// }
 
 	@PostMapping("like/{id}")
 	public ResponseEntity<Object> likeByID(@PathVariable("id") String id) throws IOException {
@@ -95,8 +95,12 @@ public class FavoritesRestController {
 		if (req.getUserPrincipal() == null) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();// 500
 		} else {
-			username = req.getUserPrincipal().getName();
+			Accounts acc = session.get("account");
+			session.set("account", acc);
+			// username = req.getUserPrincipal().getName();
+			username = acc.getUsername();
 			accounts = accDao.findById(username).get();
+			System.out.println("USERNAME : " + username);
 		}
 		if (NumberUtils.isParsable(id)) {
 			idConvert = Integer.valueOf(id);
