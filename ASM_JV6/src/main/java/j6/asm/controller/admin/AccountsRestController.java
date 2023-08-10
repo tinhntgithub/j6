@@ -130,19 +130,5 @@ public class AccountsRestController {
 		obj.put("photo", acc.getPhoto());
 		return obj;
 	}
-	@GetMapping("/rest/address/{username}")
-	public ResponseEntity<List<Address>> getAddresses(@PathVariable("username") String username) {
-		Optional<List<Address>> addresses = addServ.findByUsername(username);
-		System.out.println(username +"---------------------------------------------");
-		if (!addresses.isPresent()) {
-			return ResponseEntity.notFound().build();
-		}
-		return ResponseEntity.ok(addresses.get());
-	}
-	@GetMapping("/rest/accounts/current")
-	public ResponseEntity<Accounts> getCurrent() {
-		Accounts account = session.get("account");
-		return ResponseEntity.ok(account);
-	}
 
 }

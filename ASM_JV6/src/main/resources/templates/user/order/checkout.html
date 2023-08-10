@@ -55,30 +55,15 @@
                                         <input type="email" placeholder="Nhập email của bạn....">
                                     </div>
                                 </div> -->
-                                <!-- <div class="col-md-12">
+<div class="col-md-12">
                                     <div class="country-select clearfix mb-3">
                                         <label>Địa chỉ của bạn <span class="required">*</span></label>
-                                        <select ng-model="addrSelected" class="wide"
+                                        <!-- <select ng-model="addrSelected" class="wide"
                                             ng-options="a.address for a in addrList">
-                                            <!-- <option value="">Chọn địa chỉ</option>
-                                            <option ng-repeat="a in addrList" value="{{a.id}}">{{a.address}}</option> -->
-                                        </select>
-                                        <p ng-repeat="a in addrList">{{a.address}}</p>
+                                            
+                                        </select> -->
+                                        <!-- <p ng-repeat="a in addrList">{{a.address}}</p> -->
                                     </div>
-                                </div> -->
-                                <div class="col-md-12">
-                                    <div class="country-select clearfix mb-3">
-                                        <label>Địa chỉ của bạn <span class="required">*</span></label>
-                                       
-                                        <select ng-model="selectedAddress" class="wide">
-                                            <option value="">Chọn địa chỉ</option>
-                                            <option ng-repeat="a in currentUser.address track by a.id" value="{{a.address}}">{{a.address}}</option>
-                                        </select>
-                                        <p ng-repeat="a in addrList">{{a.address}}</p>
-                                    </div>
-                                </div>
-                                <div ng-repeat="a in currentUser.address">
-                                    <span>{{a.address}}</span>
                                 </div>
                             </div>
                             <div class="different-address">
@@ -115,7 +100,7 @@
                                 <div class="col-md-12 mb-3">
                                     <div class="checkout-form-list mb-sm-30">
                                         <label>Mã giảm giá</label>
-                                        <input type="text" name="coupon_code" ng-model="voucher.code"
+<input type="text" name="coupon_code" ng-model="voucher.code"
                                             style="width: 350px;" placeholder="Nhập mã voucher của bạn, nếu có....">
                                         <button ng-click="apply_vourcher_code()" class="btn btn-danger"
                                             style="background-color: orangered;"><strong>ÁP DỤNG</strong></button>
@@ -155,7 +140,7 @@
                                         </tr>
                                         <tr class="cart-subtotal" style="color: orangered;">
                                             <th>(-) Giảm giá</th>
-                                            <td><span class="amount" style="color: orangered;"><span>({{voucher.value}}%)</span> {{getDiscount() | currency : '' :0 |replace:
+<td><span class="amount" style="color: orangered;"><span>({{voucher.value}}%)</span> {{getDiscount() | currency : '' :0 |replace:
                                                 ',':'.'}}
                                                     đ</span></td>
                                         </tr>
@@ -168,14 +153,35 @@
                                     </tfoot>
                                 </table>
                             </div>
-                         
-                            <div class="payment-method">
+                            <!-- <div class="payment-method">
                                 <div id="accordion">
-                                    <div class="card mt-0">
+                                    <div class="card">
+                                        <div class="card-header" id="headingone" style="background-color: orangered;">
+                                            <h5 class="mb-0">
+                                                <div class="form-check btn btn-link">
+                                                  <input checked  class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"
+                                                  data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                  <label class="form-check-label text-white" for="flexRadioDefault1">
+                                                    Chuyển khoản ngân hàng
+                                                  </label>
+                                                </div>
+                                                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                  Direct Bank Transfer
+                                                </button>
+                                            </h5>
+                                        </div>
+
+                                        <div id="collapseOne" class="collapse show" aria-labelledby="headingone" data-parent="#accordion">
+                                            <div class="card-body">
+                                                <p>Thực hiện thanh toán vào ngay tài khoản ngân hàng của chúng tôi. Vui lòng sử dụng Mã đơn hàng của bạn trong phần Nội dung thanh toán. Đơn hàng sẽ đươc giao sau khi tiền đã chuyển.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+<div class="card mt-0">
                                         <div class="card-header" id="headingtwo" style="background-color: orangered;">
                                             <h5 class="mb-0">
                                                 <div class="form-check btn btn-link">
-                                                  <input checked class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo"
+                                                  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo"
                                                   >
                                                   <label class="form-check-label text-white" for="flexRadioDefault2">
                                                     Trả tiền mặt khi nhận hàng
@@ -192,101 +198,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="card">
-                                        <div class="card-header" id="headingone" style="background-color: orangered;">
-                                            <h5 class="mb-0">
-                                                <div class="form-check btn btn-link">
-                                                  <input   class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"
-                                                  data-toggle="collapse " data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                                  <label class="form-check-label text-white" for="flexRadioDefault1">
-                                                    Chuyển khoản ngân hàng
-                                                  </label>
-                                                </div>
-                                                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                                  Direct Bank Transfer
-                                                </button>
-                                            </h5>
-                                        </div>
-
-                                        <div id="collapseOne" class="collapse " aria-labelledby="headingone" data-parent="#accordion">
-                                            <div class="card-body">
-                                                <!-- <p>Thực hiện thanh toán vào ngay tài khoản ngân hàng của chúng tôi. Vui lòng sử dụng Mã đơn hàng của bạn trong phần Nội dung thanh toán. Đơn hàng sẽ đươc giao sau khi tiền đã chuyển.</p> -->
-                                                <div class="sub-bank" >
-                                                    <div class="wrapper">
-                                                        <div class="card">
-                                                            <input class="input" type="radio" name="card" value="NCB">
-                                                            <span class="check"></span>
-                                                            <label class="label">
-                                                                <div class="title">NCB</div>
-                                                                <div class="logo-bank">
-                                                                    <img src="https://sandbox.vnpayment.vn/paymentv2/images/img/logos/bank/big/ncb.svg"
-                                                                        alt="">
-                                                                </div>
-                                                            </label>
-                                                        </div>
-                                                        <div class="card">
-                                                            <input class="input" type="radio" name="card" value="TPBank">
-                                                            <span class="check"></span>
-                                                            <label class="label">
-                                                                <div class="title">TPBank</div>
-                                                                <div class="logo-bank">
-                                                                    <img src="https://sandbox.vnpayment.vn/paymentv2/images/img/logos/bank/big/tpbank.svg"
-                                                                        alt="">
-                                                                </div>
-                                                            </label>
-                                                        </div>
-                                                        <div class="card">
-                                                            <input class="input" type="radio" name="card" value="VISA">
-                                                            <span class="check"></span>
-                                                            <label class="label">
-                                                                <div class="title">VISA</div>
-                                                                <div class="logo-bank">
-                                                                    <img src="https://sandbox.vnpayment.vn/paymentv2/images/img/logos/bank/big/visa.svg"
-                                                                        alt="">
-                                                                </div>
-                                                            </label>
-                                                        </div>
-                                                        <div class="card">
-                                                            <input class="input" type="radio" name="card" value="MasterCard">
-                                                            <span class="check"></span>
-                                                            <label class="label">
-                                                                <div class="title">MasterCard</div>
-                                                                <div class="logo-bank">
-                                                                    <img src="https://sandbox.vnpayment.vn/paymentv2/images/img/logos/bank/big/mastercard.svg"
-                                                                        alt="">
-                                                                </div>
-                                                            </label>
-                                                        </div>
-                                                        <div class="card">
-                                                            <input class="input" type="radio" name="card" value="JCB">
-                                                            <span class="check"></span>
-                                                            <label class="label">
-                                                                <div class="title">JCB</div>
-                                                                <div class="logo-bank">
-                                                                    <img src="https://sandbox.vnpayment.vn/paymentv2/images/img/logos/bank/big/jcb.svg"
-                                                                        alt="">
-                                                                </div>
-                                                            </label>
-                                                        </div>
-                                                        <div class="card">
-                                                            <input class="input" type="radio" name="card" value="EXIMBANK">
-                                                            <span class="check"></span>
-                                                            <label class="label">
-                                                                <div class="title">EXIMBANK</div>
-                                                                <div class="logo-bank">
-                                                                    <img src="https://sandbox.vnpayment.vn/paymentv2/images/img/logos/bank/big/eximbank.svg"
-                                                                        alt="">
-                                                                </div>
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
                                 </div>
-                            </div>
+                            </div>-->
                             <div class="row mt-3">
                                 <div class="col-12">
                                     <a href="orders.html" ng-click="handleCheckout()" class="btn btn-danger w-100"
@@ -306,14 +219,16 @@
                             </div>
                         </div>
                     </div>
-                </div>
+</div>
             </div>
         </div>
         <!-- checkout-area end -->
     </div>
-    <script>
-        alert('Đây là thông báo từ JavaScript!');
+
+    <script th:inline="javascript">
+        Alert('Đây là thông báo từ JavaScript!');
     </script>
+
 </body>
 
 </html>

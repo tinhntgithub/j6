@@ -147,6 +147,8 @@ public class OrderController {
 		return "user/order/orders";
 	}
 
+	
+
 	// Order Details Manager
 	@GetMapping("/order_details.html")
 	public String orderDetailsPage(Model m, @RequestParam("id") Integer id) {

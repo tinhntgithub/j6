@@ -18,5 +18,4 @@ public interface AddressService {
 
 	void delete(Integer id);
 	
-	Optional<List<Address>> findByUsername(String username);
 }
