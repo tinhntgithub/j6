@@ -38,13 +38,15 @@
                                 <div class="col-md-12 mb-3">
                                     <div class="checkout-form-list mb-sm-30">
                                         <label> Họ tên <span class="required">*</span></label>
-                                        <input type="text" ng-model="currentUser.fullname" placeholder="Nhập họ tên của bạn....">
+                                        <input type="text" ng-model="currentUser.fullname"
+                                            placeholder="Nhập họ tên của bạn....">
                                     </div>
                                 </div>
                                 <div class="col-md-12 mb-3">
                                     <div class="checkout-form-list mb-sm-30">
                                         <label>Số điện thoại <span class="required">*</span></label>
-                                        <input type="text" ng-model="currentUser.phone" placeholder="Nhập số điện thoại của bạn....">
+                                        <input type="text" ng-model="currentUser.phone"
+                                            placeholder="Nhập số điện thoại của bạn....">
                                     </div>
                                 </div>
                                 <!-- <div class="col-md-12 mb-3">
@@ -56,10 +58,12 @@
                                 <div class="col-md-12">
                                     <div class="country-select clearfix mb-3">
                                         <label>Địa chỉ của bạn <span class="required">*</span></label>
-                                        <select ng-model="currentUser.selectedAddress" class="wide">
-                                            <option value="">Chọn địa chỉ</option>
-                                            <option ng-repeat="a in currentUser.address" value="{{a.id}}">{{a.address}}</option>
+                                        <select ng-model="addrSelected" class="wide"
+                                            ng-options="a.address for a in addrList">
+                                            <!-- <option value="">Chọn địa chỉ</option>
+                                            <option ng-repeat="a in addrList" value="{{a.id}}">{{a.address}}</option> -->
                                         </select>
+                                        <p ng-repeat="a in addrList">{{a.address}}</p>
                                     </div>
                                 </div>
                             </div>
@@ -75,7 +79,7 @@
                                         <div class="col-md-12 mb-3">
                                             <div class="checkout-form-list mb-sm-30">
                                                 <label>Địa chỉ <span class="required">*</span></label>
-                                                <input type="text" placeholder="Nhập địa chỉ mới ....">
+                                                <input type="text" ng-model="currentUser.newAddress" placeholder="Nhập địa chỉ mới ....">
                                             </div>
                                         </div>
                                     </div>
@@ -93,6 +97,17 @@
                     </div>
                     <div class="col-lg-6 col-md-6">
                         <div class="your-order">
+                            <div class="row mt-3">
+                                <div class="col-md-12 mb-3">
+                                    <div class="checkout-form-list mb-sm-30">
+                                        <label>Mã giảm giá</label>
+                                        <input type="text" name="coupon_code" ng-model="voucher.code"
+                                            style="width: 350px;" placeholder="Nhập mã voucher của bạn, nếu có....">
+                                        <button ng-click="apply_vourcher_code()" class="btn btn-danger"
+                                            style="background-color: orangered;"><strong>ÁP DỤNG</strong></button>
+                                    </div>
+                                </div>
+                            </div>
                             <h6 class="mb-4"><strong>ĐƠN HÀNG CỦA BẠN</strong></h6>
                             <div class="your-order-table table-responsive">
                                 <table class="bg-light">
@@ -126,7 +141,8 @@
                                         </tr>
                                         <tr class="cart-subtotal" style="color: orangered;">
                                             <th>(-) Giảm giá</th>
-                                            <td><span class="amount" style="color: orangered;">{{getDiscount()}}
+                                            <td><span class="amount" style="color: orangered;"><span>({{voucher.value}}%)</span> {{getDiscount() | currency : '' :0 |replace:
+                                                ',':'.'}}
                                                     đ</span></td>
                                         </tr>
                                         <tr class="order-total">
@@ -187,7 +203,7 @@
                             </div>-->
                             <div class="row mt-3">
                                 <div class="col-12">
-                                    <a href="orders.html" class="btn btn-danger w-100"
+                                    <a href="orders.html" ng-click="handleCheckout()" class="btn btn-danger w-100"
                                         style="background-color: orangered;"><strong>ĐẶT
                                             HÀNG</strong></a>
                                 </div>

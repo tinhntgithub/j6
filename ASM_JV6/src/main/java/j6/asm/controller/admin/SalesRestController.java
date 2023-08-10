@@ -1,6 +1,7 @@
 package j6.asm.controller.admin;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +29,17 @@ public class SalesRestController {
 	public ResponseEntity<List<Sale>> getAll(Model m) {
 
 		return ResponseEntity.ok(sale.findAll());
+	}
+
+	@GetMapping("/rest/sales/checkcode/{code}")
+	public ResponseEntity<Sale> getByCOde(@PathVariable("code") String code){
+		Optional<List<Sale>> list = sale.findByCode(code);
+		if(list.isPresent()){
+			Sale sale2 = list.get().get(0);
+			return ResponseEntity.ok(sale2);
+		}else{
+			return ResponseEntity.notFound().build();
+		}
 	}
 
 	@GetMapping("/rest/sales/{id}")

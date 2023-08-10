@@ -1,6 +1,7 @@
 package j6.asm.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
@@ -21,4 +22,6 @@ public interface SaleService {
 	Boolean checkOrder(Integer id);
 	
 	Integer getCount();
+
+	Optional<List<Sale>> findByCode(String code);
 }

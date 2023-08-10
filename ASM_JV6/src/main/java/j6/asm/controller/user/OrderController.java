@@ -83,39 +83,39 @@ public class OrderController {
 	@RequestMapping("/orders.html")
 	public String ordersPage(Model model) throws IOException, ParseException {
 		Accounts account = session.get("account");
-		List<Cart> cart = cartDAO.findByUserCart(account);
-		Pageable pageable = PageRequest.of(0, 10);
-		List<Address> addresses = addressDAO.findByUsername(account, pageable);
-		List<OrderDetails> listOrderDetails = new ArrayList<>();
+		//List<Cart> cart = cartDAO.findByUserCart(account);
+		// Pageable pageable = PageRequest.of(0, 10);
+		// List<Address> addresses = addressDAO.findByUsername(account, pageable);
+		// List<OrderDetails> listOrderDetails = new ArrayList<>();
 
-		LocalDateTime now = LocalDateTime.now();
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-ddHH:mm:ss.SSS");
-		String dateString = now.format(formatter);
+		// LocalDateTime now = LocalDateTime.now();
+		// DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-ddHH:mm:ss.SSS");
+		// String dateString = now.format(formatter);
 
-		SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-ddHH:mm:ss.SSS");
-		Date date = inputFormat.parse(dateString);
+		// SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-ddHH:mm:ss.SSS");
+		// Date date = inputFormat.parse(dateString);
 
-		Status status = statusdao.getById(1);
+		// Status status = statusdao.getById(1);
 
-		Orders orders = new Orders(null, account, date, null, "Kiên Giang", account.getFullname(), account.getPhone(),
-				status,
-				null);
+		// Orders orders = new Orders(null, account, date, null, "Kiên Giang", account.getFullname(), account.getPhone(),
+		// 		status,
+		// 		null);
 
-		orderdao.save(orders); // Lưu đối tượng Orders và OrderDetails trong cùng một giao dịch
+		// orderdao.save(orders); // Lưu đối tượng Orders và OrderDetails trong cùng một giao dịch
 
-		OrderDetails orderDetails;
+		// OrderDetails orderDetails;
 
-		for (Cart cartProduct : cart) {
-			Products product = productsDAO.findByProductId(cartProduct.getProCart().getId());
-			orderDetails = new OrderDetails(null, orders, product, cartProduct.getPrice(),
-					cartProduct.getQty(), cartProduct.getColorCart());
-			orderdetaildao.save(orderDetails);
-			cartDAO.delete(cartProduct);
-		}
+		// for (Cart cartProduct : cart) {
+		// 	Products product = productsDAO.findByProductId(cartProduct.getProCart().getId());
+		// 	orderDetails = new OrderDetails(null, orders, product, cartProduct.getPrice(),
+		// 			cartProduct.getQty(), cartProduct.getColorCart());
+		// 	orderdetaildao.save(orderDetails);
+		// 	cartDAO.delete(cartProduct);
+		// }
 
-		orders.setOrderDetails(listOrderDetails);
+		// orders.setOrderDetails(listOrderDetails);
 
-		orderdao.save(orders); // Lưu đối tượng Orders và OrderDetails trong cùng một giao dịch
+		// orderdao.save(orders); // Lưu đối tượng Orders và OrderDetails trong cùng một giao dịch
 
 		List<Orders> order_all = orderdao.find_LoginbyUsername(account.getUsername());
 		model.addAttribute("or", order_all.get(0));
