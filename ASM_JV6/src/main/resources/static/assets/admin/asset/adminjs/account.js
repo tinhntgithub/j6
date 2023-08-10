@@ -474,6 +474,9 @@ app.controller("account-auth",function($scope,$http){
         $scope.page.setTitle(current.$$route.title || ' Phân quyền tài khoản');
     });
 
+
+
+
     var loi = 0;
     $scope.form1 = {};
      $scope.load_Account = function () {

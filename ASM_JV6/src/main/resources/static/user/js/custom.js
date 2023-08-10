@@ -250,22 +250,22 @@ app.controller("cartCtr", function ($scope, $http, $rootScope, $window) {
 
 
     //Favorites
-    $scope.like = function(id){
+    $scope.like = function (id) {
         alert(id);
-		var urlLike = `http://localhost:8080/rest/favorites/like/${id}`;//${id}
-		var urlLogin = "http://" + $window.location.host + "/signin.html";
-		$http.post(urlLike).then(resp => {
-			console.log("Data form server: ",resp);
+        var urlLike = `http://localhost:8080/rest/favorites/like/${id}`;//${id}
+        var urlLogin = "http://" + $window.location.host + "/signin.html";
+        $http.post(urlLike).then(resp => {
+            console.log("Data form server: ", resp);
             alertSuccess("Thêm sản phẩm vào mục yêu thích thành công");
-		}).catch(err => {
-			console.log("Error code: ", err.status);
-			if(err.status == 424){
-				alert("Mã sản phẩm không hợp lệ.");
-			}else if(err.status == 500){
-				$window.location.href = urlLogin;
-			}
-		});
-	}
+        }).catch(err => {
+            console.log("Error code: ", err.status);
+            if (err.status == 424) {
+                alert("Mã sản phẩm không hợp lệ.");
+            } else if (err.status == 500) {
+                $window.location.href = urlLogin;
+            }
+        });
+    }
 
 })
 
@@ -438,31 +438,12 @@ app.controller("checkoutCtrl", function ($scope, $http) {
     $scope.addrList = [];
     $scope.addrSelected = "";
 
-    $scope.getCurrentUser = function () {
-        var url = `${host}rest/accounts/current`;
-        var url2 = `${host}rest/address/`;
-        $http.get(url).then((resp) => {
-            $scope.currentUser = resp.data;
-            $http.get(url2 + $scope.currentUser.username).then((resp) => {
-                $scope.addrList = resp.data;
-                console.log("Success o", $scope.currentUser);
-            }).catch((error) => {
-                console.log("Error", error);
-            });
-
-        }).catch((error) => {
-            console.log("Error", error);
-        });
-    }
-
     $scope.checkout = function () {
         alertSuccess("Thanh toán thành công");
     }
     $scope.delelteProductFormCart = function () {
 
     }
-    $scope.currentUser = {};
-    $scope.selectedAddress = ''; 
     $scope.getCurrentUser = function () {
         var url = `${host}rest/accounts/current`;
         var url2 = `${host}rest/address/`;
@@ -470,7 +451,7 @@ app.controller("checkoutCtrl", function ($scope, $http) {
             $scope.currentUser = resp.data;
             $http.get(url2 + $scope.currentUser.username).then((resp) => {
                 $scope.currentUser.address = resp.data;
-                
+
                 console.log("Success o", resp.data);
             }).catch((error) => {
                 console.log("Error", error);
@@ -484,10 +465,18 @@ app.controller("checkoutCtrl", function ($scope, $http) {
 
     $scope.loadCartProduct = function () {
         var url = `${host}rest/cart/gettemplist`;
+        var url2 = `${host}Cart/listCart`;
         $http.get(url).then((resp) => {
             $scope.payFromCart = resp.data;
             //xử lý nếu resp.data rỗng thì thay bằng toàn bộ card
-            //...
+            if ($scope.payFromCart.length == 0) {
+                $http.get(url2).then((resp) => {
+                    $scope.payFromCart = resp.data;
+                    console.log("Success o", resp.data);
+                }).catch((error) => {
+                    console.log("Error", error);
+                });
+            }
             //
             alertSuccess("Lấy API thành công");
             console.log("Success", $scope.payFromCart);
@@ -524,13 +513,11 @@ app.controller("checkoutCtrl", function ($scope, $http) {
             data.voucher = 0;
         }
         data.list = angular.copy($scope.payFromCart);
-        data.address = angular.copy($scope.addrSelected);
+
         if (!data.address) {
-            data.address = data.newAddress;
-            if(!data.address){
-                data.address = null;
-            }
+            data.address = null;
         }
+
         console.log(data)
         $http.post(url, data).then(resp => {
             alertSuccess("Thanh toán thành công")
@@ -593,11 +580,11 @@ app.controller("userImage", function ($scope, $http) {
 });
 
 // start product favorites controller
-app.controller("favoritesCtrl", function ($scope, $http,$rootScope, $window) {
-    
+app.controller("favoritesCtrl", function ($scope, $http, $rootScope, $window) {
+
     $scope.favoriteProductsList = [];
 
-    $scope.loadFavoriteProducts = function() {
+    $scope.loadFavoriteProducts = function () {
         var url = `${host}rest/favorites/like/all`;
         $http.get(url).then((resp) => {
             $scope.favoriteProductsList = resp.data;
@@ -609,11 +596,11 @@ app.controller("favoritesCtrl", function ($scope, $http,$rootScope, $window) {
         });
     }
 
-    $scope.unLikeFavoriteProducts = function(id) {
+    $scope.unLikeFavoriteProducts = function (id) {
 
         var url = `${host}rest/favorites/unLike/${id}`;
-        
-        $http.delete(url).then( resp => {
+
+        $http.delete(url).then(resp => {
             alertSuccess("Bỏ thích sản phẩm thành công, Favorite Id: " + id);
             console.log("Success", resp.data);
         }).catch((error) => {
@@ -626,17 +613,17 @@ app.controller("favoritesCtrl", function ($scope, $http,$rootScope, $window) {
         var url = `${host}Cart/create/${id}`;
         var urlLogin = "http://" + $window.location.host + "/login.html";
         $http.get(url).then(resp => {
-			console.log(resp);
+            console.log(resp);
             alertSuccess("Thêm vào giỏ hàng thành công");
             $rootScope.$emit("list", {});
         }
         ).catch(error => {
-            if(error.status == 500){
-				$window.location.href = urlLogin;
-			}
-		    console.log(error);
+            if (error.status == 500) {
+                $window.location.href = urlLogin;
+            }
+            console.log(error);
         });
-        
+
     }
 
     $scope.loadFavoriteProducts();
