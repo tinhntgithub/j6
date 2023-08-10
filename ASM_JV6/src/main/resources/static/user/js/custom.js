@@ -1,5 +1,6 @@
 // Alert Toastify
 alertSuccess = function (message) {
+alertSuccess = function (message) {
     Toastify({
         text: message,
         duration: 3000,
@@ -249,26 +250,32 @@ app.controller("cartCtr", function ($scope, $http, $rootScope, $window) {
 
 
     //Favorites
-    $scope.like = function (id) {
-        var urlLike = `http://localhost:8080/favorites/like/${id}`;//${id}
-        var urlLogin = "http://" + $window.location.host + "/signin.html";
-        $http.post(urlLike).then(resp => {
-            console.log("Data form server: ", resp);
-            alert(resp.data);
-            alertSuccess("Đã thêm vào sản phẩm yêu thích")
-        }).catch(err => {
-            console.log("Error code: ", err.status);
-            if (err.status == 424) {
-                alert("Mã sản phẩm không hợp lệ.");
-                alertSuccess("LỖI")
-            } else if (err.status == 500) {
-                $window.location.href = urlLogin;
-            }
-        });
-    }
+    $scope.like = function(id){
+        alert(id);
+		var urlLike = `http://localhost:8080/rest/favorites/like/${id}`;//${id}
+		var urlLogin = "http://" + $window.location.host + "/signin.html";
+		$http.post(urlLike).then(resp => {
+			console.log("Data form server: ",resp);
+            alertSuccess("Thêm sản phẩm vào mục yêu thích thành công");
+		}).catch(err => {
+			console.log("Error code: ", err.status);
+			if(err.status == 424){
+				alert("Mã sản phẩm không hợp lệ.");
+			}else if(err.status == 500){
+				$window.location.href = urlLogin;
+			}
+		});
+	}
+
 })
 
 var itemChecked = [];
+function checkAll() {
+    var checkboxes = document.querySelectorAll('#cart-tableBody input[type="checkbox"]');
+    checkboxes.forEach(function (checkbox) {
+        checkbox.checked = $('#checkAllId').is(':checked');
+    }, $('#checkAllId'));
+}
 function checkAll() {
     var checkboxes = document.querySelectorAll('#cart-tableBody input[type="checkbox"]');
     checkboxes.forEach(function (checkbox) {
@@ -583,3 +590,55 @@ app.controller("userImage", function ($scope, $http) {
     }
 
 });
+
+// start product favorites controller
+app.controller("favoritesCtrl", function ($scope, $http,$rootScope, $window) {
+    
+    $scope.favoriteProductsList = [];
+
+    $scope.loadFavoriteProducts = function() {
+        var url = `${host}rest/favorites/like/all`;
+        $http.get(url).then((resp) => {
+            $scope.favoriteProductsList = resp.data;
+            alertSuccess("Lấy tất cả sản phẩm yêu thích thành công");
+            console.log("Success", $scope.favoriteProductsList);
+        }).catch((error) => {
+            alertDanger("Lấy tất cả sản phẩm yêu thích thất bại");
+            console.log("Error", error);
+        });
+    }
+
+    $scope.unLikeFavoriteProducts = function(id) {
+
+        var url = `${host}rest/favorites/unLike/${id}`;
+        
+        $http.delete(url).then( resp => {
+            alertSuccess("Bỏ thích sản phẩm thành công, Favorite Id: " + id);
+            console.log("Success", resp.data);
+        }).catch((error) => {
+            alertDanger("Bỏ thích sản phẩm thất bại");
+            console.log("Error", error);
+        });
+    }
+
+    $scope.addCart = function (id) {
+        var url = `${host}Cart/create/${id}`;
+        var urlLogin = "http://" + $window.location.host + "/login.html";
+        $http.get(url).then(resp => {
+			console.log(resp);
+            alertSuccess("Thêm vào giỏ hàng thành công");
+            $rootScope.$emit("list", {});
+        }
+        ).catch(error => {
+            if(error.status == 500){
+				$window.location.href = urlLogin;
+			}
+		    console.log(error);
+        });
+        
+    }
+
+    $scope.loadFavoriteProducts();
+
+});
+// end product favorites controller

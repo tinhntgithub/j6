@@ -23,12 +23,12 @@ public class OrderDetails implements Serializable {
 	@Column(name = "[id]")
 	private Integer id;
 
-	@JsonIgnore // Ngăn chuyển đổi thuộc tính ordersId thành JSON
+	// @JsonIgnore // Ngăn chuyển đổi thuộc tính ordersId thành JSON
 	@ManyToOne
 	@JoinColumn(name = "[orderid]")
 	private Orders ordersId;
 
-	@JsonIgnore // Ngăn chuyển đổi thuộc tính productsId thành JSON
+	// @JsonIgnore // Ngăn chuyển đổi thuộc tính productsId thành JSON
 	@ManyToOne
 	@JoinColumn(name = "[productid]")
 	private Products productsId;
@@ -39,7 +39,7 @@ public class OrderDetails implements Serializable {
 	@Column(name = "[quantity]")
 	private Integer qty;
 
-	@JsonIgnore // Ngăn chuyển đổi thuộc tính colorId thành JSON
+	// @JsonIgnore // Ngăn chuyển đổi thuộc tính colorId thành JSON
 	@ManyToOne()
 	@JoinColumn(name = "[color]")
 	private ProductColor colorId;

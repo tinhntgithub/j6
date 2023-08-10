@@ -1,8 +1,13 @@
 package j6.asm.controller.user;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.mail.Session;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.math.NumberUtils;
@@ -10,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,6 +28,7 @@ import j6.asm.dao.ProductsDAO;
 import j6.asm.entity.Accounts;
 import j6.asm.entity.Favorites;
 import j6.asm.entity.Products;
+import j6.asm.service.SessionService;
 import j6.asm.service.SessionService;
 
 @CrossOrigin(origins = { "*" })
@@ -45,13 +52,39 @@ public class FavoritesRestController {
 	@Autowired
 	HttpServletResponse resp;
 
-	@GetMapping("all")
+	@Autowired
+	SessionService session;
+
+	@GetMapping("like/all")
 	public ResponseEntity<List<Favorites>> getAll() {
-		List<Favorites> list = fvrDao.findAll();
+		Accounts account = session.get("account");
+		List<Favorites> list = fvrDao.findByUserFvr(account);
 		if (list.isEmpty() || list == null) {
 			return ResponseEntity.noContent().build();
 		}
 		return ResponseEntity.ok(list);
+	}
+
+	@DeleteMapping("unLike/{id}")
+	public void delteteFavorites(@PathVariable("id") Integer id) {
+		try {
+			Accounts account = session.get("account");
+			Favorites favoriteToDelete = fvrDao.findByUserFvr(account).get(id);
+
+			if (favoriteToDelete == null) {
+				return;
+			}
+
+			fvrDao.delete(favoriteToDelete);
+
+			Map<String, String> response = new HashMap<>();
+			response.put("message", "Favorite deleted successfully");
+
+			return;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return;
+		}
 	}
 
 	@PostMapping("like/{id}")
@@ -64,6 +97,10 @@ public class FavoritesRestController {
 		if (req.getUserPrincipal() == null) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();// 500
 		} else {
+			Accounts acc = session.get("account");
+			session.set("account", acc);
+			// username = req.getUserPrincipal().getName();
+			username = acc.getUsername();
 			Accounts acc = session.get("account");
 			session.set("account", acc);
 			// username = req.getUserPrincipal().getName();

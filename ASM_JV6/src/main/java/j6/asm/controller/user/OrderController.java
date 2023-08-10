@@ -207,8 +207,8 @@ public class OrderController {
 
 		Orders order = orderdao.findById(id).get();
 		order.setStatusId(statusdao.findById(4).get());
-		orderdao.save(order);
-		return "redirect:/orders.html";
+		orderdao.delete(order);
+		return "redirect:/manageOrders.html";
 	}
 
 }
