@@ -1,5 +1,5 @@
 // Alert Toastify
-alertSuccess = function (message) {
+
 alertSuccess = function (message) {
     Toastify({
         text: message,
@@ -533,6 +533,7 @@ app.controller("checkoutCtrl", function ($scope, $http) {
         }
         console.log(data)
         $http.post(url, data).then(resp => {
+            alertSuccess("Thanh toán thành công")
             console.log(resp.data);
         }).catch(error => {
             console.log(error);

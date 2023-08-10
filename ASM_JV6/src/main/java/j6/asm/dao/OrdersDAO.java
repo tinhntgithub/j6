@@ -30,9 +30,6 @@ public interface OrdersDAO extends JpaRepository<Orders, Integer> {
 	@Query(value = "select * from Orders a where a.statusid = 3 and a.username=?1", nativeQuery = true)
 	List<Orders> find_ByNhan(String username);
 
-	@Query(value = "select * from Orders a where a.statusid = 3 and a.username=?1", nativeQuery = true)
-	List<Orders> find_ByNhan(String username);
-
 	@Query("select a from Orders a where a.userOrder.username=?1")
 	Orders find_ByUsername(String username);
 

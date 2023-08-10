@@ -35,8 +35,7 @@ import j6.asm.service.SessionService;
 @RestController
 @RequestMapping("/rest/favorites")
 public class FavoritesRestController {
-@Autowired
-	SessionService session;
+
 	@Autowired
 	FavoritesDAO fvrDao;
 
@@ -69,24 +68,19 @@ public class FavoritesRestController {
 	public void delteteFavorites(@PathVariable("id") Integer id) {
 		try {
 			Accounts account = session.get("account");
-			Favorites favoriteToDelete = fvrDao.findByUserFvr(account).get(id);
+			List<Favorites> favoriteToDelete = fvrDao.findByUserFvr(account);
 
-			if (favoriteToDelete == null) {
-				return;
+			for (Favorites favorites : favoriteToDelete) {
+				if (favorites.getId() == id) {
+					Favorites favorites1 = favorites;
+					fvrDao.delete(favorites1);
+				}
 			}
-
-			fvrDao.delete(favoriteToDelete);
-
-			Map<String, String> response = new HashMap<>();
-			response.put("message", "Favorite deleted successfully");
-
-			return;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return;
 		}
 	}
-
 	@PostMapping("like/{id}")
 	public ResponseEntity<Object> likeByID(@PathVariable("id") String id) throws IOException {
 		Integer idConvert = 0;
@@ -101,7 +95,7 @@ public class FavoritesRestController {
 			session.set("account", acc);
 			// username = req.getUserPrincipal().getName();
 			username = acc.getUsername();
-			Accounts acc = session.get("account");
+			
 			session.set("account", acc);
 			// username = req.getUserPrincipal().getName();
 			username = acc.getUsername();
