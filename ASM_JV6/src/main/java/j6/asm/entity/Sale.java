@@ -37,11 +37,11 @@ public class Sale implements Serializable {
 	@Column(name = "[value]")
 	private Double value;
 	
-	@Column(name = "[saledate]")
-	private Date saleDate;
-	
 	@Column(name = "[amount]")
 	private Integer amount;
+
+	@Column(name = "[amountused]")
+	private Integer amountused;
 	
 	@Column(name = "[createdate]")
 	private Date createDate;
