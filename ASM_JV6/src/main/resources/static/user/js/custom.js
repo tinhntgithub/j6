@@ -249,23 +249,23 @@ app.controller("cartCtr", function ($scope, $http, $rootScope, $window) {
 
 
     //Favorites
-    $scope.like = function (id) {
-        var urlLike = `http://localhost:8080/favorites/like/${id}`;//${id}
-        var urlLogin = "http://" + $window.location.host + "/signin.html";
-        $http.post(urlLike).then(resp => {
-            console.log("Data form server: ", resp);
-            alert(resp.data);
-            alertSuccess("Đã thêm vào sản phẩm yêu thích")
-        }).catch(err => {
-            console.log("Error code: ", err.status);
-            if (err.status == 424) {
-                alert("Mã sản phẩm không hợp lệ.");
-                alertSuccess("LỖI")
-            } else if (err.status == 500) {
-                $window.location.href = urlLogin;
-            }
-        });
-    }
+    $scope.like = function(id){
+        alert(id);
+		var urlLike = `http://localhost:8080/rest/favorites/like/${id}`;//${id}
+		var urlLogin = "http://" + $window.location.host + "/signin.html";
+		$http.post(urlLike).then(resp => {
+			console.log("Data form server: ",resp);
+            alertSuccess("Thêm sản phẩm vào mục yêu thích thành công");
+		}).catch(err => {
+			console.log("Error code: ", err.status);
+			if(err.status == 424){
+				alert("Mã sản phẩm không hợp lệ.");
+			}else if(err.status == 500){
+				$window.location.href = urlLogin;
+			}
+		});
+	}
+
 })
 
 var itemChecked = [];
@@ -426,10 +426,6 @@ app.controller("pushCart", function ($scope, $http, $rootScope) {
 // Orders Controller
 app.controller("checkoutCtrl", function ($scope, $http) {
 
-    $scope.delelteProductFormCart = function () {
-
-    }
-
     $scope.payFromCart = [];
 
     $scope.loadCartProduct = function () {
@@ -495,3 +491,143 @@ app.controller("userImage", function ($scope, $http) {
     }
 
 });
+
+// start product favorites controller
+app.controller("favoritesCtrl", function ($scope, $http,$rootScope, $window) {
+    
+    $scope.favoriteProductsList = [];
+
+    $scope.loadFavoriteProducts = function() {
+        var url = `${host}rest/favorites/like/all`;
+        $http.get(url).then((resp) => {
+            $scope.favoriteProductsList = resp.data;
+            alertSuccess("Lấy tất cả sản phẩm yêu thích thành công");
+            console.log("Success", $scope.favoriteProductsList);
+        }).catch((error) => {
+            alertDanger("Lấy tất cả sản phẩm yêu thích thất bại");
+            console.log("Error", error);
+        });
+    }
+
+    $scope.unLikeFavoriteProducts = function(id) {
+
+        var url = `${host}rest/favorites/like/all/${id}`;
+        alertWarning(url);
+        
+        $http.delete(url).then( resp => {
+            alertSuccess("Bỏ thích sản phẩm thành công, Favorite Id: " + id);
+            console.log("Success", resp.data);
+        }).catch((error) => {
+            alertDanger("Bỏ thích sản phẩm thất bại");
+            console.log("Error", error);
+        });
+    }
+
+    $scope.addCart = function (id) {
+        var url = `${host}Cart/create/${id}`;
+        var urlLogin = "http://" + $window.location.host + "/login.html";
+        $http.get(url).then(resp => {
+			console.log(resp);
+            alertSuccess("Thêm vào giỏ hàng thành công");
+            $rootScope.$emit("list", {});
+        }
+        ).catch(error => {
+            if(error.status == 500){
+				$window.location.href = urlLogin;
+			}
+		    console.log(error);
+        });
+        
+    }
+
+    $scope.loadFavoriteProducts();
+
+});
+// end product favorites controller
+
+app.controller("registerCtrl", function ($scope, $http,$rootScope, $window) {
+
+    let otpChecked = "";
+
+    $scope.generateOTP = function (){
+      
+        const otpLength = 6;
+        const otpChars = '0123456789';
+        let otp = '';
+          
+        for (let i = 0; i < otpLength; i++) {
+            const randomIndex = Math.floor(Math.random() * otpChars.length);
+            otp += otpChars[randomIndex];
+        }
+        otpChecked = otp;
+    
+        //const otpResultElement = document.getElementById('otpResult');
+        //otpResultElement.textContent = otp;
+    
+        $scope.startExpiryCountdown(otp);
+    }
+
+    $scope.verifyOTP = function () {
+        const enteredOTP = document.getElementById('inputOTP').value;
+        const generatedOTP = otpChecked;
+
+        const resultElement = document.getElementById('verifyResult');
+        const continueButton = document.querySelector('.return-customer-btn'); // Chọn nút "Tiếp tục"
+
+        if (enteredOTP === generatedOTP) {
+            resultElement.textContent = 'Mã OTP hợp lệ';
+            resultElement.style.color = 'green';
+            continueButton.hidden = false; // Cho phép nút "Tiếp tục" được nhấn
+        } else {
+            resultElement.textContent = 'Mã OTP không hợp lệ';
+            resultElement.style.color = 'red';
+            continueButton.hidden = true; // Vô hiệu hóa nút "Tiếp tục"
+        }
+    }
+
+    $scope.startExpiryCountdown = function (otp) {
+        const countdownElement = document.getElementById('expiryCountdown');
+        countdownElement.textContent = 'Thời gian còn lại: 60 giây';
+        const continueButton = document.querySelector('.return-customer-btn'); // Chọn nút "Tiếp tục"
+    
+        let countdown = 60;
+        const countdownInterval = setInterval(function () {
+            countdown--;
+            countdownElement.textContent = `Thời gian còn lại: ${countdown} giây`;
+    
+            if (countdown === 0) {
+                clearInterval(countdownInterval);
+                countdownElement.textContent = 'Mã OTP đã hết hạn';
+                continueButton.hidden = true; // Vô hiệu hóa nút "Tiếp tục"
+                otpChecked = "";
+            }
+        }, 1000);
+        alertSuccess("Tạo mã OTP thành công");
+        $scope.sendOTPToMail(otp);
+    }
+
+    $scope.sendOTPToMail = function (otp) {
+        const enteredEmail = document.getElementById("email").value;
+        const enteredOTP = otp;
+    
+        alert(enteredEmail);
+        alert(enteredOTP);
+    
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", `/sendOTPToMail/${enteredEmail}/${enteredOTP}`, true);
+        xhr.send();
+    
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    console.log("Request successfully triggered.");
+                    // Xử lý kết quả nếu cần
+                } else {
+                    console.error("Request failed.");
+                    // Xử lý lỗi nếu cần
+                }
+            }
+        };
+    }
+})
+// End OTP

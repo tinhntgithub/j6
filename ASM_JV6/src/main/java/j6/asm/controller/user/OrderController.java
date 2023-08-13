@@ -126,7 +126,7 @@ public class OrderController {
 	@RequestMapping("/manageOrders.html")
 	public String ordersManagePage(Model model) throws IOException, ParseException {
 		Accounts account = session.get("account");
-		if(account==null) {
+		if (account == null) {
 			return "redirect:/index.html";
 		}
 		List<Orders> order_huy = new ArrayList<>();
@@ -178,8 +178,8 @@ public class OrderController {
 
 		Orders order = orderdao.findById(id).get();
 		order.setStatusId(statusdao.findById(4).get());
-		orderdao.save(order);
-		return "redirect:/orders.html";
+		orderdao.delete(order);
+		return "redirect:/manageOrders.html";
 	}
 
 }

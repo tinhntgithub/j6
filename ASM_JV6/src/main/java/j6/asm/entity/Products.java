@@ -24,62 +24,62 @@ public class Products implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "[id]")
 	private Integer id;
-	
+
 	@Column(name = "[name]")
 	private String name;
-	
+
 	@Column(name = "[price]")
 	private Double price;
-	
+
 	@Column(name = "[createdate]")
 	@Temporal(TemporalType.DATE)
 	private Date date = new Date();
-	
+
 	@Column(name = "[avaliable]")
 	private Boolean avaliable;
-	
+
 	@Column(name = "[sale]")
 	private Double sale;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "[categoryid]")
 	private Categories catePro;
-	
+
 	@Column(name = "[description]")
 	private String description;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "[brandid]")
 	private Brand brandPro;
 
 	@Column(name = "[madein]")
 	private String madein;
-	
+
 	@Column(name = "[image]")
 	private String img;
-	
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "product")
 	List<PriceHistory> priceHistories;
-	
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "imgPro")
-	List<ProductImg> productImgs; 
-	
+	List<ProductImg> productImgs;
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "products")
 	List<ProductColor> productColors;
-	
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "productsId")
 	List<OrderDetails> orderdetails;
-	
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "proCart")
 	List<Cart> carts;
-	
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "productsId", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Favorites> favorites;
-	
+
 }

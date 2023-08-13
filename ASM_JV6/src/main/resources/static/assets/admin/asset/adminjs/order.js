@@ -453,7 +453,7 @@ app.controller("order-details", function ($scope, $http) {
             var url = `${host7}/order-details/${key7}`;
             $http.get(url).then(resp => {
                 $scope.form2 = resp.data;
-                console.log("Success", resp.data)
+                console.log("Success load products: ", resp.data)
             }).catch(error => {
                 console.log("Error", error);
             });

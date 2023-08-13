@@ -1,8 +1,14 @@
 package j6.asm.controller.user;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale.Category;
+import java.util.Map;
+
+import javax.mail.Session;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.math.NumberUtils;
@@ -10,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,8 +35,7 @@ import j6.asm.service.SessionService;
 @RestController
 @RequestMapping("/rest/favorites")
 public class FavoritesRestController {
-@Autowired
-	SessionService session;
+
 	@Autowired
 	FavoritesDAO fvrDao;
 
@@ -45,13 +51,35 @@ public class FavoritesRestController {
 	@Autowired
 	HttpServletResponse resp;
 
-	@GetMapping("all")
+	@Autowired
+	SessionService session;
+
+	@GetMapping("like/all")
 	public ResponseEntity<List<Favorites>> getAll() {
-		List<Favorites> list = fvrDao.findAll();
+		Accounts account = session.get("account");
+		List<Favorites> list = fvrDao.findByUserFvr(account);
 		if (list.isEmpty() || list == null) {
 			return ResponseEntity.noContent().build();
 		}
 		return ResponseEntity.ok(list);
+	}
+
+	@GetMapping("like/all/{id}")
+	public ResponseEntity<Favorites> getOne(@PathVariable("id") Integer id) {
+		if (!fvrDao.existsById(id)) {
+			return ResponseEntity.notFound().build();
+		}
+		return ResponseEntity.ok(fvrDao.findById(id).get());
+	}
+
+	@DeleteMapping("like/all/{id}")
+	public ResponseEntity<Void> delteteFavorites(@PathVariable("id") Integer id) {
+		if (!fvrDao.existsById(id)) {
+			return ResponseEntity.notFound().build();
+		}
+		System.out.println(id);
+		fvrDao.deleteById(id);
+		return ResponseEntity.ok().build();
 	}
 
 	@PostMapping("like/{id}")
@@ -69,7 +97,7 @@ public class FavoritesRestController {
 			// username = req.getUserPrincipal().getName();
 			username = acc.getUsername();
 			accounts = accDao.findById(username).get();
-			System.out.println("USERNAME : "+ username);
+			System.out.println("USERNAME : " + username);
 		}
 		if (NumberUtils.isParsable(id)) {
 			idConvert = Integer.valueOf(id);

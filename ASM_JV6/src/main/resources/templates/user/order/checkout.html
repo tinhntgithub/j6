@@ -140,58 +140,18 @@
                                     </tfoot>
                                 </table>
                             </div>
-                            <!-- <div class="payment-method">
-                                <div id="accordion">
-                                    <div class="card">
-                                        <div class="card-header" id="headingone" style="background-color: orangered;">
-                                            <h5 class="mb-0">
-                                                <div class="form-check btn btn-link">
-                                                  <input checked  class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"
-                                                  data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                                  <label class="form-check-label text-white" for="flexRadioDefault1">
-                                                    Chuyển khoản ngân hàng
-                                                  </label>
-                                                </div>
-                                                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                                  Direct Bank Transfer
-                                                </button>
-                                            </h5>
-                                        </div>
-
-                                        <div id="collapseOne" class="collapse show" aria-labelledby="headingone" data-parent="#accordion">
-                                            <div class="card-body">
-                                                <p>Thực hiện thanh toán vào ngay tài khoản ngân hàng của chúng tôi. Vui lòng sử dụng Mã đơn hàng của bạn trong phần Nội dung thanh toán. Đơn hàng sẽ đươc giao sau khi tiền đã chuyển.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card mt-0">
-                                        <div class="card-header" id="headingtwo" style="background-color: orangered;">
-                                            <h5 class="mb-0">
-                                                <div class="form-check btn btn-link">
-                                                  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo"
-                                                  >
-                                                  <label class="form-check-label text-white" for="flexRadioDefault2">
-                                                    Trả tiền mặt khi nhận hàng
-                                                  </label>
-                                                </div>
-                                                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                          Cheque Payment
-                                        </button>
-                                            </h5>
-                                        </div>
-                                        <div id="collapseTwo" class="collapse" aria-labelledby="headingtwo" data-parent="#accordion">
-                                            <div class="card-body">
-                                                <p>Trả tiền mặt khi nhận hàng.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>-->
                             <div class="row mt-3">
                                 <div class="col-12">
                                     <a href="orders.html" class="btn btn-danger w-100"
-                                        style="background-color: orangered;"><strong>ĐẶT
-                                            HÀNG</strong></a>
+                                        style="background-color: orangered;"><strong>Thanh toán
+                                            bằng tiền mặt khi nhận hàng</strong></a>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-12">
+                                    <a href="vnpay_pay.html?total={{getTotal()}}" class="btn btn-danger w-100"
+                                        style="background-color: orangered;"><strong>Thanh toán
+                                            bằng VnPay</strong></a>
                                 </div>
                             </div>
                             <div class="row mt-3 bg-light p-3">
@@ -211,11 +171,9 @@
         </div>
         <!-- checkout-area end -->
     </div>
-
-    <script th:inline="javascript">
-        Alert('Đây là thông báo từ JavaScript!');
+    <script>
+        alert('Đây là thông báo từ JavaScript!');
     </script>
-
 </body>
 
 </html>
