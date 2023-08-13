@@ -3,10 +3,10 @@
 	th:replace="~{/user/layout::dynamic(~{::title},~{::header},~{::.content})}">
 
 <head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>J6TEAM | Đăng nhập</title>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>J6TEAM | Đăng nhập</title>
 
 
 </head>
@@ -52,11 +52,12 @@
 						<div class="well">
 							<div class="return-customer">
 								<h3 class="mb-10 custom-title">đăng nhập</h3>
-								<div th:if="${#strings.equals(param.err, '123')}" class="alert alert-danger"
-									role="alert">Tài khoản và mật
+								<div th:if="${#strings.equals(param.err, '123')}"
+									class="alert alert-danger" role="alert">Tài khoản và mật
 									khẩu chưa chính xác!</div>
 
-								<form th:action="@{/signin.html}" method="post" th:object="${account}">
+								<form th:action="@{/signin.html}" method="post"
+									th:object="${account}">
 									<div class="form-group">
 										<input type="text" class="form-control" name="username" path="username"
 											th:placeholder="Username" />
@@ -64,7 +65,8 @@
 											th:errors="*{username}"></small> -->
 									</div>
 									<div class="form-group">
-										<input type="password" class="form-control" path="password" name="password"
+										<input type="password" class="form-control" path="password"
+											name="password"
 											th:placeholder="Password" />
 										<!-- <small class="text-danger" th:if="${#fields.hasErrors('password')}"
 											th:errors="*{password}"></small> -->
@@ -77,10 +79,8 @@
 										nhập</button>
 
 								</form>
-								<a class="return-customer-btn btn-google " href="/oauth2/authorization/google"><i
-										class='bx bxl-google'></i>
-									<p> Đăng nhập với Google</p>
-								</a>
+								<a class="return-customer-btn btn-google "
+									href="/oauth2/authorization/google"><i class='bx bxl-google'></i><p> Đăng nhập với Google</p></a>
 							</div>
 						</div>
 					</div>
@@ -92,7 +92,6 @@
 		</div>
 		<!-- LogIn Page End -->
 	</div>
-
 </body>
 
 </html>

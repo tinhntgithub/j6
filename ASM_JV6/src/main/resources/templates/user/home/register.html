@@ -1,20 +1,16 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.thymeleaf.org"
-    th:replace="~{/user/layout::dynamic(~{::title},~{::header},~{::.content})}">
-
+<html lang="en" xmlns="http://www.thymeleaf.org" th:replace="~{/user/layout::dynamic(~{::title},~{::header},~{::.content})}">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>J6TEAM | Đăng ký</title>
 </head>
-
 <body>
     <header th:insert="~{/user/common/header::header}"></header>
-    <div class="content" ng-controller="registerCtrl">
-        <!-- Breadcrumb Start -->
-        <div class="breadcrumb-area mt-30">
+    <div class="content">
+         <!-- Breadcrumb Start -->
+         <div class="breadcrumb-area mt-30">
             <div class="container">
                 <div class="breadcrumb">
                     <ul class="d-flex align-items-center">
@@ -33,8 +29,7 @@
                     <div class="col-sm-12">
                         <div class="register-title">
                             <h3 class="mb-10">ĐĂNG KÝ TÀI KHOẢN</h3>
-                            <p class="mb-10">Nếu bạn đã có tài khoản với chúng tôi, vui lòng đăng nhập tại trang đăng
-                                nhập.</p>
+                            <p class="mb-10">Nếu bạn đã có tài khoản với chúng tôi, vui lòng đăng nhập tại trang đăng nhập.</p>
                         </div>
                     </div>
                 </div>
@@ -44,49 +39,40 @@
 
 
                         <div th:hidden="${mess6 == null}">
-                            <p class="alert alert-success" role="alert">[[${mess6}]]</p>
-                        </div>
+                            <p class="alert alert-success" role="alert" >[[${mess6}]]</p>
+                       </div>
 
 
-                        <form class="form-register" th:action="@{/register.html}" th:object="${signUpForm}"
-                            th:method="post">
+                        <form class="form-register" th:action="@{/register.html}" th:object="${signUpForm}" th:method="post">
                             <fieldset>
                                 <legend>Thông tin cá nhân của bạn</legend>
                                 <div class="form-group d-md-flex align-items-md-center">
-                                    <label class="control-label col-md-2" for="f-name"><span class="require">*</span>Tên
-                                        đăng nhập</label>
+                                    <label class="control-label col-md-2" for="f-name"><span class="require">*</span>Tên đăng nhập</label>
                                     <div class="col-md-10">
-                                        <input th:field="*{username}" name="username" type="text" class="form-control"
-                                            id="f-name" placeholder="Tên đăng nhập...">
+                                        <input th:field="*{username}" name="username" type="text" class="form-control" id="f-name" placeholder="Tên đăng nhập...">
                                         <i class="erros_mess" th:errors="*{username}"></i>
                                         <p class="erros_mess">[[${mess1}]]</p>
                                     </div>
                                 </div>
                                 <div class="form-group d-md-flex align-items-md-center">
-                                    <label class="control-label col-md-2" for="fullname"><span
-                                            class="require">*</span>Họ và Tên</label>
+                                    <label class="control-label col-md-2" for="fullname"><span class="require">*</span>Họ và Tên</label>
                                     <div class="col-md-10">
-                                        <input th:field="*{fullname}" name="fullname" type="text" class="form-control"
-                                            id="fullname" placeholder="Họ và tên...">
+                                        <input th:field="*{fullname}" name="fullname" type="text" class="form-control" id="fullname" placeholder="Họ và tên...">
                                         <i class="erros_mess" th:errors="*{fullname}"></i>
                                     </div>
                                 </div>
                                 <div class="form-group d-md-flex align-items-md-center">
-                                    <label class="control-label col-md-2" for="email"><span
-                                            class="require">*</span>Email</label>
+                                    <label class="control-label col-md-2" for="email"><span class="require">*</span>Email</label>
                                     <div class="col-md-10">
-                                        <input th:field="*{email}" name="email" type="email" class="form-control"
-                                            id="email" placeholder="Email...">
+                                        <input th:field="*{email}" name="email" type="email" class="form-control" id="email" placeholder="Email...">
                                         <i class="erros_mess" th:errors="*{email}"></i>
                                         <p class="erros_mess">[[${mess2}]]</p>
                                     </div>
                                 </div>
                                 <div class="form-group d-md-flex align-items-md-center">
-                                    <label class="control-label col-md-2" for="number"><span class="require">*</span>Số
-                                        điện thoại</label>
+                                    <label class="control-label col-md-2" for="number"><span class="require">*</span>Số điện thoại</label>
                                     <div class="col-md-10">
-                                        <input th:field="*{phone}" name="phone" type="text" class="form-control"
-                                            id="number" placeholder="Số điện thoại...">
+                                        <input th:field="*{phone}" name="phone" type="text" class="form-control" id="number" placeholder="Số điện thoại...">
                                         <i class="erros_mess" th:errors="*{phone}"></i>
                                         <p class="erros_mess">[[${mess3}]]</p>
                                         <p class="erros_mess">[[${mess5}]]</p>
@@ -96,45 +82,26 @@
                             <fieldset>
                                 <legend>Mật khẩu của bạn</legend>
                                 <div class="form-group d-md-flex align-items-md-center">
-                                    <label class="control-label col-md-2" for="pwd"><span class="require">*</span>Mật
-                                        khẩu:</label>
+                                    <label class="control-label col-md-2" for="pwd"><span class="require">*</span>Mật khẩu:</label>
                                     <div class="col-md-10">
-                                        <input th:field="*{password}" name="pass" type="password" class="form-control"
-                                            id="pwd" placeholder="Mật khẩu...">
+                                        <input th:field="*{password}" name="pass" type="password" class="form-control" id="pwd" placeholder="Mật khẩu...">
                                         <i class="erros_mess" th:errors="*{password}"></i>
                                     </div>
                                 </div>
                                 <div class="form-group d-md-flex align-items-md-center">
-                                    <label class="control-label col-md-2" for="pwd-confirm"><span
-                                            class="require">*</span>Xác nhận mật khẩu</label>
+                                    <label class="control-label col-md-2" for="pwd-confirm"><span class="require">*</span>Xác nhận mật khẩu</label>
                                     <div class="col-md-10">
-                                        <input th:field="*{password2}" name="pass2" type="password" class="form-control"
-                                            id="pwd-confirm" placeholder="Xác nhận mật khẩu...">
+                                        <input th:field="*{password2}" name="pass2" type="password" class="form-control" id="pwd-confirm" placeholder="Xác nhận mật khẩu...">
                                         <i class="erros_mess" th:errors="*{password}"></i>
                                         <p class="erros_mess">[[${mess4}]]</p>
-                                    </div>
-                                </div>
-                                <div class="form-group d-md-flex align-items-md-center">
-                                    <label class="control-label col-md-2" for="inputOTP"><span
-                                            class="require">*</span>Nhập mã OTP: </label>
-                                    <div class="col-md-10">
-                                        <label class="btn btn-warning" ng-click="generateOTP()" value="Tạo mã OTP">Tạo
-                                            mã OTP</label>
-                                        <input required ng-model="enteredOTP" ng-change="verifyOTP()" name="inputOTP"
-                                            class="form-control" id="inputOTP" placeholder="Nhập mã OTP...">
-                                        <br>
-                                        <!-- <p>Kết quả tạo mã OTP: <span id="otpResult"></span></p> -->
-                                        <p id="expiryCountdown"></p>
-                                        <p id="verifyResult"></p>
                                     </div>
                                 </div>
                             </fieldset>
                             <div class="terms">
                                 <div class="float-md-right">
-                                    <span>Tôi đã đọc và đồng ý với <a href="#" class="agree"><b>Chính sách bảo
-                                                mật</b></a></span>
-                                    <input type="checkbox" th:field="*{check}" name="check" value="1"> &nbsp;
-                                    <input hidden type="submit" value="Tiếp tục" class="return-customer-btn">
+                                    <span>Tôi đã đọc và đồng ý với <a href="#" class="agree"><b>Chính sách bảo mật</b></a></span>
+                                    <input type="checkbox" th:field="*{check}" name="check" value="1"> &nbsp;                                
+                                    <input type="submit" value="Tiếp tục" class="return-customer-btn">
                                     </br>
                                     <i class="erros_mess" th:errors="*{check}"></i>
                                 </div>
@@ -150,5 +117,4 @@
         <!-- Register Account End -->
     </div>
 </body>
-
 </html>

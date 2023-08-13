@@ -14,10 +14,7 @@ import j6.asm.entity.Accounts;
 public interface AccountsService {
 
 	List<Accounts> findAll();
-	List<Object[]> getResultList();
 
-	List<Object[]> getReportPrintCustomer(String username);
-	
 	List<Object[]> getPurchaseDataByYearRange(Date from, Date to);
 
 	List<Object[]> getReportAllCustomer();

@@ -74,15 +74,15 @@
                                     </h3>
                                 </div> -->
                                 <!-- <div id="ship-box-info"> -->
-                                <div class="row">
-                                    <div class="col-md-12 mb-3">
-                                        <div class="checkout-form-list mb-sm-30">
-                                            <label>Địa chỉ <span class="required">*</span></label>
-                                            <input type="text" ng-model="currentUser.newAddress"
-                                                placeholder="Nhập địa chỉ mới ....">
+                                    <div class="row">
+                                        <div class="col-md-12 mb-3">
+                                            <div class="checkout-form-list mb-sm-30">
+                                                <label>Địa chỉ <span class="required">*</span></label>
+                                                <input type="text" ng-model="currentUser.newAddress"
+                                                    placeholder="Nhập địa chỉ mới ....">
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
                                 <!-- </div> -->
                                 <div class="order-notes">
                                     <div class="checkout-form-list">
@@ -101,6 +101,7 @@
                                 <div class="col-md-12 mb-3">
                                     <div class="checkout-form-list mb-sm-30">
                                         <label>Mã giảm giá</label>
+                                        <span th:text="${message}"></span>
                                         <input type="text" name="coupon_code" ng-model="voucher.code"
                                             style="width: 350px;" placeholder="Nhập mã voucher của bạn, nếu có....">
                                         <button ng-click="apply_vourcher_code()" class="btn btn-danger"
@@ -187,6 +188,9 @@
         </div>
         <!-- checkout-area end -->
     </div>
+    <script>
+        alert('Đây là thông báo từ JavaScript!');
+    </script>
 </body>
 
 </html>

@@ -48,19 +48,10 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr ng-repeat="product in favoriteProductsList">
+                                        <tr>
+                                           
                                             <td>
-                                                <a href=""><img
-                                                        th:src="@{/user/img/products/{{product.productsId.img}}}"
-                                                        alt="cart-image" width="72px;"></a>
-                                            </td>
-                                            <td>
-                                                <a href="" class="text-dark">{{product.productsId.name}}</a>
-                                            </td>
-                                            <td>
-                                                <a href="" class="btn btn-danger"
-                                                    ng-click="addCart(product.productsId.id)">Thêm
-                                                    ngay {{product.productsId.id}}</a>
+                                                <a href="#"><img th:src="@{/user/img/products/6.jpg}" alt="cart-image" width="72px;"></a>
                                             </td>
                                             <td>
                                                 <a href="" class="text-dark">
@@ -93,6 +84,10 @@
         </div>
         <!-- Wish List End -->
     </div>
+   
 </body>
+
+</html>
+
 
 </html>

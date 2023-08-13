@@ -40,7 +40,7 @@ public class Orders implements Serializable {
 	private Accounts userOrder;
 
 	@Column(name = "[createdate]")
-	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.DATE)
 	private Date date = new Date();
 
 	@ManyToOne

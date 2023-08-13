@@ -1,7 +1,9 @@
 package j6.asm.controller.admin;
 
+import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
+import java.util.TimeZone;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +17,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import j6.asm.dao.SaleDAO;
 import j6.asm.entity.Sale;
+import j6.asm.message.ResponseMessageError;
 import j6.asm.service.SaleService;
 
 @CrossOrigin("*")
@@ -24,6 +28,8 @@ public class SalesRestController {
 
 	@Autowired
 	SaleService sale;
+	@Autowired
+	SaleDAO dao;
 
 	@GetMapping("/rest/sales")
 	public ResponseEntity<List<Sale>> getAll(Model m) {
@@ -32,14 +38,35 @@ public class SalesRestController {
 	}
 
 	@GetMapping("/rest/sales/checkcode/{code}")
-	public ResponseEntity<Sale> getByCOde(@PathVariable("code") String code){
+	public ResponseEntity<?> getByCOde(@PathVariable("code") String code, Model m) {
 		Optional<List<Sale>> list = sale.findByCode(code);
-		if(list.isPresent()){
+		//Optional<List<Sale>> list1 = sale.discountcode(code);
+		Calendar cld = Calendar.getInstance(TimeZone.getTimeZone("Etc/GMT+7"));
+		System.out.println(cld.getTime().getTime());
+		if (list.isPresent()) {
 			Sale sale2 = list.get().get(0);
+			System.out.println(sale2.getCreateDate().getTime());
+			if (sale2.getEndDate().getTime() < cld.getTime().getTime()) {
+				System.err.println("MÃ GIÃM GIÁ ĐÃ HẾT HẠN");
+				return ResponseEntity.badRequest()
+						.body(new ResponseMessageError("MÃ GIÃM GIÁ ĐÃ HẾT HẠN!", "coupon_code"));
+			}
+			if (sale2.getAmountused() == 0) {
+				System.err.println("SỐ LƯỢNG CỦA MÃ GIẢM GIÁ ĐÃ HẾT");
+				return ResponseEntity.badRequest()
+						.body(new ResponseMessageError("SỐ LƯỢNG CỦA MÃ GIẢM GIÁ ĐÃ HẾT!", "coupon_code"));
+			}
+			if (sale2.getAmount() < sale2.getAmountused()) {
+				System.err.println("SỐ LƯỢNG CỦA MÃ GIẢM GIÁ ĐÃ NHẬP HẾT");
+				return ResponseEntity.badRequest()
+						.body(new ResponseMessageError("SỐ LƯỢNG CỦA MÃ GIẢM GIÁ ĐÃ NHẬP HẾT!", "coupon_code"));
+			}
+			
 			return ResponseEntity.ok(sale2);
-		}else{
-			return ResponseEntity.notFound().build();
+		} else {
+			return ResponseEntity.badRequest().body(new ResponseMessageError("MÃ GIÃM GIÁ KHÔNG ĐÚNG!", "coupon_code"));
 		}
+
 	}
 
 	@GetMapping("/rest/sales/{id}")
@@ -52,6 +79,7 @@ public class SalesRestController {
 
 	@GetMapping("/rest/sales/check/{id}")
 	public Boolean checkOrder(@PathVariable("id") Integer id) {
+
 		return sale.checkOrder(id);
 	}
 

@@ -82,47 +82,46 @@ public class OrderController {
 	@RequestMapping("/orders.html")
 	public String ordersPage(Model model) throws IOException, ParseException {
 		Accounts account = session.get("account");
-		List<Cart> cart = cartDAO.findByUserCart(account);
-		Pageable pageable = PageRequest.of(0, 10);
-		List<Address> addresses = addressDAO.findByUsername(account, pageable);
-		List<OrderDetails> listOrderDetails = new ArrayList<>();
+		// List<Cart> cart = cartDAO.findByUserCart(account);
+		// Pageable pageable = PageRequest.of(0, 10);
+		// List<Address> addresses = addressDAO.findByUsername(account, pageable);
+		// List<OrderDetails> listOrderDetails = new ArrayList<>();
 
-		LocalDateTime now = LocalDateTime.now();
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
-		String formattedDate = now.format(formatter);
-		System.out.println("Formatted Date: " + formattedDate);
+		// LocalDateTime now = LocalDateTime.now();
+		// DateTimeFormatter formatter =
+		// DateTimeFormatter.ofPattern("yyyy-MM-ddHH:mm:ss.SSS");
+		// String dateString = now.format(formatter);
 
-		SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
-		Date date = inputFormat.parse(formattedDate);
-		System.out.println("Parsed Date: " + date);
+		// SimpleDateFormat inputFormat = new
+		// SimpleDateFormat("yyyy-MM-ddHH:mm:ss.SSS");
+		// Date date = inputFormat.parse(dateString);
 
-		// To make sure the parsed Date matches the formattedDate in milliseconds
-		String parsedFormattedDate = inputFormat.format(date);
-		System.out.println("Parsed and Reformatted Date: " + parsedFormattedDate);
+		// Status status = statusdao.getById(1);
 
-		Status status = statusdao.getById(1);
+		// Orders orders = new Orders(null, account, date, null, "Kiên Giang",
+		// account.getFullname(), account.getPhone(),
+		// status,
+		// null);
 
-		Orders orders = new Orders(null, account, date, null, "Kiên Giang",
-				account.getFullname(), account.getPhone(),
-				status,
-				null);
+		// orderdao.save(orders); // Lưu đối tượng Orders và OrderDetails trong cùng một
+		// giao dịch
 
-		orderdao.save(orders); // Lưu đối tượng Orders và OrderDetails trong cùng một giao dịch
+		// OrderDetails orderDetails;
 
-		OrderDetails orderDetails;
+		// for (Cart cartProduct : cart) {
+		// Products product =
+		// productsDAO.findByProductId(cartProduct.getProCart().getId());
+		// orderDetails = new OrderDetails(null, orders, product,
+		// cartProduct.getPrice(),
+		// cartProduct.getQty(), cartProduct.getColorCart());
+		// orderdetaildao.save(orderDetails);
+		// cartDAO.delete(cartProduct);
+		// }
 
-		for (Cart cartProduct : cart) {
-			Products product = productsDAO.findByProductId(cartProduct.getProCart().getId());
-			orderDetails = new OrderDetails(null, orders, product,
-					cartProduct.getPrice(),
-					cartProduct.getQty(), cartProduct.getColorCart());
-			orderdetaildao.save(orderDetails);
-			cartDAO.delete(cartProduct);
-		}
+		// orders.setOrderDetails(listOrderDetails);
 
-		orders.setOrderDetails(listOrderDetails);
-
-		orderdao.save(orders); // Lưu đối tượng Orders và OrderDetails trong cùng một giao dịch
+		// orderdao.save(orders); // Lưu đối tượng Orders và OrderDetails trong cùng một
+		// giao dịch
 
 		List<Orders> order_all = orderdao.find_LoginbyUsername(account.getUsername());
 		model.addAttribute("or", order_all.get(0));
@@ -148,12 +147,14 @@ public class OrderController {
 		return "user/order/orders";
 	}
 
+	
+
 	// Order Details Manager
 	@GetMapping("/order_details.html")
 	public String orderDetailsPage(Model m, @RequestParam("id") Integer id) {
 		Accounts account = session.get("account");
 		List<OrderDetails> details = orderdetaildao.find_Order_details(id);
-
+		
 		m.addAttribute("details", details);
 
 		// thông tin khách hàng
@@ -205,9 +206,8 @@ public class OrderController {
 		Accounts account = session.get("account");
 
 		Orders order = orderdao.findById(id).get();
-		System.out.println();
 		order.setStatusId(statusdao.findById(4).get());
-		orderdao.save(order);
+		orderdao.delete(order);
 		return "redirect:/manageOrders.html";
 	}
 

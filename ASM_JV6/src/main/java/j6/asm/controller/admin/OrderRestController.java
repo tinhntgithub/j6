@@ -13,6 +13,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -128,8 +129,6 @@ public class OrderRestController {
 
 		String address;
 		JsonNode addNode = data.get("address");
-		
-
 
 		LocalDateTime now = LocalDateTime.now();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-ddHH:mm:ss.SSS");
@@ -155,6 +154,18 @@ public class OrderRestController {
 
 		Integer saleid = data.get("voucher").asInt();
 
+		System.err.println("Lấy Mã voucher: " + saleid);
+		Sale check = saleService.findById(saleid);
+		if (check == null) {
+			System.err.println("Không thấy bên sale nè");
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		if (check.getAmountused() > 0) {
+			check.setAmountused(check.getAmountused() + 1);
+			final Sale updateAmountuser = saleService.save(check);
+			System.err.println("Lấy thành công: ");
+		}
+
 		Orders orders = new Orders();
 		orders.setDate(date);
 		orders.setUserOrder(account);
@@ -167,7 +178,7 @@ public class OrderRestController {
 				address = addrList.get().get(0).getAddress();
 				orders.setAddress(address);
 			}
-		}else{
+		} else {
 			address = addNode.asText();
 			orders.setAddress("Chân cầu Cần Thơ");
 		}
@@ -197,7 +208,7 @@ public class OrderRestController {
 			ProductColor productColor = cartProduct.getColorCart();
 			productColor.setQty(productColor.getQty() - cartProduct.getQty());
 			productColorService.update(productColor);
-			
+
 			cartService.delete(cartProduct.getId());
 		}
 

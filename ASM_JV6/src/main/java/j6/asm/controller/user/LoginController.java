@@ -158,6 +158,8 @@ public class LoginController {
 					}
 				} else {
 					UserDetails newAccount = User.withUsername(googleEmail).password("123").roles("CUST").build();
+				
+//					accountsService1.create(newAccount);
 
 					// // Tạo đối tượng AuthenTication từ UserDetails
 					Authentication auth = new UsernamePasswordAuthenticationToken(newAccount, null,
@@ -167,15 +169,15 @@ public class LoginController {
 					System.out.println(auth.getAuthorities());
 					// Lưu tài khoản mới vào cơ sở dữ liệu
 					Accounts accounts = new Accounts();
-					accounts.setUsername(generateRandomUsername()); //
+					accounts.setUsername(generateRandomUsername()); // 
 					accounts.setActive(true);
 					accounts.setFullname(usernameString);
 					accounts.setPassword(generateRandomPassword());
 					accounts.setEmail(googleEmail);
 					accounts.setPhoto(picture);
 					accountsService1.create(accounts);
-					System.out.println("Nè " + accounts);
-					session.set("account", accounts); // Sử dụng newAccount thay vì account
+					System.out.println("Nè "+accounts);
+      				session.set( "account", accounts); // Sử dụng newAccount thay vì account
 					return "redirect:/index.html";
 				}
 			} else {

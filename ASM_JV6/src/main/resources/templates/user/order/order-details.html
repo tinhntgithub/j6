@@ -66,11 +66,10 @@
 
 
                                         <div class="col-md-2">
-                                            <img width="70px" height="70px" class="primary-img"
-                                                th:src="${'/uploads/productImg/'+{e.productsId.img}}"
-                                                alt="single-product">
+                                            <img width="70px" height="70px"
+                                            class="primary-img" th:src="${'/uploads/productImg/'+{e.productsId.img}}"  alt="single-product">
 
-                                            <!-- <p class="text-muted mb-0" th:text="*{productsId.img}"></p> -->
+                                  <!-- <p class="text-muted mb-0" th:text="*{productsId.img}"></p> -->
                                         </div>
 
                                         <div
@@ -84,16 +83,13 @@
                                             class="col-md-2 text-center d-flex justify-content-center align-items-center">
                                             <p class="text-muted mb-0 small" th:text="*{qty}"></p>
                                         </div>
-                                        <div
-                                            class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                                        <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
                                             <!-- <p class="text-muted mb-0 small" th:text="${#numbers.formatDecimal(price, 0, 'COMMA', 0, 'POINT') +'đ'}"></p> -->
-                                            <p class="text-muted mb-0 small"
-                                                th:text="${#numbers.formatDecimal(price, 0, 'COMMA', 3, 'POINT')}"></p>
+                                            <p class="text-muted mb-0 small" th:text="${#numbers.formatDecimal(price, 0, 'COMMA', 3, 'POINT')}"></p>
 
                                         </div>
-                                        <div
-                                            class="col-md-2 text-center d-flex justify-content-center align-items-center">
-                                            <p class="text-muted mb-0 small" th:text=" *{price*qty}"></p>
+                                        <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                                            <p class="text-muted mb-0 small"  th:text=" *{price*qty}"></p>
                                         </div>
 
                                         <hr class="mb-4" style="background-color: #e0e0e0; opacity: 1;">
@@ -105,24 +101,21 @@
                             </div>
 
                             <div class="d-flex justify-content-between pt-2">
-                                <p class="fw-bold mb-0">Chi tiết đơn hàng:</p>
-                                <p class="text-muted mb-0"><span class="fw-bold me-4">Tổng:</span><span
-                                        th:text="${#numbers.formatDecimal(subtotal, 0, 'COMMA', 0, 'POINT')}"></span>
-                                </p>
+                                <p class="fw-bold mb-0" >Chi tiết đơn hàng:</p>
+                                <p class="text-muted mb-0"><span class="fw-bold me-4">Tổng:</span ><span th:text="${#numbers.formatDecimal(subtotal, 0, 'COMMA', 0, 'POINT')}"></span> </p>
                             </div>
 
                             <div th:each="list:${or}">
 
-                                <div class="d-flex justify-content-between pt-2">
-                                    <p class="text-muted mb-0">Họ tên người nhận : [[${list.fullname}]]</p>
-                                    <!-- <p class="text-muted mb-0"><span class="fw-bold me-4">(+) Phí ship:</span> 0 VND</p> -->
-                                </div>
+                            <div class="d-flex justify-content-between pt-2" >
+                                <p class="text-muted mb-0">Họ tên người nhận : [[${list.fullname}]]</p>
+                                <!-- <p class="text-muted mb-0"><span class="fw-bold me-4">(+) Phí ship:</span> 0 VND</p> -->
+                            </div>
 
-                                <div class="d-flex justify-content-between pt-2">
-                                    <p class="text-muted mb-0">Số điện thoại : [[${list.phone}]]</p>
-                                    <p class="text-muted mb-0"><span class="fw-bold me-4">(-) Giảm giá:</span>
-                                        [[${#numbers.formatDecimal(giamgia, 0, 'COMMA', 0, 'POINT')}]] VND</p>
-                                </div>
+                            <div class="d-flex justify-content-between pt-2">
+                                <p class="text-muted mb-0">Số điện thoại : [[${list.phone}]]</p>
+                                <p class="text-muted mb-0"><span class="fw-bold me-4">(-) Giảm giá:</span> [[${#numbers.formatDecimal(giamgia, 0, 'COMMA', 0, 'POINT')}]] VND</p>
+                            </div>
 
                                 <!-- <div class="d-flex justify-content-between pt-2">
                                 <p class="text-muted mb-0">Email : abc@gmail.com</p>
@@ -141,8 +134,7 @@
                             style="border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;background: #ffffff;">
                             <hr class="" style="background-color: #e0e0e0; opacity: 1;">
                             <h5 class="d-flex align-items-center justify-content-end text-danger mb-0">Tổng tiền:
-                                <span class="h5 mb-0 ms-2">[[${#numbers.formatDecimal(total, 0, 'COMMA', 0, 'POINT')}]]
-                                    VND</span>
+                                <span class="h5 mb-0 ms-2">[[${#numbers.formatDecimal(total, 0, 'COMMA', 0, 'POINT')}]] VND</span>
                             </h5>
                             <div class="justify-content-start">
                                 <a href="manageOrders.html" class="btn btn-danger">Trở về...</a>

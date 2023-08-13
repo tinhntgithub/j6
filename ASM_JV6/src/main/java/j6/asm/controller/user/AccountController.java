@@ -2,7 +2,6 @@ package j6.asm.controller.user;
 
 import java.text.DecimalFormat;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.Properties;
 import java.util.Random;
@@ -29,14 +28,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.fasterxml.jackson.databind.JsonNode;
 
 import j6.asm.dao.AccountDAO;
 import j6.asm.dao.AddressDAO;
@@ -79,63 +72,17 @@ public class AccountController {
 	@Autowired
 	SessionService session;
 
-	// Register page
+//	Register page
 	@GetMapping("/register.html")
 	public String register(Model m, @ModelAttribute("signUpForm") SignUpForm signUp) {
 		signUp = new SignUpForm();
 		return "user/home/register";
 	}
 
-	// @RequestMapping("/logout.html")
+//	@RequestMapping("/logout.html")
 	public String logout() {
 		session.remove("account");
 		return "redirect:/index.html";
-	}
-
-	@RequestMapping("/sendOTPToMail/{email}/{otp}")
-	@ResponseBody
-	public String sendOTPToMail(@PathVariable("email") String email1, @PathVariable("otp") String otp1, Model model) {
-		String email = email1;
-		System.out.println(email);
-		String otp = otp1;
-		System.out.println(otp);
-
-		// Xử lý gửi OTP qua email ở đây
-		Properties pros = new Properties();
-		pros.setProperty("mail.smtp.auth", "true");
-		pros.setProperty("mail.smtp.starttls.enable", "true");
-		pros.setProperty("mail.smtp.host", "smtp.gmail.com");
-		pros.setProperty("mail.smtp.ssl.trust", "smtp.gmail.com");
-		pros.setProperty("mail.smtp.ssl.protocols", "TLSv1.2");
-		pros.setProperty("mail.smtp.port", "587");
-
-		Session session = Session.getInstance(pros, new Authenticator() {
-			protected javax.mail.PasswordAuthentication getPasswordAuthentication() {
-				String username = "dtndatn2022@gmail.com";
-				String password = "qdaggkewjaejnuxo";
-				return new javax.mail.PasswordAuthentication(username, password);
-			}
-		});
-
-		try {
-			Multipart multipart = new MimeMultipart();
-			MimeBodyPart bodytext = new MimeBodyPart();
-			bodytext.setContent(getHTMLT(otp, "Mã otp của bạn là !"), "text/html;charset=utf-8");
-			multipart.addBodyPart(bodytext);
-
-			MimeMessage mess = new MimeMessage(session);
-			mess.setFrom(new InternetAddress("phuchtpc01818@fpt.edu.vn"));
-			// mess.setRecipients(Message.RecipientType.TO, req.getParameter("email"));
-			mess.setRecipients(Message.RecipientType.TO, email);
-			mess.setSubject("Mã otp đăng ký", "utf-8");
-			mess.setReplyTo(mess.getFrom());
-			mess.setContent(multipart);
-			Transport.send(mess);
-			model.addAttribute("mess", "OTP đã được gửi đến email");
-		} catch (MessagingException e) {
-			e.printStackTrace();
-		}
-		return "Success";
 	}
 
 	@PostMapping("/register.html")
@@ -195,7 +142,7 @@ public class AccountController {
 		return "user/home/register";
 	}
 
-	// Change Pass page
+//	Change Pass page
 	@GetMapping("/changepass.html")
 	public String changepass(@ModelAttribute("changePassForm") ChangePassForm changepass) {
 		return "user/home/changepass";
@@ -226,7 +173,7 @@ public class AccountController {
 		return "user/home/changepass";
 	}
 
-	// Forgot password page
+//	Forgot password page
 	@GetMapping("/forgot-password.html")
 	public String forgot_password() {
 		return "user/home/forgot-password";
@@ -293,14 +240,14 @@ public class AccountController {
 		return "user/home/forgot-password";
 	}
 
-	// @GetMapping("/otp.html")
-	// public String otp() {
-	// String otp = session.get("otpCode");
-	// if(otp==null) {
-	// return "redirect:/index.html";
-	// }
-	// return "user/home/otp";
-	// }
+//	@GetMapping("/otp.html")
+//	public String otp() {
+//		String otp = session.get("otpCode");
+//		if(otp==null) {
+//			return "redirect:/index.html";
+//		}
+//		return "user/home/otp";
+//	}
 
 	public String getHTMLT(String code, String message) {
 		String html = "<!DOCTYPE html\r\n"
