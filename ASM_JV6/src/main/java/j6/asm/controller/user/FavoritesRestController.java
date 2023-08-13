@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale.Category;
 import java.util.Map;
 
 import javax.mail.Session;
@@ -63,26 +64,22 @@ public class FavoritesRestController {
 		return ResponseEntity.ok(list);
 	}
 
-	@DeleteMapping("unLike/{id}")
-	public void delteteFavorites(@PathVariable("id") Integer id) {
-		try {
-			Accounts account = session.get("account");
-			Favorites favoriteToDelete = fvrDao.findByUserFvr(account).get(id);
-
-			if (favoriteToDelete == null) {
-				return;
-			}
-
-			fvrDao.delete(favoriteToDelete);
-
-			Map<String, String> response = new HashMap<>();
-			response.put("message", "Favorite deleted successfully");
-
-			return;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return;
+	@GetMapping("like/all/{id}")
+	public ResponseEntity<Favorites> getOne(@PathVariable("id") Integer id) {
+		if (!fvrDao.existsById(id)) {
+			return ResponseEntity.notFound().build();
 		}
+		return ResponseEntity.ok(fvrDao.findById(id).get());
+	}
+
+	@DeleteMapping("like/all/{id}")
+	public ResponseEntity<Void> delteteFavorites(@PathVariable("id") Integer id) {
+		if (!fvrDao.existsById(id)) {
+			return ResponseEntity.notFound().build();
+		}
+		System.out.println(id);
+		fvrDao.deleteById(id);
+		return ResponseEntity.ok().build();
 	}
 
 	@PostMapping("like/{id}")
