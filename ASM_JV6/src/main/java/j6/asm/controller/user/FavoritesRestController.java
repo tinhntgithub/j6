@@ -30,6 +30,7 @@ import j6.asm.entity.Accounts;
 import j6.asm.entity.Favorites;
 import j6.asm.entity.Products;
 import j6.asm.service.SessionService;
+import j6.asm.service.SessionService;
 
 @CrossOrigin(origins = { "*" })
 @RestController
@@ -81,7 +82,6 @@ public class FavoritesRestController {
 		fvrDao.deleteById(id);
 		return ResponseEntity.ok().build();
 	}
-
 	@PostMapping("like/{id}")
 	public ResponseEntity<Object> likeByID(@PathVariable("id") String id) throws IOException {
 		Integer idConvert = 0;
@@ -96,8 +96,12 @@ public class FavoritesRestController {
 			session.set("account", acc);
 			// username = req.getUserPrincipal().getName();
 			username = acc.getUsername();
+			
+			session.set("account", acc);
+			// username = req.getUserPrincipal().getName();
+			username = acc.getUsername();
 			accounts = accDao.findById(username).get();
-			System.out.println("USERNAME : " + username);
+			System.out.println("USERNAME : "+ username);
 		}
 		if (NumberUtils.isParsable(id)) {
 			idConvert = Integer.valueOf(id);

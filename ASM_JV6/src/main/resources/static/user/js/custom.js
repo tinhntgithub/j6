@@ -1,4 +1,5 @@
 // Alert Toastify
+
 alertSuccess = function (message) {
     Toastify({
         text: message,
@@ -275,6 +276,12 @@ function checkAll() {
         checkbox.checked = $('#checkAllId').is(':checked');
     }, $('#checkAllId'));
 }
+function checkAll() {
+    var checkboxes = document.querySelectorAll('#cart-tableBody input[type="checkbox"]');
+    checkboxes.forEach(function (checkbox) {
+        checkbox.checked = $('#checkAllId').is(':checked');
+    }, $('#checkAllId'));
+}
 app.controller("pushCart", function ($scope, $http, $rootScope) {
 
     $rootScope.$on("list", function () {
@@ -305,14 +312,14 @@ app.controller("pushCart", function ($scope, $http, $rootScope) {
         for (var i = 0; i < $scope.Cart.length; i++) {
             $scope.Cart[i].isSelected = $scope.selectAll;
             if ($scope.selectAll) {
-                $scope.selectedIDs.push($scope.Cart[i].id); // Thêm ID vào mảng selectedIDs
+                $scope.selectedIDs.push($scope.Cart[i]); // Thêm ID vào mảng selectedIDs
             }
         }
-        
-     
+
+
         $scope.calculateTotalAmount();
     };
-    
+
     $scope.calculateTotalAmount = function () {
         var total = 0;
 
@@ -406,6 +413,7 @@ app.controller("pushCart", function ($scope, $http, $rootScope) {
     $scope.loadCheckoutList = function () {
         var url = `${host}rest/cart/savetemplist`;
         var data = angular.copy($scope.selectedIDs)
+
         $http.post(url, data).then(resp => {
             console.log(resp.data);
         }
@@ -426,13 +434,27 @@ app.controller("pushCart", function ($scope, $http, $rootScope) {
 // Orders Controller
 app.controller("checkoutCtrl", function ($scope, $http) {
 
+    $scope.delelteProductFormCart = function () {
+
+    }
+
     $scope.payFromCart = [];
 
     $scope.loadCartProduct = function () {
         var url = `${host}rest/cart/gettemplist`;
+        var url2 = `${host}Cart/listCart`;
         $http.get(url).then((resp) => {
-            // Access the itemChecked array from SharedService
             $scope.payFromCart = resp.data;
+            //xử lý nếu resp.data rỗng thì thay bằng toàn bộ card
+            if ($scope.payFromCart.length == 0) {
+                $http.get(url2).then((resp) => {
+                    $scope.payFromCart = resp.data;
+                    console.log("Success o", resp.data);
+                }).catch((error) => {
+                    console.log("Error", error);
+                });
+            }
+            //
             alertSuccess("Lấy API thành công");
             console.log("Success", $scope.payFromCart);
         }).catch((error) => {
@@ -440,6 +462,48 @@ app.controller("checkoutCtrl", function ($scope, $http) {
             console.log("Error", error);
         });
     };
+
+    $scope.voucher = {};
+
+    $scope.apply_vourcher_code = function () {
+        var url = `${host}rest/sales/checkcode/`;
+        var item = angular.copy($scope.voucher);
+        console.log($scope.voucher);
+        $http.get(url + item.code).then(resp => {
+            $scope.voucher = resp.data;
+            console.log($scope.voucher);
+            $scope.getDiscount = function () {
+                var sub = $scope.getSubtotal();
+                return $scope.voucher.value * sub / 100;
+            };
+        }).catch(error => {
+            console.log("Error", error)
+
+        })
+    }
+
+    $scope.handleCheckout = function () {
+        var url = `${host}rest/order/neworder`;
+        var data = angular.copy($scope.currentUser);
+        data.voucher = angular.copy($scope.voucher.id);
+        if (data.voucher == undefined) {
+            data.voucher = 0;
+        }
+        data.list = angular.copy($scope.payFromCart);
+
+        if (!data.address) {
+            data.address = null;
+        }
+
+        console.log(data)
+        $http.post(url, data).then(resp => {
+            alertSuccess("Thanh toán thành công")
+            console.log(resp.data);
+        }).catch(error => {
+            console.log(error);
+        });
+
+    }
 
     // Function to calculate the subtotal
     $scope.getSubtotal = function () {
@@ -450,9 +514,8 @@ app.controller("checkoutCtrl", function ($scope, $http) {
         return subtotal;
     };
 
-    // Function to calculate the discount (assuming discount is 0 for now)
+
     $scope.getDiscount = function () {
-        // You can calculate the discount here based on your business logic
         return 0;
     };
 
@@ -461,6 +524,7 @@ app.controller("checkoutCtrl", function ($scope, $http) {
         return $scope.getSubtotal() - $scope.getDiscount();
     };
 
+    $scope.getCurrentUser();
     $scope.loadCartProduct();
 
     //alert(this.temp);
@@ -493,11 +557,11 @@ app.controller("userImage", function ($scope, $http) {
 });
 
 // start product favorites controller
-app.controller("favoritesCtrl", function ($scope, $http,$rootScope, $window) {
-    
+app.controller("favoritesCtrl", function ($scope, $http, $rootScope, $window) {
+
     $scope.favoriteProductsList = [];
 
-    $scope.loadFavoriteProducts = function() {
+    $scope.loadFavoriteProducts = function () {
         var url = `${host}rest/favorites/like/all`;
         $http.get(url).then((resp) => {
             $scope.favoriteProductsList = resp.data;
@@ -509,10 +573,9 @@ app.controller("favoritesCtrl", function ($scope, $http,$rootScope, $window) {
         });
     }
 
-    $scope.unLikeFavoriteProducts = function(id) {
+    $scope.unLikeFavoriteProducts = function (id) {
 
-        var url = `${host}rest/favorites/like/all/${id}`;
-        alertWarning(url);
+        var url = `${host}rest/favorites/unLike/${id}`;
         
         $http.delete(url).then( resp => {
             alertSuccess("Bỏ thích sản phẩm thành công, Favorite Id: " + id);
@@ -527,17 +590,17 @@ app.controller("favoritesCtrl", function ($scope, $http,$rootScope, $window) {
         var url = `${host}Cart/create/${id}`;
         var urlLogin = "http://" + $window.location.host + "/login.html";
         $http.get(url).then(resp => {
-			console.log(resp);
+            console.log(resp);
             alertSuccess("Thêm vào giỏ hàng thành công");
             $rootScope.$emit("list", {});
         }
         ).catch(error => {
-            if(error.status == 500){
-				$window.location.href = urlLogin;
-			}
-		    console.log(error);
+            if (error.status == 500) {
+                $window.location.href = urlLogin;
+            }
+            console.log(error);
         });
-        
+
     }
 
     $scope.loadFavoriteProducts();

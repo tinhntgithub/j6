@@ -12,8 +12,13 @@ app.controller("account-list", function ($scope, $http) {
         $scope.page.setTitle(current.$$route.title || ' Danh sách tài khoản');
     });
 
+    var url6 = "http://localhost:8080/rest/uploads/accountImg";
     $scope.url = function (filename) {
-        return `${url5}/${filename}`;
+        if (filename != null) {
+            return `${url6}/${filename}`;
+        } else {
+            return 'asset/images/default.jpg';
+        }
     }
 
     $scope.items = [];
@@ -468,6 +473,9 @@ app.controller("account-auth",function($scope,$http){
     $scope.$on('$routeChangeSuccess', function(event, current, previous) {
         $scope.page.setTitle(current.$$route.title || ' Phân quyền tài khoản');
     });
+
+
+
 
     var loi = 0;
     $scope.form1 = {};

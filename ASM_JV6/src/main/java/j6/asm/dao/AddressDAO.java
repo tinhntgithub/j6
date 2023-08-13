@@ -1,6 +1,7 @@
 package j6.asm.dao;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,4 +13,7 @@ import j6.asm.entity.Address;
 public interface AddressDAO extends JpaRepository<Address, Integer> {
 	@Query("Select a from Address a where a.userAr=?1")
 	List<Address> findByUsername(Accounts acc,Pageable page);
+
+	@Query("Select a from Address a where a.userAr.username=?1")
+	Optional<List<Address>> findByUsername (String username);
 }
