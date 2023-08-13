@@ -55,6 +55,11 @@
                             <tr style="background-color: orangered;">
                                 <th>
                                     <a href="" class="text-white" style="text-decoration: none;">
+                                      MÃ SẢN PHẨM
+                                    </a>
+                                </th>
+                                <th>
+                                    <a href="" class="text-white" style="text-decoration: none;">
                                         HÌNH ẢNH
                                     </a>
                                 </th>
@@ -94,6 +99,11 @@
                         </thead>
                         <tfoot>
                             <tr style="background-color: orangered;">
+                                <th>
+                                    <a href="" class="text-white" style="text-decoration: none;">
+                                      MÃ SẢN PHẨM
+                                    </a>
+                                </th>
                                 <th>
                                     <a href="" class="text-white" style="text-decoration: none;">
                                         HÌNH ẢNH
@@ -141,8 +151,10 @@
                                     Không có dữ liệu
                                 </td>
                             </tr>
-                            <tr
-                                ng-repeat="his in items  | filter : search | orderBy : prop |limitTo : pageSize : begin">
+                            <tr  ng-repeat="his in items  | filter : search | orderBy : prop |limitTo : pageSize : begin">
+                              <td class="h5">
+                                {{his.product.id}}
+                              </td>
                                 <td class="h5">
                                     <img class="img-fluid" src="/uploads/productimg/1.jpg"
                                         style="width: 64px;height: 64px;">
@@ -150,9 +162,9 @@
                                 <td class="h5">
                                    {{his.product.name}}
                                 </td>
-                                <td class="h5">{{his.price}} vnđ</td>
+                                <td class="h5">{{his.price  | currency:''}} </td>
                                 <td class="h5">{{his.sale}} %</td>
-                                <td class="h5">{{his.date | date:'dd-MM-yyyy'}}</td>
+                                <td class="h5">{{his.date | date:'dd-MM-yyyy hh:mm:ss'}}</td>
                             </tr>
                             <!-- List item end -->
 
