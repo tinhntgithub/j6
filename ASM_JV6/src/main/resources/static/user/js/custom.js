@@ -524,7 +524,6 @@ app.controller("checkoutCtrl", function ($scope, $http) {
         return $scope.getSubtotal() - $scope.getDiscount();
     };
 
-    $scope.getCurrentUser();
     $scope.loadCartProduct();
 
     //alert(this.temp);
