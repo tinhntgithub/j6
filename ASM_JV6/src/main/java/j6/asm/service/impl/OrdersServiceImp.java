@@ -69,6 +69,15 @@ public class OrdersServiceImp implements OrdersService {
 	}
 
 	@Override
+	public Integer getWaitCount() {
+		return dao.getDelivingCount();
+	}
+	@Override
+	public Integer getDelivingCount() {
+		return dao.getDelivingCount();
+	}
+
+	@Override
 	public Integer getCount() {
 		return dao.getCount();
 	}

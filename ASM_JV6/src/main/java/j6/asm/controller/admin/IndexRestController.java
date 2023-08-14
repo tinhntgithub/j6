@@ -52,6 +52,8 @@ public class IndexRestController {
 		node.put("productCount", products.getCount());
 		node.put("cateCount", category.getCount());
 		node.put("brandCount", brands.getCount());
+		node.put("orderWaitCount", orders.getWaitCount());
+		node.put("orderDelivingCount", orders.getDelivingCount());
 		node.put("orderCount", orders.getCount());
 		node.put("saleCount", sales.getCount());
 		node.put("colorCount", colors.getCount());

@@ -29,5 +29,7 @@ public interface OrdersService {
 
 	void delete(Integer id);
 	
+	Integer getWaitCount();
+	Integer getDelivingCount();
 	Integer getCount();
 }
