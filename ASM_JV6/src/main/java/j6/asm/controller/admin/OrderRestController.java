@@ -186,8 +186,8 @@ public class OrderRestController {
 				sale.setAmountused(sale.getAmountused() + 1);
 				saleService.save(sale);
 			}
-
 			orders.setSaleId(sale);
+			// System.out.println(sale+"assss");
 		}
 
 		orderService.create(orders); // Lưu đối tượng Orders và OrderDetails trong cùng một giao dịch

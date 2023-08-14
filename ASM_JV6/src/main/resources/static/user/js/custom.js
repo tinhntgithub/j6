@@ -787,6 +787,7 @@ app.controller("checkoutCtrl", function($scope, $http) {
 		data.list = angular.copy($scope.payFromCart);
 		data.address = angular.copy($scope.currentUser.selectedAddress);
 		console.log("Không chọn địa chỉ: "+ data.address);
+		console.log("Không chọn địa chỉ: "+ data.voucher.id);
 		var diferAdd = angular.copy($scope.differentAddress);
 		console.log(diferAdd);
 		if (!data.address && diferAdd) {
@@ -878,7 +879,7 @@ app.controller("favoritesCtrl", function($scope, $http, $rootScope, $window) {
 
 	$scope.unLikeFavoriteProducts = function(id) {
 
-		var url = `${host}rest/favorites/unLike/${id}`;
+		var url = `${host}rest/favorites/like/all/${id}`;
 
 		$http.delete(url).then(resp => {
 			alertSuccess("Bỏ thích sản phẩm thành công, Favorite Id: " + id);
@@ -910,3 +911,91 @@ app.controller("favoritesCtrl", function($scope, $http, $rootScope, $window) {
 
 });
 // end product favorites controller
+
+app.controller("registerCtrl", function ($scope, $http,$rootScope, $window) {
+
+    let otpChecked = "";
+
+    $scope.generateOTP = function (){
+
+        const otpLength = 6;
+        const otpChars = '0123456789';
+        let otp = '';
+
+        for (let i = 0; i < otpLength; i++) {
+            const randomIndex = Math.floor(Math.random() * otpChars.length);
+            otp += otpChars[randomIndex];
+        }
+        otpChecked = otp;
+
+        //const otpResultElement = document.getElementById('otpResult');
+        //otpResultElement.textContent = otp;
+
+        $scope.startExpiryCountdown(otp);
+    }
+
+    $scope.verifyOTP = function () {
+        const enteredOTP = document.getElementById('inputOTP').value;
+        const generatedOTP = otpChecked;
+
+        const resultElement = document.getElementById('verifyResult');
+        const continueButton = document.querySelector('.return-customer-btn'); // Chọn nút "Tiếp tục"
+
+        if (enteredOTP === generatedOTP) {
+            resultElement.textContent = 'Mã OTP hợp lệ';
+            resultElement.style.color = 'green';
+            continueButton.hidden = false; // Cho phép nút "Tiếp tục" được nhấn
+        } else {
+            resultElement.textContent = 'Mã OTP không hợp lệ';
+            resultElement.style.color = 'red';
+            continueButton.hidden = true; // Vô hiệu hóa nút "Tiếp tục"
+        }
+    }
+
+    $scope.startExpiryCountdown = function (otp) {
+        const countdownElement = document.getElementById('expiryCountdown');
+        countdownElement.textContent = 'Thời gian còn lại: 60 giây';
+        const continueButton = document.querySelector('.return-customer-btn'); // Chọn nút "Tiếp tục"
+
+        let countdown = 60;
+        const countdownInterval = setInterval(function () {
+            countdown--;
+            countdownElement.textContent = `Thời gian còn lại: ${countdown} giây`;
+
+            if (countdown === 0) {
+                clearInterval(countdownInterval);
+                countdownElement.textContent = 'Mã OTP đã hết hạn';
+                continueButton.hidden = true; // Vô hiệu hóa nút "Tiếp tục"
+                otpChecked = "";
+            }
+        }, 1000);
+        alertSuccess("Tạo mã OTP thành công");
+		document.getElementById("inputOTP").disabled = false;
+        $scope.sendOTPToMail(otp);
+    }
+
+    $scope.sendOTPToMail = function (otp) {
+        const enteredEmail = document.getElementById("email").value;
+        const enteredOTP = otp;
+
+        // alert(enteredEmail);
+        // alert(enteredOTP);
+
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", `/sendOTPToMail/${enteredEmail}/${enteredOTP}`, true);
+        xhr.send();
+
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    console.log("Request successfully triggered.");
+                    // Xử lý kết quả nếu cần
+                } else {
+                    console.error("Request failed.");
+                    // Xử lý lỗi nếu cần
+                }
+            }
+        };
+    }
+})
+// End OTP
