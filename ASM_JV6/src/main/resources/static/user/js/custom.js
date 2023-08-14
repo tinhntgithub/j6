@@ -71,6 +71,8 @@ alertResetAndEdit = function (message) {
         onClick: function () { } // Callback after click
     }).showToast();
 }
+
+
 // Lắng nghe sự kiện khi click vào ô checkbox trên cùng
 function checkAll() {
     var checkboxes = document.querySelectorAll('#cart-tableBody input[type="checkbox"]');
@@ -82,14 +84,14 @@ function checkAll() {
 //Start Delete Address
 function deleteAddress(adr, id) {
     $(".address").text(adr);
-    $("#deleteAddress").attr("href", "/DTNsBike/update_account.html/delete/" + id);
+    $("#deleteAddress").attr("href", "/update_account.html/delete/" + id);
 }
 //End Delete Address
 
 //Start Update Address
 function updateAddress(adr, id) {
     $('#editAddress').val(adr);
-    $("#updateAddress").attr("formaction", "/DTNsBike/update_account.html/update/" + id);
+    $("#updateAddress").attr("formaction", "/update_account.html/update/" + id);
 }
 function updateAdr() {
     var adr = String($("#editAddress").val());
@@ -127,34 +129,280 @@ $(document).ready(function () {
 //Angular.js 
 var app = angular.module("gemApp", []);
 var host = "http://localhost:8080/";
-//Upload Avatar
-// app.controller("myctr", function ($scope, $http) {
-//     var url = "http://localhost:8080/DTNsBike/update_account.html/avatar"
-//     $scope.url = function (filename) {
-//         return url + '/' + filename;
-//     }
-//     $scope.list = function () {
-//         $http.get(url).then(resp => {
-//             $scope.filename = resp.data;
-//         }).catch(error => {
-//             console.log("Errors", error);
-//         });
-//     }
-//     $scope.upload = function (files) {
-//         var form = new FormData();
-//         for (var i = 0; i < files.length; i++) {
-//             form.append("files", files[i]);
-//         }
-//         $http.post(url, form, {
-//             transformRwquest: angular.identity,
-//             headers: { 'Content-Type': undefined }
-//         }).then(resp => {
-//             $scope.filenames.push(...resp.data);
-//         }).catch(error => {
-//             console.log("Errors", error);
-//         })
-//     }
-// })
+app.controller("updateAddressCtrl", function ($scope, $http, $timeout, $rootScope) {
+    function refesh() {
+        $http.get(`${host}update_profile/address`).then(resp => {
+            $scope.addressList = resp.data;
+            console.log("DẤTs", resp.data);
+        }).catch(error => {
+            console.log("Error", error);
+        });
+        $http.get('https://provinces.open-api.vn/api/p/').then(resp => {
+            $scope.provinceList = resp.data;
+            $timeout(function () {
+                $('.selectpicker').selectpicker('refresh');
+            }, 1)
+        }).catch(error => {
+            console.log("Error", error);
+        })
+        $scope.add = true;
+        $scope.update = false;
+        $scope.address = {};
+    }
+    refesh();
+    $scope.getdistrict = function () {
+        if ($scope.selectProvince != undefined) {
+            $http.get(`https://provinces.open-api.vn/api/p/${$scope.selectProvince}?depth=2`).then(resp => {
+                $scope.districtList = resp.data.districts;
+                $scope.wardList = null;
+                $timeout(function () {
+                    $('.selectpicker').selectpicker('refresh');
+                }, 1)
+                console.log("HUYỆN", resp.data.districts);
+            }).catch(error => {
+                console.log("Error", error);
+            });
+        }
+    }
+    $scope.getward = function () {
+        if ($scope.selectDistrict != undefined) {
+            $http.get(`https://provinces.open-api.vn/api/d/${$scope.selectDistrict}?depth=2`).then(resp => {
+                $scope.wardList = resp.data.wards;
+                $timeout(function () {
+                    $('.selectpicker').selectpicker('refresh');
+                }, 1)
+                console.log("XÃ PHƯỜNG", resp.data.wards);
+            }).catch(error => {
+                console.log("Error", error);
+            });
+        }
+
+    }
+    $scope.refeshList = function () {
+        $timeout(function () {
+            $('.selectpicker').selectpicker('refresh');
+            console.log("Selected Ward:", $scope.selectWard);
+        }, 1)
+    }
+
+    $scope.addAddress = function () {
+        var loi = 0;
+
+        if ($scope.selectProvince == undefined) {
+            $scope.reqProvince = true;
+            loi++;
+        }
+        if ($scope.selectDistrict == undefined) {
+            $scope.reqDistrict = true;
+            loi++;
+        }
+        if ($scope.selectWard == undefined) {
+            $scope.reqWard = true;
+            loi++;
+        }
+        if ($scope.address.adr == null || $scope.address.adr == '') {
+            $scope.reqAdr = true;
+            loi++;
+        }
+
+        if ($scope.af.$valid == true && loi == 0) {
+            var item = angular.copy($scope.address);
+            for (var i = 0; i < $scope.provinceList.length; i++) {
+                if ($scope.provinceList[i].code == $scope.selectProvince) {
+                    $scope.selectProvince = $scope.provinceList[i].name;
+                    break;
+                }
+            }
+            for (var i = 0; i < $scope.districtList.length; i++) {
+                if ($scope.districtList[i].code == $scope.selectDistrict) {
+                    $scope.selectDistrict = $scope.districtList[i].name;
+                    break;
+                }
+            }
+            for (var i = 0; i < $scope.wardList.length; i++) {
+                if ($scope.wardList[i].code == $scope.selectWard) {
+                    $scope.selectWard = $scope.wardList[i].name;
+                    break;
+                }
+            }
+            console.log("Item before modifications:", item);
+
+            // Gán giá trị cho trường address trong item
+            item.address = $scope.address.adr + ", " + $scope.selectWard + ", " + $scope.selectDistrict + ", " + $scope.selectProvince;
+            // item.adr = $scope.address.adr + ", " + $scope.selectWard + ", " + $scope.selectDistrict + ", " + $scope.selectProvince;
+            var url = `${host}update_profile/address`;
+            $http.post(url, item).then(resp => {
+                $('#addressModal').modal('hide');
+                $scope.address = {};
+                console.log("Address creation successful:", resp);
+                refesh();
+                $('#message').modal('show');
+                $('#message>.modal-dialog>.modal-content>.modal-body').html("<i class='far fa-check-circle text-success mb-1' style='font-size: 60px;'></i><p>Thêm địa chỉ thành công</p>");
+            }).catch(error => {
+
+                console.log("Lỗi", error)
+            })
+            setTimeout(function () {
+                $('#message').modal('hide');
+            }, 2000);
+        }
+    }
+    $scope.updateModel = function(i) {
+		$scope.add = false;
+		$scope.update = true;
+		$scope.address = {};
+		$scope.updateForm = $scope.addressList[i];
+		var adr = String($scope.updateForm.address);
+		var province = adr.substring(adr.lastIndexOf(","), adr.length);
+		adr = adr.substring(0, adr.lastIndexOf(","));
+		var district = adr.substring(adr.lastIndexOf(","), adr.length);
+		adr = adr.substring(0, adr.lastIndexOf(","));
+		var ward = adr.substring(adr.lastIndexOf(","), adr.length);
+		adr = adr.substring(0, adr.lastIndexOf(","));
+		
+		$scope.address.adr = adr;
+		$(".loading-gem").removeClass("sr-only");
+		$('#adrManager').modal('hide');
+		$('#addressModal').modal('show');
+		for (var i = 0; i < $scope.provinceList.length; i++) {
+			if ($scope.provinceList[i].name == province.replace(", ", "")) {
+				$scope.selectProvince = $scope.provinceList[i].code;
+				$timeout(function() {
+					$('.selectpicker').selectpicker('refresh');
+				}, 1);
+				$http.get(`https://provinces.open-api.vn/api/p/${$scope.provinceList[i].code}?depth=2`).then(resp => {
+					$scope.districtList = resp.data.districts;
+					$timeout(function() {
+						$('.selectpicker').selectpicker('refresh');
+					}, 1)
+					for (var i = 0; i < $scope.districtList.length; i++) {
+						if ($scope.districtList[i].name == district.replace(", ", "")) {
+							$scope.selectDistrict = $scope.districtList[i].code;
+							$timeout(function() {
+								$('.selectpicker').selectpicker('refresh');
+							}, 1);
+							$http.get(`https://provinces.open-api.vn/api/d/${$scope.districtList[i].code}?depth=2`).then(resp => {
+								$scope.wardList = resp.data.wards;
+								$timeout(function() {
+									$('.selectpicker').selectpicker('refresh');
+								}, 1)
+								for (var i = 0; i < $scope.wardList.length; i++) {
+									if ($scope.wardList[i].name == ward.replace(", ", "")) {
+										$scope.selectWard = $scope.wardList[i].code;
+										$timeout(function() {
+											$('.selectpicker').selectpicker('refresh');
+											$(".loading-gem").addClass("sr-only");
+										}, 1);
+										break;
+									}
+								}
+							})
+							break;
+						}
+					}
+				})
+				break;
+			}
+		}
+
+
+	}
+
+	$scope.updateAddress = function() {
+		if ($scope.updateForm != undefined || $scope.updateForm != null) {
+			var loi = 0;
+			
+			if ($scope.selectProvince == undefined) {
+				$scope.reqProvince = true;
+				loi++;
+			}
+			if ($scope.selectDistrict == undefined) {
+				$scope.reqDistrict = true;
+				loi++;
+			}
+			if ($scope.selectWard == undefined) {
+				$scope.reqWard = true;
+				loi++;
+			}
+			if ($scope.address.adr == null || $scope.address.adr == '') {
+				$scope.reqAdr = true;
+				loi++;
+			}
+			if ($scope.af.$valid == true && loi == 0) {
+				var item = angular.copy($scope.address);
+				for (var i = 0; i < $scope.provinceList.length; i++) {
+					if ($scope.provinceList[i].code == $scope.selectProvince) {
+						$scope.selectProvince = $scope.provinceList[i].name;
+						break;
+					}
+				}
+				for (var i = 0; i < $scope.districtList.length; i++) {
+					if ($scope.districtList[i].code == $scope.selectDistrict) {
+						$scope.selectDistrict = $scope.districtList[i].name;
+						break;
+					}
+				}
+				for (var i = 0; i < $scope.wardList.length; i++) {
+					if ($scope.wardList[i].code == $scope.selectWard) {
+						$scope.selectWard = $scope.wardList[i].name;
+						break;
+					}
+				}
+                item.address = $scope.address.adr + ", " + $scope.selectWard + ", " + $scope.selectDistrict + ", " + $scope.selectProvince;
+				$http.put(`${host}update_profile/address?id=${$scope.updateForm.id}`, item).then(resp => {
+					$('#addressModal').modal('hide');
+					$scope.address = {};
+					refesh();
+					$('#message').modal('show');
+					$('#message>.modal-dialog>.modal-content>.modal-body').html("<i class='far fa-check-circle text-success mb-1' style='font-size: 60px;'></i><p>Cập nhật địa chỉ thành công</p>");
+				}).catch(error => {
+					$('#addressModal').modal('hide');
+					$('#message').modal('show');
+					$('#message>.modal-dialog>.modal-content>.modal-body').html("<i class='far fa-times-circle text-danger mb-1' style='font-size: 60px;'></i>");
+					// var loi = error.data.message;
+					if (error.status == 302) {
+						$('#message>.modal-dialog>.modal-content>.modal-body').append("<p>" + loi + "</p>");
+					} else {
+						$('#message>.modal-dialog>.modal-content>.modal-body').append("<p>Thêm thất bại! Do một số lỗi dữ liệu</p>");
+					}
+				})
+				setTimeout(function() {
+					$('#message').modal('hide');
+				}, 2000);
+			}
+		}
+	}
+    $scope.confirmRemove = function (i) {
+        if ($scope.addressList[i] != undefined) {
+            $('#addressDel').modal('show');
+            $scope.delTarget = $scope.addressList[i];
+        } else {
+            $('#message').modal('show');
+            $('#message>.modal-dialog>.modal-content>.modal-body').html("<i class='far fa-times-circle text-danger mb-1' style='font-size: 60px;'></i><p>Lỗi khi xóa</p>");
+            setTimeout(function () {
+                $('#message').modal('hide');
+            }, 2000);
+        }
+    }
+    $scope.delAddress = function () {
+        if ($scope.delTarget != undefined) {
+            var id = $scope.delTarget.id;
+            $http.delete(`${host}update_profile/deleteAddress/${id}`).then(resp => {
+                $('#addressDel').modal('hide');
+                console.log("Xóa Thành Công")
+                refesh();
+            }
+            ).catch(error => {
+                $('#cartDel').modal('hide');
+                $('#message').modal('show');
+                $('#message>.modal-dialog>.modal-content>.modal-body').html("<i class='far fa-times-circle text-danger mb-1' style='font-size: 60px;'></i><p>Lỗi khi xóa</p>");
+                setTimeout(function () {
+                    $('#message').modal('hide');
+                }, 2000);
+            });
+        }
+    }
+})
 //End Upload Avatar
 //filter Replace
 app.filter('replace', [function () {
@@ -172,6 +420,7 @@ app.filter('replace', [function () {
 
 
 }]);
+
 
 //Cart Controller
 app.controller("cartCtr", function ($scope, $http, $rootScope, $window) {

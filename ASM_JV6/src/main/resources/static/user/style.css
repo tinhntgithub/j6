@@ -4917,3 +4917,34 @@ a.form-check-label {
 .sub-bank .label .logo-bank img {
   object-fit: cover;
 }
+
+
+.form-control {
+  display: block;
+  width: 100%;
+  height: calc(1.5em + 0.75rem + 2px);
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 0;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+.select-overlay .form-control {
+  position: relative; /* Đặt vị trí là tương đối */
+  z-index: 1; /* Đặt lớp chồng lên */
+}
+
+.select-overlay .bootstrap-select {
+  position: absolute; /* Đặt vị trí là tuyệt đối */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none; /* Không ảnh hưởng đến sự kiện trong các phần tử con */
+  z-index: 2; /* Đặt lớp chồng lên cao hơn form-control */
+}

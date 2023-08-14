@@ -113,12 +113,9 @@
                     </div>
                 </form>
 
-                <div class="row">
+                <div class="row" ng-controller="updateAddressCtrl">
                     <div class="col-12">
                         <h3 class="mb-20">Danh sách địa chỉ</h3>
-                        <th:block th:if="${messageAdr}!=null">
-                            <div th:class="|${alert} alert|" th:text="${messageAdr}" role="alert"></div>
-                        </th:block>
                         <div class="table-responsive">
                             <table class="table table-hover">
                                 <thead>
@@ -136,24 +133,26 @@
                                         <th class="w-25">Thao tác</th>
                                     </tr>
                                 </thead>
-
                                 <tbody>
-                                    <th:block th:if="${listAddress.size() == 0}">
-                                        <tr>
-                                            <td colspan="2">Không có dữ liệu</td>
-                                        </tr>
-                                    </th:block>
-                                    <tr th:each="list,viTri: ${listAddress}" th:object="${list}">
+                                    <tr ng-repeat="list in addressList">
+                                        <td>{{ $index + 1 }}</td>
+                                        <td>{{ list.address }}</td>
                                         <td>
-                                            [[${viTri.index+1}]]
-                                        </td>
-                                        <td> [[*{address}]]</td>
-                                        <td>
-                                            <a href="#!account-form" class="text-primary" data-toggle="modal"
-                                                data-target="#modalUpdate"
-                                                th:attr="onclick=|updateAddress('*{address}','*{id}')|"
+                                            <a class="text-primary" data-toggle="modal" data-target="#addressModal"
+                                                 ng-click="updateModel($index)"
                                                 style="font-size: 28px;text-decoration: none;">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                                <path
+                                                    d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                                <path fill-rule="evenodd"
+                                                    d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                                            </svg>
+                                            </a>
+                                            <a ng-if="addressList.length > 1" class="text-danger"
+                                                ng-show="addressList.length>1"
+                                                ng-click="confirmRemove($index)" style="font-size: 28px;text-decoration: none;">
+                                                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                     fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
                                                     <path
                                                         d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
@@ -161,21 +160,12 @@
                                                         d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
                                                 </svg>
                                             </a>
-                                            <a th:if="${listAddress.size}>1" class="text-danger"
-                                                th:attr="onclick=|deleteAddress('*{address}','*{id}')|"
-                                                data-toggle="modal" data-target="#modalDelete"
-                                                style="font-size: 28px;text-decoration: none;">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
-                                                    <path
-                                                        d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z" />
-                                                </svg>
-                                            </a>
                                         </td>
                                     </tr>
-
+                                    <tr ng-if="addressList.length === 0">
+                                        <td colspan="3">Không có dữ liệu</td>
+                                    </tr>
                                 </tbody>
-
                                 <tfoot>
                                     <tr>
                                         <th>
@@ -189,129 +179,134 @@
                                             </a>
                                         </th>
                                         <th>
-                                            <a data-toggle="modal" data-target="#modalCreate" class="text-success"><i
+                                            <a data-toggle="modal" data-target="#addressModal" class="text-success"><i
                                                     class="fa fa-plus-circle " aria-hidden="true"></i> Thêm địa chỉ</a>
                                         </th>
                                     </tr>
                                 </tfoot>
                             </table>
                         </div>
+                        
                     </div>
                     <!-- Modal Delete -->
-                    <!-- Modal -->
-                    <div class="modal fade" id="modalDelete" tabindex="-1" aria-labelledby="exampleModalLabel"
-                        aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content text-center">
-                                <div class="modal-header border-0">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="130" height="130" fill="orange"
-                                        class="bi bi-exclamation-triangle" viewBox="0 0 16 16">
-                                        <path
-                                            d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z" />
-                                        <path
-                                            d="M7.002 12a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 5.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995z" />
-                                    </svg>
-                                    <p class="mt-2" style="font-size: 17px;">Bạn chắc chắn muốn xóa đại chỉ <strong
-                                            class="address"></strong> ?
-                                    </p>
-                                </div>
-                                <div class="text-center mb-5">
-                                    <a type="button" class="btn btn-success text-white " id="deleteAddress">Chắc chắn!
-                                    </a>
-                                    <button type="button" class="btn btn-danger text-white"
-                                        data-dismiss="modal">Không!</button>
+                    <div class="modal" id="addressDel" tabindex="-1">
+                        <div class="modal-dialog modal-dialog-centered ">
+                            <div class="modal-content shadow border-0 rounded">
+                                <div class="modal-body text-center ">
+                                    <i class="far fa-question-circle text-warning" style='font-size: 60px;'></i>
+                                    <p class='py-1'>Bạn có chắc chắn xóa địa chỉ này ?</p>
+                                    <div class='d-flex justify-content-end'><button
+                                            class='btn btn-outline-primary mr-3'
+                                            ng-click="delAddress()">Có</button><button
+                                            class='btn btn-outline-dark mr-3' data-dismiss='modal'>Trở
+                                            lại</button></div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!-- Modal Create End -->
-                    <!-- Modal Create -->
-                    <!-- Modal -->
-                    <div class="modal fade" id="modalCreate" tabindex="-1" aria-labelledby="exampleModalLabel"
-                        aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <form th:action="@{/update_account.html/create}" th:method="post"
-                                    onsubmit="return createAdr()">
-                                    <div class="modal-header border-0">
-                                        <h3>Thêm địa chỉ</h3>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div id="contact-form" class="contact-form">
-                                            <div class="address-wrapper row">
-                                                <div class="col-md-12">
-                                                    <div class="address-fname">
-                                                        <label class="control-label" for="f-name">Địa chỉ:<span
-                                                                class="require" id="errorsAdr"></span></label>
-                                                        <textarea class="form-control" name="newAddress" id="newAddress"
-                                                            placeholder="Nhập địa chỉ..."></textarea>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer text-right">
-                                        <button class="btn btn-success text-white" id="CreateAddress"
-                                            onclick="createAdr()">Thêm</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Modal Create End -->
+                   
 
-                    <!-- Modal Update Start -->
-                    <!-- Modal -->
-                    <div class="modal fade" id="modalUpdate" tabindex="-1" aria-labelledby="exampleModalLabel"
-                        aria-hidden="true" onclick="$('.errorsAdr').text('')">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <form th:action="@{/update_account.html/update}" th:method="post"
-                                    onsubmit="return updateAdr()">
-                                    <div class="modal-header border-0">
-                                        <h3>Sửa địa chỉ</h3>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div id="contact-form" class="contact-form">
-                                            <div class="address-wrapper row">
-                                                <div class="col-md-12">
-                                                    <div class="address-fname">
-                                                        <label class="control-label" for="f-name">Địa chỉ:<span
-                                                                class="require errorsAdr"></span></label>
-                                                        <textarea class="form-control" name="editAddress"
-                                                            id="editAddress" placeholder=""></textarea>
-                                                    </div>
+                    <!-- Model API ĐỊA CHỈ-->
+                    <div class="modal fade" id="addressModal" tabindex="-1" data-backdrop="static"
+                    data-keyboard="false" aria-hidden="true">
+                    <div class="modal-dialog  modal-lg modal-dialog-scrollable ">
+                        <div class="modal-content ">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel" ng-show="add">Tạo địa chỉ
+                                </h5>
+                                <h5 class="modal-title" id="exampleModalLabel" ng-show="update">Cập nhật địa
+                                    chỉ</h5>
+                            </div>
+                            <div class="modal-body ">
+                                <div class="container">
+                                    <form method="post" class="position-relative" name="af">
+                                           
+                                        <div class="row mt-2">
+                                            <div class="form-group col-12 col-md-4">
+                                                <div class="form-group">
+                                                    <label class="font-weight-bold text-dark">*Tỉnh/Thành
+                                                        phố</label>
+                                                    <select class="selectpicker form-control"
+                                                        title="Chọn Tỉnh" name="province" id="province"
+                                                        data-live-search="true" data-size="5"
+                                                        ng-model="selectProvince"
+                                                        ng-options="y.code as y.name for y in provinceList"
+                                                        ng-change="getdistrict()"
+                                                        ng-required="reqProvince"></select>
+                                                    <span class="require"
+                                                        ng-show="af.province.$error.required">Vui
+                                                        lòng chọn tỉnh</span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-12 col-md-4">
+                                                <div class="form-group">
+                                                    <label
+                                                        class="font-weight-bold text-dark">*Huyện/Quận</label>
+                                                    <select class="selectpicker form-control"
+                                                        title="Chọn Huyện" ng-model="selectDistrict"
+                                                        data-live-search="true" data-size="5"
+                                                        ng-options="y.code as y.name for y in districtList"
+                                                        ng-change="getward()" name="district" id="district"
+                                                        ng-required="reqDistrict">
+                                                    </select>
+                                                    <span class="require"
+                                                        ng-show="af.district.$error.required">Vui
+                                                        lòng chọn Huyện</span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-12 col-md-4">
+                                                <div class="form-group">
+                                                    <label
+                                                        class="font-weight-bold text-dark">*Xã/Phường</label>
+                                                    <select class="selectpicker form-control"
+                                                        title="Chọn Xã" ng-model="selectWard"
+                                                        data-live-search="true" data-size="5"
+                                                        ng-options="y.code as y.name for y in wardList"
+                                                        name="ward" id="ward" ng-required="reqWard"
+                                                        ng-change="refeshList()">
+                                                    </select>
+                                                    <span class="require"
+                                                        ng-show="af.ward.$error.required">Vui
+                                                        lòng chọn Xã</span>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="modal-footer text-right">
-                                        <button class="btn btn-success text-white" id="updateAddress"
-                                            onclick="updateAdr()">Sửa</button>
-                                    </div>
-                                </form>
+                                        <div class="row">
+                                            <div class="form-group col-md-12">
+                                                <label class="font-weight-bold text-dark">*Địa chỉ cụ
+                                                    thể</label>
+                                                <textarea class="form-control " placeholder="Địa chỉ cụ thể"
+                                                    ng-model="address.adr" name="adr" id="adr"
+                                                    ng-required="reqAdr"></textarea>
+                                                <span class="require" ng-show="af.adr.$error.required">Vui
+                                                    lòng nhập địa chỉ cụ thể</span>
+                                            </div>
+
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" ng-click="back()"
+                                    data-dismiss="modal">Trở
+                                    lại</button>
+                                <button type="button" class="btn btn-primary" ng-show="add"
+                                    ng-click="addAddress()">Thêm
+                                    địa chỉ</button>
+                                <button type="button" class="btn btn-primary" ng-show="update"
+                                    ng-click="updateAddress()">Cập nhật</button>
+                            </div>
+
                         </div>
                     </div>
-                    <!-- Modal Update End -->
                 </div>
+                    <!--  -->
+                </div>
+
             </div>
 
+            <!-- Register Account End -->
         </div>
-
-        <!-- Register Account End -->
-    </div>
 </body>
 
 </html>

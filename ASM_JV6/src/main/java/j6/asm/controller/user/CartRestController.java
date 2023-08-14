@@ -1,16 +1,20 @@
 package j6.asm.controller.user;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,13 +27,22 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+
+import j6.asm.dao.AddressDAO;
 import j6.asm.entity.Accounts;
+import j6.asm.entity.Address;
 import j6.asm.entity.Cart;
 import j6.asm.entity.ProductColor;
 import j6.asm.entity.Products;
+import j6.asm.service.AddressService;
 import j6.asm.service.ProductColorService;
 import j6.asm.service.ProductsService;
 import j6.asm.service.SessionService;
+import j6.asm.service.impl.AddressServiceImp;
 import j6.asm.service.impl.CartServiceImp;
 import j6.asm.service.impl.ShoppingCartServiceImpl;
 
@@ -44,11 +57,90 @@ public class CartRestController {
 	ProductsService daoProduct;
 	@Autowired
 	SessionService session;
+	@Autowired
+	AddressDAO addressDAO;
+
+	@Autowired
+	AddressService addressService;
 
 	@Autowired
 	ProductColorService pdColorService;
 
 	RestTemplate resp = new RestTemplate();
+
+	@GetMapping("/update_profile/address")
+	public ResponseEntity<List<Address>> getAddress() {
+		Accounts acc = session.get("account");
+		if (acc == null) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		}
+
+		List<Address> addressList = addressDAO.findByUsername(acc, null);
+		return ResponseEntity.ok(addressList);
+	}
+
+	@PostMapping("/update_profile/address")
+	public ResponseEntity<Address> createAddress(@RequestBody Address form) throws ParseException {
+
+		Address adr = new Address();
+		Accounts acc = session.get("account");
+		adr.setUserAr(acc);
+		adr.setAddress(form.getAddress());
+		System.out.println("ooooooooooooooo" + form.getAddress());
+		// Lưu đối tượng Address vào cơ sở dữ liệu bằng addressService
+		addressService.create(adr);
+
+		return ResponseEntity.ok(form);
+
+	}
+
+	@SuppressWarnings("unused")
+	@PutMapping("/update_profile/address")
+	public ResponseEntity<Address> PutOne(@RequestBody Address form,@RequestParam("id") String id) throws ParseException {
+		Accounts acc = session.get("account");
+		ObjectMapper mapper = new ObjectMapper();
+		ObjectNode node = mapper.createObjectNode();
+		if (acc == null) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		}
+		
+		Optional<Address> contacts = addressDAO.findContactIdByUserAr(Integer.parseInt(id), acc.getUsername());
+		if(!contacts.isPresent()) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		}
+		Address updateC= contacts.get();
+		updateC.setUserAr(acc);
+		updateC.setAddress(form.getAddress());
+		
+		addressService.create(updateC);
+		return ResponseEntity.ok(form);
+	}
+	
+
+	@DeleteMapping("/update_profile/deleteAddress/{id}")
+	public ResponseEntity<JsonNode> deleteCartList(@PathVariable("id") String id) {
+		Accounts acc = session.get("account");
+		if (acc == null) {
+			return ResponseEntity.status(404).build();
+		}
+		Optional<List<Address>> listAdr = addressDAO.findByUsername(acc.getUsername());
+		if (listAdr.isPresent() && listAdr.get().size() <= 1) {
+			return ResponseEntity.status(404).build();
+		}
+
+		if (!NumberUtils.isParsable(id)) {
+			return ResponseEntity.status(404).build();
+		}
+		Optional<Address> contacts = addressDAO.findById(Integer.parseInt(id));
+		if (!contacts.isPresent()) {
+			return ResponseEntity.status(404).build();
+		} else if (!contacts.get().getUserAr().getUsername().equals(acc.getUsername())) {
+			return ResponseEntity.status(404).build();
+		} else {
+			addressDAO.delete(contacts.get());
+		}
+		return ResponseEntity.noContent().build();
+	}
 
 	@GetMapping("/Cart/create/{id}")
 	public ResponseEntity<List<Cart>> addToCart(@PathVariable("id") Optional<Integer> id, HttpServletResponse resp)
@@ -148,17 +240,17 @@ public class CartRestController {
 
 	}
 
-	private List<Cart> tempList = new ArrayList<>(); 
+	private List<Cart> tempList = new ArrayList<>();
 
-    @PostMapping("/rest/cart/savetemplist")
-    public ResponseEntity<String> saveTempList(@RequestBody List<Cart> tempCarts) {
-        tempList = tempCarts; 
-        return ResponseEntity.ok("Ok");
-    }
+	@PostMapping("/rest/cart/savetemplist")
+	public ResponseEntity<String> saveTempList(@RequestBody List<Cart> tempCarts) {
+		tempList = tempCarts;
+		return ResponseEntity.ok("Ok");
+	}
 
-    @GetMapping("/rest/cart/gettemplist")
-    public ResponseEntity<List<Cart>> getTempList() {
-        return ResponseEntity.ok(tempList);
-    }
+	@GetMapping("/rest/cart/gettemplist")
+	public ResponseEntity<List<Cart>> getTempList() {
+		return ResponseEntity.ok(tempList);
+	}
 
 }

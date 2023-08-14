@@ -10,6 +10,8 @@ import javax.servlet.ServletContext;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,8 +20,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import j6.asm.dao.AddressDAO;
@@ -103,23 +107,33 @@ public class UpdateAccountController {
 	}
 
 	@RequestMapping("/update_account.html/create")
-	public String postCreateAddress(Model m, @RequestParam("newAddress") Optional<String> address) {
+	public String postCreateAddress(Model m,
+									 @RequestParam("province") String province,
+									 @RequestParam("district") String district,
+									 @RequestParam("ward") String ward,
+									 @RequestParam("address") String address) {
 		Accounts acc = session.get("account");
-		if (address.isPresent() && acc != null) {
+		
+		if (acc != null) {
 			Address adr = new Address();
-			if (!address.get().isEmpty()) {
-				adr.setAddress(address.get());
+			
+			if (!province.isEmpty() && !district.isEmpty() && !ward.isEmpty() && !address.isEmpty()) {
+				String combinedAddress = province + ", " + district + ", " + ward + ", " + address;
+				adr.setAddress(combinedAddress);
 			} else {
 				return "redirect:/update_account.html?tb=errorCreateAdrNull#messageAdr";
 			}
+			
 			adr.setUserAr(acc);
 			addressService.create(adr);
-		} else {
-			return "redirect:/update_account.html#messageAdr";
+			return "redirect:/update_account.html?tb=successCreateAdr#messageAdr";
 		}
-
-		return "redirect:/update_account.html?tb=successCreateAdr#messageAdr";
+		
+		return "redirect:/update_account.html#messageAdr";
 	}
+	
+
+
 
 	@RequestMapping("/update_account.html/update/{id}")
 	public String updateDeleteAccount(Model m, @PathVariable("id") Optional<String> id,
