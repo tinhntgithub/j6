@@ -1,7 +1,8 @@
 <body ng-controller="index">
   <div class="card row mt-2">
     <div class="card-body row">
-      <div class="col-3 text-white" style="border-right:5px solid white;background-color: orangered;">
+      <div class="col-3 text-white" onclick="window.location.href = '#!account-list'"
+        style="border-right:5px solid white;background-color: orangered; cursor: pointer;">
         <div class="row mt-3">
           <div class="col-3">
             <svg xmlns="http://www.w3.org/2000/svg" width="54" height="54" fill="white"
@@ -17,7 +18,8 @@
           </div>
         </div>
       </div>
-      <div class="col-3 bg-danger text-white" style="border-right:5px solid white;">
+      <div class="col-3 bg-danger text-white" style="border-right:5px solid white; cursor: pointer;"
+        onclick="window.location.href = '#!product-list'">
         <div class="row mt-3">
           <div class="col-3">
             <svg xmlns="http://www.w3.org/2000/svg" width="54" height="54" fill="white"
@@ -33,35 +35,37 @@
           </div>
         </div>
       </div>
-      <div class="col-3 text-white" style="border-right:5px solid white;background-color: orange;">
+      <div class="col-3 text-white" style="border-right:5px solid white;background-color: orange; cursor: pointer;"
+        onclick="window.location.href = '#!order-wait'">
         <div class="row mt-3">
           <div class="col-3">
-            <svg xmlns="http://www.w3.org/2000/svg" width="54" height="54" fill="white"
-              class="bi   bi-person-circle ms-2" viewBox="0 0 16 16">
+            <svg style="color: white" xmlns="http://www.w3.org/2000/svg" width="54" height="54" fill="white"
+              class="bi bi-cart" viewBox="0 0 16 16">
               <path
-                d="M12.643 15C13.979 15 15 13.845 15 12.5V5H1v7.5C1 13.845 2.021 15 3.357 15h9.286zM5.5 7h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1zM.8 1a.8.8 0 0 0-.8.8V3a.8.8 0 0 0 .8.8h14.4A.8.8 0 0 0 16 3V1.8a.8.8 0 0 0-.8-.8H.8z" />
+                d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"
+                fill="white"></path>
             </svg>
           </div>
           <div class="col-9">
-            <h4 class="text-end">Tổng danh mục</h4>
-            <h3 class="text-end">{{items.cateCount}}</h3>
+            <h4 class="text-end">Tổng đơn đang chờ</h4>
+            <h3 class="text-end">{{items.orderWaitCount}}</h3>
           </div>
         </div>
       </div>
-      <div class="col-3 text-white" style="background-color: rgb(217, 92, 47);">
+      <div class="col-3 text-white" style="background-color: rgb(217, 92, 47); cursor: pointer;"
+        onclick="window.location.href = '#!order-delivered'">
         <div class="row mt-3">
           <div class="col-3">
-            <svg xmlns="http://www.w3.org/2000/svg" width="54" height="54" fill="white"
-              class="bi   bi-person-circle ms-2" viewBox="0 0 16 16">
+            <svg style="color: white" xmlns="http://www.w3.org/2000/svg" width="54" height="54" fill="white"
+              class="bi bi-cart" viewBox="0 0 16 16">
               <path
-                d="M2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586V2zm3.5 4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z" />
-              <path
-                d="M1.293 7.793A1 1 0 0 1 1 7.086V2a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l.043-.043-7.457-7.457z" />
+                d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"
+                fill="white"></path>
             </svg>
           </div>
           <div class="col-9">
-            <h4 class="text-end">Tổng thương hiệu</h4>
-            <h3 class="text-end">{{items.brandCount}}</h3>
+            <h4 class="text-end">Tổng đơn đang giao</h4>
+            <h3 class="text-end">{{items.orderDelivingCount}}</h3>
           </div>
         </div>
       </div>

@@ -18,9 +18,12 @@ public interface OrdersDAO extends JpaRepository<Orders, Integer> {
 	@Query(value = "SELECT * FROM Orders WHERE statusid = ?", nativeQuery = true)
 	List<Orders> findAllById2(Integer id);
 
+	@Query("SELECT count(o) FROM Orders o WHERE o.statusId.id = 1")
+	Integer getWaitCount();
+	@Query("SELECT count(o) FROM Orders o WHERE o.statusId.id = 2")
+	Integer getDelivingCount();
 	@Query("SELECT count(o) FROM Orders o WHERE o.statusId.id = 3")
 	Integer getCount();
-
 	@Query(value = "select * from Orders a where a.username=?1 and a.statusid = 1 or a.statusid =2", nativeQuery = true)
 	List<Orders> find_LoginbyUsername(String username);
 

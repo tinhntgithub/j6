@@ -34,16 +34,6 @@ public class AccountServiceImpl implements AccountsService {
 	}
 	
 	@Override
-	public List<Object[]> getResultList() {
-		return dao.getResultList();
-	}
-
-	@Override
-	public List<Object[]> getReportPrintCustomer(String username) {
-		return dao.getReportPrintCustomer(username);
-	}
-
-	@Override
 	public List<Object[]> getPurchaseDataByYearRange(Date from, Date to) {
 		return dao.getPurchaseDataByYearRange(from, to);
 	}

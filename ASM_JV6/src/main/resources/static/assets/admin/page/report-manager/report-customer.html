@@ -24,7 +24,7 @@
         <a href="#!report-order" class="btn btn-success btn-rounded text-white">
           <div class="d-flex">
             <i class="mdi mdi-format-list-bulleted-type"></i>
-            <strong class="mt-1 ms-1"> Thống kê đơn hàng theo thời gian</strong>
+            <strong class="mt-1 ms-1"> TK Theo đơn hàng</strong>
           </div>
         </a>
       </div>
@@ -42,9 +42,9 @@
               <path fill-rule="evenodd"
                 d="M5 11.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm-3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" />
             </svg>
-            <strong class="ms-1 h5 text-uppercase">Thống kê khách hàng</strong>
+            <strong class="ms-1 h5 text-uppercase">Thống kê theo khách hàng</strong>
           </div>
-          <!-- <div class="col-5 text-end">
+          <div class="col-5 text-end">
             <div class="row">
               <input style="width: 80%;float: left;" type="text" class="col-10 form-control"
                 placeholder="Nhập tên khách hàng cần tìm...." />
@@ -52,10 +52,10 @@
                 <i class="mdi mdi-magnify"></i>
               </a>
             </div>
-          </div> -->
+          </div>
         </div>
         <br>
-        <!-- <div class="row">
+        <div class="row">
           <div class="col-sm-6">
             <label class="text-success">Ngày Bắt Đầu</label>
             <input type="date" ng-change="dates()" ng-model="dateStart" class="form-control" />
@@ -67,32 +67,11 @@
         </div>
 
 
-        <label style="visibility: hidden;" id="start">{{dateNow | date:'yyyy-MM-dd'}}</label>         -->
+        <label style="visibility: hidden;" id="start">{{dateNow | date:'yyyy-MM-dd'}}</label>
+
         <div class="table-responsive">
-          <button class="btn btn-primary" ng-click="printPDF()">In PDF</button>
-          <button class="btn btn-success" ng-click="exportExcel()">Xuất Excel</button>
-          <table  class="table table-hover table-striped">
-            <thead>
-              <tr>
-                   <th>#</th>
-              
-                  <th>Tên Khách Hàng</th>
-                  <th>Tổng Đơn Hàng</th>
-             
-                  <th>Tổng Tiền</th>
-                  <th>In chi tiết</th>
-              </tr>
-          </thead>
-          <tbody>
-              <tr ng-repeat="item in reportCustomer">
-                  <td>{{ $index + 1 }}</td>
-                
-                  <td>{{item[0]}}</td>
-                  <td>{{ item[1] }}</td>
-                  <td>{{ item[2]|customCurrency }}</td>
-              
-                  <td><button class="btn btn-info"ng-click="printDetail(item[3])">In Chi tiết</button></td>
-              </tr>
+          <table  id="example2" class="table table-hover table-striped">
+           
           </table>
         </div>
       </div>

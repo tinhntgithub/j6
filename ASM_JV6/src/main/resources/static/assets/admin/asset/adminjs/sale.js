@@ -228,10 +228,9 @@ app.controller("sale-form", function ($scope, $http) {
 
         if ($scope.check()) {
             var item = angular.copy($scope.form);
-            item.form.code = item.form.code.toUpperCase();
-            item.saleDate = moment().format("YYYY-MM-DD");
             item.createDate = moment(item.createDate, 'DD-MM-YYYY HH:mm').format("YYYY-MM-DDTHH:mm:ss.SSS");
             item.endDate = moment(item.endDate, 'DD-MM-YYYY HH:mm').format("YYYY-MM-DDTHH:mm:ss.SSS");
+            item.amountused = 0;
             console.log(item);
             var url = `${host2}/sales`;
             $http.post(url, item).then(resp => {
@@ -255,7 +254,6 @@ app.controller("sale-form", function ($scope, $http) {
 
         if ($scope.check() == true) {
             var item = angular.copy($scope.form);
-            item.form.code = item.form.code.toUpperCase();
             item.createDate = moment(item.createDate, 'DD-MM-YYYY HH:mm').format("YYYY-MM-DDTHH:mm:ss.SSS");
             item.endDate = moment(item.endDate, 'DD-MM-YYYY HH:mm').format("YYYY-MM-DDTHH:mm:ss.SSS");
             console.log(item);

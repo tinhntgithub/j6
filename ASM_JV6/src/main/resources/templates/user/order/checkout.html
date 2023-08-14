@@ -55,25 +55,34 @@
                                         <input type="email" placeholder="Nhập email của bạn....">
                                     </div>
                                 </div> -->
-                                <!-- <div class="col-md-12">
+                                <div class="col-md-12">
                                     <div class="country-select clearfix mb-3">
-                                        <label>Địa chỉ của bạn <span class="required">*</span></label>
-                                        <select ng-model="addrSelected" class="wide"
-                                            ng-options="a.address for a in addrList">
-                                            
-                                        </select>
-                                        <p ng-repeat="a in addrList">{{a.address}}</p>
+                                        <div class="form-group">
+                                            <label>Địa chỉ của bạn <span class="required">*</span></label>
+                                            <div ng-repeat="a in addressList" class="row">
+                                                <div class="custom-control custom-radio">
+                                                    <input type="radio" id="address{{a.id}}" name="addressRadio" class="custom-control-input" ng-value="a.address" ng-change="showSelectedAddress()" ng-model="currentUser.selectedAddress" ng-disabled="differentAddress">
+                                                    <label class="custom-control-label" for="address{{a.id}}">{{a.address}}</label>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-12" ng-if="addressList.length === 0">
+                                                    <p>Bạn chưa có địa chỉ</p>
+                                                    <a href="update_account.html" class="btn btn-sm btn-success">Thêm địa chỉ mới</a>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div> -->
+                                </div>
                             </div>
                             <div class="different-address">
-                                <!-- <div class="ship-different-title">
+                                <div class="ship-different-title">
                                     <h3>
                                         <label>Giao hàng đến địa chỉ khác?</label>
-                                        <input id="ship-box" type="checkbox">
+                                        <input id="ship-box" type="checkbox" ng-model="differentAddress" ng-change="clearSelectedAddress()">
                                     </h3>
-                                </div> -->
-                                <!-- <div id="ship-box-info"> -->
+                                </div>
+                                <div id="ship-box-info">
                                     <div class="row">
                                         <div class="col-md-12 mb-3">
                                             <div class="checkout-form-list mb-sm-30">
@@ -83,7 +92,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                <!-- </div> -->
+                                </div>
                                 <div class="order-notes">
                                     <div class="checkout-form-list">
                                         <label>THÔNG TIN BỔ SUNG</label>
@@ -101,6 +110,7 @@
                                 <div class="col-md-12 mb-3">
                                     <div class="checkout-form-list mb-sm-30">
                                         <label>Mã giảm giá</label>
+                                        <span th:text="${message}"></span>
                                         <input type="text" name="coupon_code" ng-model="voucher.code"
                                             style="width: 350px;" placeholder="Nhập mã voucher của bạn, nếu có....">
                                         <button ng-click="apply_vourcher_code()" class="btn btn-danger"

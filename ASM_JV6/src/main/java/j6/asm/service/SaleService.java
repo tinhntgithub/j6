@@ -18,10 +18,15 @@ public interface SaleService {
 	void update(Sale entity);
 
 	void delete(Integer id);
-	
+
 	Boolean checkOrder(Integer id);
-	
+
 	Integer getCount();
 
 	Optional<List<Sale>> findByCode(String code);
+
+	void applyDiscount(Integer code); // Trừ số lượng mã giảm giá khi sử dụng
+
+	Sale save(Sale sale);
+	
 }

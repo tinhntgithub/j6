@@ -63,6 +63,16 @@ public class AccountsRestController {
 		return ResponseEntity.ok(addresses.get());
 	}
 
+	@PostMapping("rest/address/{address}")
+	public ResponseEntity<Address> newAddress(@PathVariable("address") String address){
+		Accounts account = session.get("account");
+		Address address2 = new Address();
+		address2.setAddress(address);
+		address2.setUserAr(account);
+		addServ.create(address2);
+		return ResponseEntity.ok(address2);
+	}
+
 	@GetMapping("/rest/accounts/{id}")
 	public ResponseEntity<Accounts> getOne(@PathVariable("id") String id) {
 		if (account.findById(id) == null) {

@@ -53,5 +53,14 @@ public class SaleServiceImp implements SaleService {
 	public Optional<List<Sale>> findByCode(String code) {
 		return dao.findByCode(code);
 	}
+	@Override
+	public void applyDiscount(Integer code) {
+		dao.updateQuantityByCode(code);
+		
+	}
+	 @Override
+	  public Sale save(Sale sale) {
+	    return dao.save(sale);
+	  }
 
 }

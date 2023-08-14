@@ -1,15 +1,11 @@
 package j6.asm.controller.admin;
 
 import java.sql.Date;
-import java.text.SimpleDateFormat;
 import java.util.List;
-import java.text.ParseException;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import j6.asm.service.AccountsService;
@@ -33,25 +29,10 @@ public class ReportRestController {
         return AccountsService.getPurchaseDataByYearRange(s, e);
     }
 
-   @GetMapping("/rest/reportPrintCustomer/{username}")
-public List<Object[]> reportPrintCustomer(@PathVariable String username) {
-    // Chuyển đổi chuỗi ngày thành đối tượng java.sql.Date
-    // SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
-    // Date createDate = null;
-    // try {
-    //     createDate = new java.sql.Date(dateFormat.parse(date).getTime());
-    // } catch (ParseException e) {
-    //     e.printStackTrace();
-    // }
-
-    return AccountsService.getReportPrintCustomer(username);
-}
-
-
     @GetMapping("/rest/reportCustomerAll")
-    public List<Object[]> getResultList() {
+    public List<Object[]> reportCustomerAll() {
 
-        return AccountsService.getResultList();
+        return AccountsService.getReportAllCustomer();
     }
 
     @GetMapping("/rest/reportOrder")

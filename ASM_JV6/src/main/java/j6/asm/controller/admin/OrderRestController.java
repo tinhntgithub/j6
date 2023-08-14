@@ -13,6 +13,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -75,6 +76,19 @@ public class OrderRestController {
 	@Autowired
 	ProductColorService productColorService;
 
+	private List<Cart> tempList = new ArrayList<>();
+
+	@PostMapping("/rest/order/savetemplist")
+	public ResponseEntity<String> saveTempList(@RequestBody List<Cart> tempCarts) {
+		tempList = tempCarts;
+		return ResponseEntity.ok("Ok");
+	}
+
+	@GetMapping("/rest/order/gettemplist")
+	public ResponseEntity<List<Cart>> getTempList() {
+		return ResponseEntity.ok(tempList);
+	}
+
 	// Đơn hàng đang chờ Restful API
 	@GetMapping("/rest/order-wait")
 	public ResponseEntity<List<Orders>> getAll() {
@@ -126,15 +140,12 @@ public class OrderRestController {
 		Accounts account = session.get("account");
 		List<OrderDetails> listOrderDetails = new ArrayList<>();
 
-		String address;
-		JsonNode addNode = data.get("address");
-		
-
+		String address = data.get("address").asText();
 
 		LocalDateTime now = LocalDateTime.now();
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-ddHH:mm:ss.SSS");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("YYYY-MM-DDTHH:mm:ss.SSS");
 		String dateString = now.format(formatter);
-		SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-ddHH:mm:ss.SSS");
+		SimpleDateFormat inputFormat = new SimpleDateFormat("YYYY-MM-DDTHH:mm:ss.SSS");
 		Date date = inputFormat.parse(dateString);
 
 		Integer statusid = 1;
@@ -152,7 +163,7 @@ public class OrderRestController {
 				cartList.add(cart);
 			}
 		}
-
+		Sale sale;
 		Integer saleid = data.get("voucher").asInt();
 
 		Orders orders = new Orders();
@@ -161,21 +172,21 @@ public class OrderRestController {
 		orders.setStatusId(status);
 		orders.setFullname(fullname);
 		orders.setPhone(phone);
-		if (addNode == null) {
-			Optional<List<Address>> addrList = addressDAO.findByUsername(account.getUsername());
-			if (addrList.isPresent()) {
-				address = addrList.get().get(0).getAddress();
-				orders.setAddress(address);
-			}
-		}else{
-			address = addNode.asText();
-			orders.setAddress("Chân cầu Cần Thơ");
-		}
+		orders.setAddress(address);
 
 		if (saleid == 0) {
 			orders.setSaleId(null);
 		} else {
-			Sale sale = saleService.findById(saleid);
+			sale = saleService.findById(saleid);
+			if (sale == null) {
+				return new ResponseEntity<Orders>(HttpStatus.NOT_FOUND);
+			}
+			// nếu số lượng sử dụng nằm trong phạm vi cho phép
+			if (sale.getAmountused() >= 0 && sale.getAmountused() <= sale.getAmount()) {
+				sale.setAmountused(sale.getAmountused() + 1);
+				saleService.save(sale);
+			}
+
 			orders.setSaleId(sale);
 		}
 
@@ -197,9 +208,11 @@ public class OrderRestController {
 			ProductColor productColor = cartProduct.getColorCart();
 			productColor.setQty(productColor.getQty() - cartProduct.getQty());
 			productColorService.update(productColor);
-			
+
 			cartService.delete(cartProduct.getId());
 		}
+
+		tempList.clear();
 
 		return ResponseEntity.ok(orders);
 	}
