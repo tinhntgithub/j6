@@ -24,8 +24,8 @@ app.controller("report-favorite", function ($scope, $http) {
             info: false,
             ordering: false ,// Tắt tính năng sắp xếp'
             columns: [
+                { data: 'id', title: 'Mã sản phẩm' },
                 { data: 'name', title: 'Tên sản phẩm' },
-                { data: 'img', title: 'Hình ảnh' },
                 { data: 'countLike', title: 'Số lượt thích' },
                 { data: 'formattedPrice', title: 'Giá tiền' } // Sử dụng giá tiền đã định dạng
             ]
@@ -39,10 +39,10 @@ app.controller("report-favorite", function ($scope, $http) {
         $http.get(url).then(function (response) {
             $scope.reportFavorites = response.data.map(function(item) {
                 return {
-                    name: item[0],
-                    img: item[1],
-                    countLike: item[3],
-                    formattedPrice: formatCurrency(item[2]) // Định dạng giá tiền
+                    id: item[0],
+                    name: item[1],
+                    countLike: item[4],
+                    formattedPrice: formatCurrency(item[3]) // Định dạng giá tiền
                 };
             });
             console.log(response.data);
