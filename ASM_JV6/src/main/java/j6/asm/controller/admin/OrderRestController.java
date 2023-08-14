@@ -76,6 +76,19 @@ public class OrderRestController {
 	@Autowired
 	ProductColorService productColorService;
 
+	private List<Cart> tempList = new ArrayList<>();
+
+	@PostMapping("/rest/order/savetemplist")
+	public ResponseEntity<String> saveTempList(@RequestBody List<Cart> tempCarts) {
+		tempList = tempCarts;
+		return ResponseEntity.ok("Ok");
+	}
+
+	@GetMapping("/rest/order/gettemplist")
+	public ResponseEntity<List<Cart>> getTempList() {
+		return ResponseEntity.ok(tempList);
+	}
+
 	// Đơn hàng đang chờ Restful API
 	@GetMapping("/rest/order-wait")
 	public ResponseEntity<List<Orders>> getAll() {
@@ -127,8 +140,7 @@ public class OrderRestController {
 		Accounts account = session.get("account");
 		List<OrderDetails> listOrderDetails = new ArrayList<>();
 
-		String address;
-		JsonNode addNode = data.get("address");
+		String address = data.get("address").asText();
 
 		LocalDateTime now = LocalDateTime.now();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-ddHH:mm:ss.SSS");
@@ -151,20 +163,8 @@ public class OrderRestController {
 				cartList.add(cart);
 			}
 		}
-
+		Sale sale;
 		Integer saleid = data.get("voucher").asInt();
-
-		System.err.println("Lấy Mã voucher: " + saleid);
-		Sale check = saleService.findById(saleid);
-		if (check == null) {
-			System.err.println("Không thấy bên sale nè");
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-		if (check.getAmountused() > 0) {
-			check.setAmountused(check.getAmountused() + 1);
-			final Sale updateAmountuser = saleService.save(check);
-			System.err.println("Lấy thành công: ");
-		}
 
 		Orders orders = new Orders();
 		orders.setDate(date);
@@ -172,21 +172,21 @@ public class OrderRestController {
 		orders.setStatusId(status);
 		orders.setFullname(fullname);
 		orders.setPhone(phone);
-		if (addNode == null) {
-			Optional<List<Address>> addrList = addressDAO.findByUsername(account.getUsername());
-			if (addrList.isPresent()) {
-				address = addrList.get().get(0).getAddress();
-				orders.setAddress(address);
-			}
-		} else {
-			address = addNode.asText();
-			orders.setAddress("Chân cầu Cần Thơ");
-		}
+		orders.setAddress(address);
 
 		if (saleid == 0) {
 			orders.setSaleId(null);
 		} else {
-			Sale sale = saleService.findById(saleid);
+			sale = saleService.findById(saleid);
+			if (sale == null) {
+				return new ResponseEntity<Orders>(HttpStatus.NOT_FOUND);
+			}
+			// nếu số lượng sử dụng nằm trong phạm vi cho phép
+			if (sale.getAmountused() >= 0 && sale.getAmountused() <= sale.getAmount()) {
+				sale.setAmountused(sale.getAmountused() + 1);
+				saleService.save(sale);
+			}
+
 			orders.setSaleId(sale);
 		}
 
@@ -211,6 +211,8 @@ public class OrderRestController {
 
 			cartService.delete(cartProduct.getId());
 		}
+
+		tempList.clear();
 
 		return ResponseEntity.ok(orders);
 	}

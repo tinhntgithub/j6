@@ -82,14 +82,14 @@ function checkAll() {
 //Start Delete Address
 function deleteAddress(adr, id) {
 	$(".address").text(adr);
-	$("#deleteAddress").attr("href", "/DTNsBike/update_account.html/delete/" + id);
+	$("#deleteAddress").attr("href", "/update_account.html/delete/" + id);
 }
 //End Delete Address
 
 //Start Update Address
 function updateAddress(adr, id) {
 	$('#editAddress').val(adr);
-	$("#updateAddress").attr("formaction", "/DTNsBike/update_account.html/update/" + id);
+	$("#updateAddress").attr("formaction", "/update_account.html/update/" + id);
 }
 function updateAdr() {
 	var adr = String($("#editAddress").val());
@@ -129,7 +129,7 @@ var app = angular.module("gemApp", []);
 var host = "http://localhost:8080/";
 //Upload Avatar
 // app.controller("myctr", function ($scope, $http) {
-//     var url = "http://localhost:8080/DTNsBike/update_account.html/avatar"
+//     var url = "http://localhost:8080/update_account.html/avatar"
 //     $scope.url = function (filename) {
 //         return url + '/' + filename;
 //     }
@@ -411,7 +411,7 @@ app.controller("pushCart", function($scope, $http, $rootScope) {
 	}
 
 	$scope.loadCheckoutList = function() {
-		var url = `${host}rest/cart/savetemplist`;
+		var url = `${host}rest/order/savetemplist`;
 		var data = angular.copy($scope.selectedIDs)
 
 		$http.post(url, data).then(resp => {
@@ -435,8 +435,8 @@ app.controller("pushCart", function($scope, $http, $rootScope) {
 app.controller("checkoutCtrl", function($scope, $http) {
 
 	$scope.currentUser = {};
-	$scope.addrList = [];
-	$scope.addrSelected = "";
+	$scope.differentAddress = false;
+	$scope.addressList = [];
 
 	$scope.checkout = function() {
 		alertSuccess("Thanh toán thành công");
@@ -450,9 +450,8 @@ app.controller("checkoutCtrl", function($scope, $http) {
 		$http.get(url).then((resp) => {
 			$scope.currentUser = resp.data;
 			$http.get(url2 + $scope.currentUser.username).then((resp) => {
-				$scope.currentUser.address = resp.data;
-
-				console.log("Success o", resp.data);
+				$scope.addressList = resp.data;
+				console.log("Success o", $scope.currentUser);
 			}).catch((error) => {
 				console.log("Error", error);
 			});
@@ -461,10 +460,17 @@ app.controller("checkoutCtrl", function($scope, $http) {
 			console.log("Error", error);
 		});
 	}
+
+	$scope.clearSelectedAddress = function () {
+		if ($scope.differentAddress) {
+			$scope.currentUser.selectedAddress = null;
+		}
+	};
+
 	$scope.payFromCart = [];
 
 	$scope.loadCartProduct = function() {
-		var url = `${host}rest/cart/gettemplist`;
+		var url = `${host}rest/order/gettemplist`;
 		var url2 = `${host}Cart/listCart`;
 		$http.get(url).then((resp) => {
 			$scope.payFromCart = resp.data;
@@ -495,14 +501,16 @@ app.controller("checkoutCtrl", function($scope, $http) {
 		$http.get(url + item.code).then(resp => {
 			if (resp.data.id != null) {
 				$scope.voucher = resp.data;
-				Swal.fire({
-					position: 'center',
-					icon: 'success',
-					title: 'Bạn đã áp dụng mã khuyến mãi thành công!',
-					showConfirmButton: false,
-					timer: 2500
-				})
+				// áp voucher thôi chứ có phải gì ghê gớm đâu mà phải có thông báo lớn
+				// Swal.fire({
+				// 	position: 'center',
+				// 	icon: 'success',
+				// 	title: 'Bạn đã áp dụng mã khuyến mãi thành công!',
+				// 	showConfirmButton: false,
+				// 	timer: 2500
+				// })
 				console.log($scope.voucher.amount);
+				alertSuccess('Giảm thành công '+ $scope.voucher.value + '%');
 				$scope.getDiscount = function() {
 					var sub = $scope.getSubtotal();
 					return $scope.voucher.value * sub / 100;
@@ -512,12 +520,8 @@ app.controller("checkoutCtrl", function($scope, $http) {
 			if (error.data.type === 'coupon_code') {
 				$scope.error.coupon_code = error.data.message;
 			}
-			Swal.fire({
-				icon: 'error',
-				title: 'LỖI',
-				text: error.data.message,
-				footer: ''
-			})
+			alertWarning(error.data.message);
+			$scope.voucher = null;
 			console.log("Error", error)
 
 		})
@@ -525,17 +529,26 @@ app.controller("checkoutCtrl", function($scope, $http) {
 
 	$scope.handleCheckout = function() {
 		var url = `${host}rest/order/neworder`;
+
 		var data = angular.copy($scope.currentUser);
 		data.voucher = angular.copy($scope.voucher.id);
-		if (data.voucher == undefined) {
+		if (!data.voucher) {
 			data.voucher = 0;
 		}
 		data.list = angular.copy($scope.payFromCart);
-
-		if (!data.address) {
-			data.address = null;
+		data.address = angular.copy($scope.currentUser.selectedAddress);
+		console.log("Không chọn địa chỉ: "+ data.address);
+		var diferAdd = angular.copy($scope.differentAddress);
+		console.log(diferAdd);
+		if (!data.address && diferAdd) {
+			data.address = angular.copy($scope.currentUser.newAddress);
+			var url2 = `/rest/address/`;
+			$http.post(url2 + data.address, data.address).then(resp => {
+				console.log(resp.data);
+			}).catch(error => {
+				console.log(error);
+			});
 		}
-
 		console.log(data)
 		$http.post(url, data).then(resp => {
 			alertSuccess("Thanh toán thành công")

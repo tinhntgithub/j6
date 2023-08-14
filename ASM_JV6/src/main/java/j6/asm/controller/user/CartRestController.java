@@ -148,17 +148,5 @@ public class CartRestController {
 
 	}
 
-	private List<Cart> tempList = new ArrayList<>(); 
-
-    @PostMapping("/rest/cart/savetemplist")
-    public ResponseEntity<String> saveTempList(@RequestBody List<Cart> tempCarts) {
-        tempList = tempCarts; 
-        return ResponseEntity.ok("Ok");
-    }
-
-    @GetMapping("/rest/cart/gettemplist")
-    public ResponseEntity<List<Cart>> getTempList() {
-        return ResponseEntity.ok(tempList);
-    }
 
 }

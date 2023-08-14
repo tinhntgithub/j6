@@ -51,15 +51,15 @@ public class SalesRestController {
 				return ResponseEntity.badRequest()
 						.body(new ResponseMessageError("MÃ GIÃM GIÁ ĐÃ HẾT HẠN!", "coupon_code"));
 			}
-			if (sale2.getAmountused() == 0) {
+			if (sale2.getAmount() == 0) {
 				System.err.println("SỐ LƯỢNG CỦA MÃ GIẢM GIÁ ĐÃ HẾT");
 				return ResponseEntity.badRequest()
 						.body(new ResponseMessageError("SỐ LƯỢNG CỦA MÃ GIẢM GIÁ ĐÃ HẾT!", "coupon_code"));
 			}
-			if (sale2.getAmount() < sale2.getAmountused()) {
+			if (sale2.getAmount() <= sale2.getAmountused()) {
 				System.err.println("SỐ LƯỢNG CỦA MÃ GIẢM GIÁ ĐÃ NHẬP HẾT");
 				return ResponseEntity.badRequest()
-						.body(new ResponseMessageError("SỐ LƯỢNG CỦA MÃ GIẢM GIÁ ĐÃ NHẬP HẾT!", "coupon_code"));
+						.body(new ResponseMessageError("MÃ GIẢM GIÁ ĐÃ HẾT LƯỢT SỬ DỤNG!", "coupon_code"));
 			}
 			
 			return ResponseEntity.ok(sale2);
