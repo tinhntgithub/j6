@@ -230,6 +230,7 @@ app.controller("sale-form", function ($scope, $http) {
             var item = angular.copy($scope.form);
             item.createDate = moment(item.createDate, 'DD-MM-YYYY HH:mm').format("YYYY-MM-DDTHH:mm:ss.SSS");
             item.endDate = moment(item.endDate, 'DD-MM-YYYY HH:mm').format("YYYY-MM-DDTHH:mm:ss.SSS");
+            item.amountused = 0;
             console.log(item);
             var url = `${host2}/sales`;
             $http.post(url, item).then(resp => {
