@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale.Category;
 import java.util.Map;
 
 import javax.mail.Session;
@@ -28,7 +29,6 @@ import j6.asm.dao.ProductsDAO;
 import j6.asm.entity.Accounts;
 import j6.asm.entity.Favorites;
 import j6.asm.entity.Products;
-import j6.asm.service.SessionService;
 import j6.asm.service.SessionService;
 
 @CrossOrigin(origins = { "*" })
@@ -64,23 +64,24 @@ public class FavoritesRestController {
 		return ResponseEntity.ok(list);
 	}
 
-	@DeleteMapping("unLike/{id}")
-	public void delteteFavorites(@PathVariable("id") Integer id) {
-		try {
-			Accounts account = session.get("account");
-			List<Favorites> favoriteToDelete = fvrDao.findByUserFvr(account);
-
-			for (Favorites favorites : favoriteToDelete) {
-				if (favorites.getId() == id) {
-					Favorites favorites1 = favorites;
-					fvrDao.delete(favorites1);
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			return;
+	@GetMapping("like/all/{id}")
+	public ResponseEntity<Favorites> getOne(@PathVariable("id") Integer id) {
+		if (!fvrDao.existsById(id)) {
+			return ResponseEntity.notFound().build();
 		}
+		return ResponseEntity.ok(fvrDao.findById(id).get());
 	}
+
+	@DeleteMapping("like/all/{id}")
+	public ResponseEntity<Void> delteteFavorites(@PathVariable("id") Integer id) {
+		if (!fvrDao.existsById(id)) {
+			return ResponseEntity.notFound().build();
+		}
+		System.out.println(id);
+		fvrDao.deleteById(id);
+		return ResponseEntity.ok().build();
+	}
+
 	@PostMapping("like/{id}")
 	public ResponseEntity<Object> likeByID(@PathVariable("id") String id) throws IOException {
 		Integer idConvert = 0;
@@ -95,12 +96,8 @@ public class FavoritesRestController {
 			session.set("account", acc);
 			// username = req.getUserPrincipal().getName();
 			username = acc.getUsername();
-			
-			session.set("account", acc);
-			// username = req.getUserPrincipal().getName();
-			username = acc.getUsername();
 			accounts = accDao.findById(username).get();
-			System.out.println("USERNAME : "+ username);
+			System.out.println("USERNAME : " + username);
 		}
 		if (NumberUtils.isParsable(id)) {
 			idConvert = Integer.valueOf(id);
