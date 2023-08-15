@@ -115,7 +115,7 @@ function createAdr() {
 	}
 }
 
-$(document).ready(function () {
+$(document).ready(function() {
 
 	$('textarea').keypress(function (event) {
 
@@ -405,7 +405,7 @@ app.controller("updateAddressCtrl", function ($scope, $http, $timeout, $rootScop
 })
 //End Upload Avatar
 //filter Replace
-app.filter('replace', [function () {
+app.filter('replace', [function() {
 
 	return function (input, from, to) {
 
@@ -538,13 +538,7 @@ function checkAll() {
 		checkbox.checked = $('#checkAllId').is(':checked');
 	}, $('#checkAllId'));
 }
-function checkAll() {
-	var checkboxes = document.querySelectorAll('#cart-tableBody input[type="checkbox"]');
-	checkboxes.forEach(function (checkbox) {
-		checkbox.checked = $('#checkAllId').is(':checked');
-	}, $('#checkAllId'));
-}
-app.controller("pushCart", function ($scope, $http, $rootScope) {
+app.controller("pushCart", function($scope, $http, $rootScope) {
 
 	$rootScope.$on("list", function () {
 		var url = `${host}Cart/listCart`;
@@ -887,7 +881,7 @@ app.controller("userImage", function ($scope, $http) {
 });
 
 // start product favorites controller
-app.controller("favoritesCtrl", function ($scope, $http, $rootScope, $window) {
+app.controller("favoritesCtrl", function($scope, $http, $rootScope, $window) {
 
 	$scope.favoriteProductsList = [];
 

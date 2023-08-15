@@ -59,7 +59,7 @@ public class OrderRestController {
 	OrderDetailsService ordersService;
 	@Autowired
 	StatusService statusService;
-	@Autowired
+	@Autowired  
 	SessionService session;
 	@Autowired
 	AddressService addressDAO;
@@ -147,7 +147,7 @@ public class OrderRestController {
 		String dateString = now.format(formatter);
 		SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 		Date date = inputFormat.parse(dateString);
-
+		
 		Integer statusid = 1;
 		Status status = statusService.findById(statusid);
 
@@ -156,19 +156,28 @@ public class OrderRestController {
 		List<Cart> cartList = new ArrayList<Cart>();
 
 		JsonNode listNode = data.get("list");
-		if (listNode != null && listNode.isArray()) {
+		
+		String hashData = session.get("hashData");
+		if(hashData == null) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+		}else {
+			session.remove("hashData");
+		}
+
+		if (listNode.size() >0 && listNode.isArray()) {
 			for (JsonNode node : listNode) {
 				Integer cartid = node.get("id").asInt();
 				Cart cart = cartService.findById(cartid);
 				cartList.add(cart);
 			}
+		}else {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
 		}
 		Sale sale;
 		Integer saleid = data.get("voucher").asInt();
 
 		Orders orders = new Orders();
 		orders.setDate(date);
-		orders.setUserOrder(account);
 		orders.setStatusId(status);
 		orders.setFullname(fullname);
 		orders.setPhone(phone);
@@ -214,7 +223,8 @@ public class OrderRestController {
 
 		tempList.clear();
 
-		return ResponseEntity.ok(orders);
+		return ResponseEntity.status(200).body(null);
+		
 	}
 
 }

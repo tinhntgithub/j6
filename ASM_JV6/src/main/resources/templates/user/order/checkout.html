@@ -172,13 +172,13 @@ ho                                            style="width: 350px;" placeholder=
                             <div class="row mt-3">
                                 <div class="col-12">
                                     <a href="orders.html" class="btn btn-danger w-100" ng-click="handleCheckout()"
-                                        style="background-color: orangered;"><strong>Thanh toán
+                                        style="background-color: orangered;"><strong class="text-white">Thanh toán
                                             bằng tiền mặt khi nhận hàng</strong></a>
                                 </div>
                             </div>
                             <div class="row mt-3">
                                 <div class="col-12">
-                                    <a href="vnpay_pay.html?total={{getTotal()}}" class="btn btn-danger w-100"
+                                    <a href="vnpay_pay.html?total={{getTotal()}}&txt_billing_fullname={{currentUser.fullname}}" class="btn btn-danger w-100"
                                         style="background-color: orangered;"><strong>Thanh toán
                                             bằng VnPay</strong></a>
                                 </div>
