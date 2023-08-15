@@ -123,11 +123,16 @@
 					<div class="col-xl-9 col-lg-8 col-md-12">
 						<nav class="d-none d-lg-block">
 							<ul class="header-bottom-list d-flex">
+<<<<<<< HEAD
 								<li><a href="index.html" th:text="#{menu.home}">TRANG CHỦ</a></li>
+=======
+								<li th:class="${in}"><a href="index.html" th:text="#{menu.home}">TRANG CHỦ</a></li>
+>>>>>>> duylk
 								<li th:class="${sp}"><a href="shop.html" th:text="#{menu.product}">SẢN PHẨM</a></li>
 								<li th:class="${ab}"><a href="about.html" th:text="#{menu.about}">GIỚI THIỆU</a></li>
 								<li th:class="${bl}"><a href="blog.html" th:text="#{menu.blog}">TIN TỨC</a></li>
 								<li th:class="${ct}"><a href="contact.html" th:text="#{menu.contact}">LIÊN HỆ</a></li>
+<<<<<<< HEAD
 								<li th:if="${session.account !=  null}"><a href="#"><span
 											th:text="#{menu.manager}"></span><i class="fa fa-angle-down"></i></a>
 									<!-- Home Version Dropdown Start -->
@@ -137,18 +142,35 @@
 							</ul>
 							<!-- Home Version Dropdown End -->
 							</li>
+=======
+								<li th:if="${session.account !=  null}"><a href="#">QUẢN LÝ<i
+												class="fa fa-angle-down"></i></a>
+										<!-- Home Version Dropdown Start -->
+										<ul class="ht-dropdown">
+										<li><a href="manageOrders.html" th:text="#{menu.order}">Đơn hàng của bạn</a>
+										<li><a href="admin/index.html" th:text="#{menu.admin}" th:if="${au}">Trang quản trị</a></li>
+									</ul>
+										<!-- Home Version Dropdown End -->
+									</li>
+>>>>>>> duylk
 							</ul>
 						</nav>
 						<div class="mobile-menu d-block d-lg-none">
 							<nav>
 								<ul>
+<<<<<<< HEAD
 									<li style="background-color:orangered;"><a class="text-white"
 											href="index.html">TRANG CHỦ</a></li>
 									<li><a href="index.html">TRANG CHỦ</a></li>
+=======
+									<li  ><a 
+											href="index.html">TRANG CHỦ</a></li>
+>>>>>>> duylk
 									<li><a href="shop.html">SẢN PHẨM</a></li>
 									<li><a href="about.html">GIỚI THIỆU</a></li>
 									<li><a href="blog.html">TIN TỨC</a></li>
 									<li><a href="contact.html">LIÊN HỆ</a></li>
+<<<<<<< HEAD
 									<li th:if="${session.account !=  null}"><a href="#">QUẢN LÝ<i
 												class="fa fa-angle-down"></i></a>
 										<!-- Home Version Dropdown Start -->
@@ -157,6 +179,15 @@
 											<li><a href="admin/index.html" th:text="#{menu.admin}">Trang quản trị</a>
 											</li>
 										</ul>
+=======
+								<li th:if="${session.account !=  null}"><a href="#">QUẢN LÝ<i
+												class="fa fa-angle-down"></i></a>
+										<!-- Home Version Dropdown Start -->
+										<ul class="ht-dropdown">
+										<li><a href="manageOrders.html" th:text="#{menu.order}">Đơn hàng của bạn</a>
+										<li><a href="admin/index.html" th:text="#{menu.admin}" th:if="${au}">Trang quản trị</a></li>
+									</ul>
+>>>>>>> duylk
 										<!-- Home Version Dropdown End -->
 									</li>
 								</ul>
@@ -226,6 +257,7 @@
 </header>
 
 </html>
+<<<<<<< HEAD
 <nav>
 	<ul>
 		<li style="background-color:orangered;"><a class="text-white" href="index.html">TRANG CHỦ</a></li>
@@ -244,3 +276,5 @@
 		</li>
 	</ul>
 </nav>
+=======
+>>>>>>> duylk

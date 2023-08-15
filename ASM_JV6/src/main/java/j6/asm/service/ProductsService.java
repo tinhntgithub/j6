@@ -48,4 +48,5 @@ public interface ProductsService {
 
 	Page<Products> findByCategoryAndPrice(int lowerPrice, int upperPrice, Pageable pageable);
 
+	List<Products> getByKeyword(String keyword);
 }

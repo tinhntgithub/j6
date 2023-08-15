@@ -125,4 +125,12 @@ public class ProductsServiceImp implements ProductsService {
 	public Integer getCount() {
 		return dao.getCount();
 	}
+	
+	@Override
+	public List<Products> getByKeyword(String keyword) {
+		if(keyword != null) {
+			return dao.getByKeyword(keyword);
+		}
+		return (List<Products>) dao.findAll();
+	}
 }

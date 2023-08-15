@@ -73,9 +73,17 @@ public class OrderController {
 	// Checkout page
 	@RequestMapping("/checkout.html")
 	public String checkoutPage(Model model) {
+<<<<<<< HEAD
 		Accounts account = session.get("account");
 		model.addAttribute("userInfo", account);
 
+=======
+		// Lấy thông tin sản phẩm từ giỏ hàng
+		Accounts account = session.get("account");
+		model.addAttribute("fullName", account.getFullname());
+		model.addAttribute("Phone", account.getPhone());
+		model.addAttribute("address", account.getAddress());
+>>>>>>> duylk
 		return "user/order/checkout";
 	}
 
@@ -139,12 +147,20 @@ public class OrderController {
 			return "redirect:/index.html";
 		}
 		List<Orders> order_huy = new ArrayList<>();
+<<<<<<< HEAD
 		List<Orders> order_all = orderdao.find_LoginbyUsername(account.getUsername());
 		List<Orders> list_nhan = orderdao.find_ByNhan(account.getUsername());
 		order_huy = orderdao.find_ByHuy(account.getUsername());
 		model.addAttribute("huy", order_huy);
 		model.addAttribute("or", order_all);
 		model.addAttribute("nhan", list_nhan);
+=======
+		order_huy = orderdao.find_ByHuy(account.getUsername());
+		model.addAttribute("huy", order_huy);
+		List<Orders> order_all = orderdao.find_LoginbyUsername(account.getUsername());
+
+		model.addAttribute("or", order_all);
+>>>>>>> duylk
 		return "user/order/orders";
 	}
 

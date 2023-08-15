@@ -107,7 +107,7 @@ public class PaymentController {
 		} catch (NumberFormatException e) {
 			return "redirect:/checkout.html?err=bug";
 		}
-		int amount =  Integer.parseInt(req.getParameter("total")) * 100;
+		long amount =  Long.parseLong(req.getParameter("total")) * 100;
 		Map vnp_Params = new HashMap<>();
 		vnp_Params.put("vnp_Version", vnp_Version);
 		vnp_Params.put("vnp_Command", vnp_Command);

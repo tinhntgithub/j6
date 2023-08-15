@@ -11,6 +11,7 @@ public class AsmJ6 {
 
 	public static void main(String[] args) {
 		SpringApplication.run(AsmJ6.class, args);
+
 	}
   @Bean
     public RestTemplate restTemplate(RestTemplateBuilder builder) {

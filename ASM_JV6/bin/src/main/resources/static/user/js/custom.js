@@ -351,4 +351,8 @@ app.controller("checkoutCtrl", function ($scope, $http) {
 
     //alert(this.temp);
 });
+<<<<<<< HEAD
+=======
+
+>>>>>>> duylk
 // End Orders Controller

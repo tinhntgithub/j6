@@ -293,6 +293,7 @@ public class AccountController {
 		return "user/home/forgot-password";
 	}
 
+<<<<<<< HEAD
 	// @GetMapping("/otp.html")
 	// public String otp() {
 	// String otp = session.get("otpCode");
@@ -301,6 +302,16 @@ public class AccountController {
 	// }
 	// return "user/home/otp";
 	// }
+=======
+//	@GetMapping("/otp.html")
+//	public String otp() {
+//		String otp = session.get("otpCode");
+//		if(otp==null) {
+//			return "redirect:/index.html";
+//		}
+//		return "user/home/otp";
+//	}
+>>>>>>> duylk
 
 	public String getHTMLT(String code, String message) {
 		String html = "<!DOCTYPE html\r\n"

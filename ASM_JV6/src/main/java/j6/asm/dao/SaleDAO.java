@@ -13,6 +13,7 @@ public interface SaleDAO extends JpaRepository<Sale, Integer> {
 
 	@Query("SELECT count(o) FROM Sale o")
 	Integer getCount();
+<<<<<<< HEAD
 
 	@Query("Select o from Sale o where code = ?1")
 	Optional<List<Sale>> findByCode(String code);
@@ -22,4 +23,9 @@ public interface SaleDAO extends JpaRepository<Sale, Integer> {
 
 	@Query(value = "select * from Sale where GETDATE() between createDate and endDate ORDER BY amountused ASC;", nativeQuery = true)
 	List<Sale> findCurrentSale();
+=======
+	
+	@Query("SELECT cp FROM Sale cp WHERE cp.code=?1")
+	Sale findByCode(String code);
+>>>>>>> duylk
 }
