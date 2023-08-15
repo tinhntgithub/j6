@@ -92,4 +92,16 @@ public class AccountServiceImpl implements AccountsService {
 	public Integer getCount() {
 		return dao.getCount();
 	}
+
+	@Override
+	public List<Object[]> getReportPrintCustomer(String username) {
+		return dao.getReportPrintCustomer(username);
+	}
+
+	@Override
+	public List<Object[]> getResultList() {
+		return dao.getResultList();
+	}
+
+
 }

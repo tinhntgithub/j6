@@ -143,9 +143,9 @@ public class OrderRestController {
 		String address = data.get("address").asText();
 
 		LocalDateTime now = LocalDateTime.now();
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("YYYY-MM-DDTHH:mm:ss.SSS");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-mm-dd HH:mm:ss.SSS");
 		String dateString = now.format(formatter);
-		SimpleDateFormat inputFormat = new SimpleDateFormat("YYYY-MM-DDTHH:mm:ss.SSS");
+		SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 		Date date = inputFormat.parse(dateString);
 
 		Integer statusid = 1;

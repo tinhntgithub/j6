@@ -38,4 +38,6 @@ public interface AccountsService {
 	Integer getCount();
 
 	Optional<Accounts> checkDuplicateEmail(@Param("email") String email);
+	List<Object[]> getReportPrintCustomer(String username);
+	List<Object[]> getResultList();
 }

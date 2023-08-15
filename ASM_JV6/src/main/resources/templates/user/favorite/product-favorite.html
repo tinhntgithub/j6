@@ -48,10 +48,19 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                           
+                                        <tr ng-repeat="product in favoriteProductsList">
                                             <td>
-                                                <a href="#"><img th:src="@{/user/img/products/6.jpg}" alt="cart-image" width="72px;"></a>
+                                                <a href=""><img
+                                                        th:src="@{/user/img/products/{{product.productsId.img}}}"
+                                                        alt="cart-image" width="72px;"></a>
+                                            </td>
+                                            <td>
+                                                <a href="" class="text-dark">{{product.productsId.name}}</a>
+                                            </td>
+                                            <td>
+                                                <a href="" class="btn btn-danger"
+                                                    ng-click="addCart(product.productsId.id)">Thêm
+                                                    ngay {{product.productsId.id}}</a>
                                             </td>
                                             <td>
                                                 <a href="" class="text-dark">
@@ -61,6 +70,30 @@
                                             </td>
                                         </tr>
                                     </tbody>
+                                    <tbody>
+                                        <tr ng-repeat="product in favoriteProductsList">
+                                            <td>
+                                                <a href=""><img
+                                                        th:src="@{/uploads/productImg/{{product.productsId.img}}}"
+                                                        alt="cart-image" width="72px;"></a>
+                                            </td>
+                                            <td>
+                                                <a href="" class="text-dark">{{product.productsId.name}}</a>
+                                            </td>
+                                            <td>
+                                                <a href="" class="btn btn-danger"
+                                                    ng-click="addCart(product.productsId.id)">Thêm
+                                                    ngay {{product.productsId.id}}</a>
+                                            </td>
+                                            <td>
+                                                <a href="" class="text-dark">
+                                                    <i ng-click="unLikeFavoriteProducts(product.id)" class="fa fa-times"
+                                                        aria-hidden="true"> Bỏ thích</i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+
                                 </table>
                             </div>
                             <!-- Table Content Start -->
@@ -84,7 +117,7 @@
         </div>
         <!-- Wish List End -->
     </div>
-   
+
 </body>
 
 </html>
