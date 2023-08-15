@@ -28,5 +28,7 @@ public interface SaleService {
 	void applyDiscount(Integer code); // Trừ số lượng mã giảm giá khi sử dụng
 
 	Sale save(Sale sale);
+
+	List<Sale> findCurrentSale();
 	
 }

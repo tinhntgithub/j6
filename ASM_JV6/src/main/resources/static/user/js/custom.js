@@ -1,6 +1,6 @@
 // Alert Toastify
 
-alertSuccess = function(message) {
+alertSuccess = function (message) {
 	Toastify({
 		text: message,
 		duration: 3000,
@@ -14,11 +14,11 @@ alertSuccess = function(message) {
 			background: "#34c240",
 			color: "white",
 		},
-		onClick: function() { } // Callback after click
+		onClick: function () { } // Callback after click
 	}).showToast();
 }
 
-alertWarning = function(message) {
+alertWarning = function (message) {
 	Toastify({
 		text: message,
 		duration: 3000,
@@ -32,11 +32,11 @@ alertWarning = function(message) {
 			background: "#fa9f47",
 			color: "white",
 		},
-		onClick: function() { } // Callback after click
+		onClick: function () { } // Callback after click
 	}).showToast();
 }
 
-alertDanger = function(message) {
+alertDanger = function (message) {
 	Toastify({
 		text: message,
 		duration: 3000,
@@ -50,11 +50,11 @@ alertDanger = function(message) {
 			background: "#d64242",
 			color: "white",
 		},
-		onClick: function() { } // Callback after click
+		onClick: function () { } // Callback after click
 	}).showToast();
 }
 
-alertResetAndEdit = function(message) {
+alertResetAndEdit = function (message) {
 	Toastify({
 		text: message,
 		duration: 3000,
@@ -68,13 +68,13 @@ alertResetAndEdit = function(message) {
 			background: "#0090e0",
 			color: "white",
 		},
-		onClick: function() { } // Callback after click
+		onClick: function () { } // Callback after click
 	}).showToast();
 }
 // Lắng nghe sự kiện khi click vào ô checkbox trên cùng
 function checkAll() {
 	var checkboxes = document.querySelectorAll('#cart-tableBody input[type="checkbox"]');
-	checkboxes.forEach(function(checkbox) {
+	checkboxes.forEach(function (checkbox) {
 		checkbox.checked = $('#checkAllId').is(':checked');
 	}, $('#checkAllId'));
 }
@@ -113,9 +113,9 @@ function createAdr() {
 	}
 }
 
-$(document).ready(function() {
+$(document).ready(function () {
 
-	$('textarea').keypress(function(event) {
+	$('textarea').keypress(function (event) {
 
 		if (event.keyCode == 13) {
 			event.preventDefault();
@@ -157,9 +157,9 @@ var host = "http://localhost:8080/";
 // })
 //End Upload Avatar
 //filter Replace
-app.filter('replace', [function() {
+app.filter('replace', [function () {
 
-	return function(input, from, to) {
+	return function (input, from, to) {
 
 		if (input === undefined) {
 			return;
@@ -174,10 +174,23 @@ app.filter('replace', [function() {
 }]);
 
 //Cart Controller
-app.controller("cartCtr", function($scope, $http, $rootScope, $window) {
+app.controller("cartCtr", function ($scope, $http, $rootScope, $window) {
+	if (!$rootScope.vouchercopi) {
+		$rootScope.vouchercopi = []; // Khởi tạo mảng nếu chưa tồn tại
+	}
+
+	$scope.codelist = [];
+
+	$scope.addToCopyCode = function (value) {
+		$rootScope.vouchercopi.push(value);
+		alertSuccess('Copied ' + value)
+
+		console.log(value)
+	}
+
 	$scope.colorid = "";
 
-	$scope.initializeStockQuantity = function() {
+	$scope.initializeStockQuantity = function () {
 		var init = document.querySelector(".color-link")
 		var initialQty = init.getAttribute("data-qty");
 		var inittialId = init.getAttribute("data-id");
@@ -190,11 +203,11 @@ app.controller("cartCtr", function($scope, $http, $rootScope, $window) {
 		$scope.colorid = inittialId;
 	};
 
-	angular.element(document).ready(function() {
+	angular.element(document).ready(function () {
 		$scope.initializeStockQuantity();
 	});
 
-	$scope.updateStockQuantity = function(event) {
+	$scope.updateStockQuantity = function (event) {
 		var link = event.currentTarget;
 		var clickedQty = link.getAttribute("data-qty");
 		var clickedId = link.getAttribute("data-id");
@@ -202,7 +215,7 @@ app.controller("cartCtr", function($scope, $http, $rootScope, $window) {
 		stockQuantitySpan.textContent = clickedQty;
 
 		var activeLinks = document.querySelectorAll(".color-link.active");
-		activeLinks.forEach(function(activeLink) {
+		activeLinks.forEach(function (activeLink) {
 			activeLink.classList.remove("active");
 		});
 
@@ -214,7 +227,7 @@ app.controller("cartCtr", function($scope, $http, $rootScope, $window) {
 	};
 
 
-	$scope.addCart = function(id) {
+	$scope.addCart = function (id) {
 		var url = `${host}Cart/create/${id}`;
 		var urlLogin = "http://" + $window.location.host + "/signin.html";
 		$http.get(url).then(resp => {
@@ -232,7 +245,7 @@ app.controller("cartCtr", function($scope, $http, $rootScope, $window) {
 
 	}
 	$scope.quantity = 1;
-	$scope.addCartQty = function(id) {
+	$scope.addCartQty = function (id) {
 
 		var url = `${host}rest/cart/${id}/${$scope.colorid}`
 		var urlLogin = "http://" + $window.location.host + "/signin.html";
@@ -250,7 +263,7 @@ app.controller("cartCtr", function($scope, $http, $rootScope, $window) {
 
 
 	//Favorites
-	$scope.like = function(id) {
+	$scope.like = function (id) {
 		alert(id);
 		var urlLike = `http://localhost:8080/rest/favorites/like/${id}`;//${id}
 		var urlLogin = "http://" + $window.location.host + "/signin.html";
@@ -272,21 +285,21 @@ app.controller("cartCtr", function($scope, $http, $rootScope, $window) {
 var itemChecked = [];
 function checkAll() {
 	var checkboxes = document.querySelectorAll('#cart-tableBody input[type="checkbox"]');
-	checkboxes.forEach(function(checkbox) {
+	checkboxes.forEach(function (checkbox) {
 		checkbox.checked = $('#checkAllId').is(':checked');
 	}, $('#checkAllId'));
 }
 function checkAll() {
 	var checkboxes = document.querySelectorAll('#cart-tableBody input[type="checkbox"]');
-	checkboxes.forEach(function(checkbox) {
+	checkboxes.forEach(function (checkbox) {
 		checkbox.checked = $('#checkAllId').is(':checked');
 	}, $('#checkAllId'));
 }
-app.controller("pushCart", function($scope, $http, $rootScope) {
+app.controller("pushCart", function ($scope, $http, $rootScope) {
 
-	$rootScope.$on("list", function() {
+	$rootScope.$on("list", function () {
 		var url = `${host}Cart/listCart`;
-		$scope.url = function(filename) {
+		$scope.url = function (filename) {
 			return `${host}uploads/productImg/${filename}`;
 		}
 		$http.get(url).then(resp => {
@@ -306,7 +319,7 @@ app.controller("pushCart", function($scope, $http, $rootScope) {
 	// $scope.selectAll = false;
 	$scope.selectAll = false;
 
-	$scope.checkAll = function() {
+	$scope.checkAll = function () {
 		$scope.selectAll = !$scope.selectAll;
 		$scope.selectedIDs = []; // Xóa tất cả các ID đã chọn trước đó
 		for (var i = 0; i < $scope.Cart.length; i++) {
@@ -320,7 +333,7 @@ app.controller("pushCart", function($scope, $http, $rootScope) {
 		$scope.calculateTotalAmount();
 	};
 
-	$scope.calculateTotalAmount = function() {
+	$scope.calculateTotalAmount = function () {
 		var total = 0;
 
 		for (var i = 0; i < $scope.Cart.length; i++) {
@@ -335,7 +348,7 @@ app.controller("pushCart", function($scope, $http, $rootScope) {
 
 
 
-	$scope.updateSelectedIDs = function(listCart) {
+	$scope.updateSelectedIDs = function (listCart) {
 		if (listCart.isSelected) {
 			$scope.selectedIDs.push(listCart);
 		} else {
@@ -348,7 +361,7 @@ app.controller("pushCart", function($scope, $http, $rootScope) {
 	};
 
 	var url = `${host}Cart/listCart`;
-	$scope.url = function(filename) {
+	$scope.url = function (filename) {
 		return `${host}uploads/productImg/${filename}`;
 	}
 	$http.get(url).then(resp => {
@@ -359,7 +372,7 @@ app.controller("pushCart", function($scope, $http, $rootScope) {
 		else {
 			$scope.total = "99+";
 		}
-		$scope.getTotalTempoary = function() {
+		$scope.getTotalTempoary = function () {
 			var total = 0;
 
 			if ($scope.selectAll) {
@@ -380,7 +393,7 @@ app.controller("pushCart", function($scope, $http, $rootScope) {
 	}).catch(error => {
 		console.log("Errors", error);
 	});
-	$scope.deleteCart = function(id, name) {
+	$scope.deleteCart = function (id, name) {
 		if (confirm("Bạn có muốn xóa sản phẩm " + name + " khỏi giỏ hàng không ?") == true) {
 			var url = `${host}Cart/delete/${id}`
 			$http.get(url).then(resp => {
@@ -394,7 +407,7 @@ app.controller("pushCart", function($scope, $http, $rootScope) {
 		}
 
 	}
-	$scope.updateCart = function(id) {
+	$scope.updateCart = function (id) {
 		var url = `${host}Cart/update`
 		var data = $scope.Cart;
 		for (var i = 0; i < data.length; i++) {
@@ -410,7 +423,7 @@ app.controller("pushCart", function($scope, $http, $rootScope) {
 
 	}
 
-	$scope.loadCheckoutList = function() {
+	$scope.loadCheckoutList = function () {
 		var url = `${host}rest/order/savetemplist`;
 		var data = angular.copy($scope.selectedIDs)
 
@@ -432,19 +445,33 @@ app.controller("pushCart", function($scope, $http, $rootScope) {
 //End Cart Controller
 
 // Orders Controller
-app.controller("checkoutCtrl", function($scope, $http) {
+app.controller("checkoutCtrl", function ($scope, $http, $rootScope) {
 
 	$scope.currentUser = {};
 	$scope.differentAddress = false;
 	$scope.addressList = [];
 
-	$scope.checkout = function() {
+
+	$scope.autocompleteItems = $rootScope.vouchercopi; // Dữ liệu từ $rootScope
+	$scope.autocompleteVisible = false; // Ban đầu ẩn danh sách autocomplete
+
+	$scope.showAutocomplete = function () {
+		$scope.autocompleteVisible = true; // Hiển thị danh sách autocomplete
+	};
+
+	$scope.selectAutocomplete = function (item) {
+		$scope.voucher.code = item; // Gán giá trị từ danh sách autocomplete vào input
+		$scope.autocompleteVisible = false; // Ẩn danh sách autocomplete
+	};
+
+
+	$scope.checkout = function () {
 		alertSuccess("Thanh toán thành công");
 	}
-	$scope.delelteProductFormCart = function() {
+	$scope.delelteProductFormCart = function () {
 
 	}
-	$scope.getCurrentUser = function() {
+	$scope.getCurrentUser = function () {
 		var url = `${host}rest/accounts/current`;
 		var url2 = `${host}rest/address/`;
 		$http.get(url).then((resp) => {
@@ -469,7 +496,7 @@ app.controller("checkoutCtrl", function($scope, $http) {
 
 	$scope.payFromCart = [];
 
-	$scope.loadCartProduct = function() {
+	$scope.loadCartProduct = function () {
 		var url = `${host}rest/order/gettemplist`;
 		var url2 = `${host}Cart/listCart`;
 		$http.get(url).then((resp) => {
@@ -494,7 +521,7 @@ app.controller("checkoutCtrl", function($scope, $http) {
 
 	$scope.voucher = {};
 	$scope.error = {};
-	$scope.apply_vourcher_code = function() {
+	$scope.apply_vourcher_code = function () {
 		var url = `${host}rest/sales/checkcode/`;
 		var item = angular.copy($scope.voucher);
 		console.log($scope.voucher);
@@ -510,8 +537,8 @@ app.controller("checkoutCtrl", function($scope, $http) {
 				// 	timer: 2500
 				// })
 				console.log($scope.voucher.amount);
-				alertSuccess('Giảm thành công '+ $scope.voucher.value + '%');
-				$scope.getDiscount = function() {
+				alertSuccess('Giảm thành công ' + $scope.voucher.value + '%');
+				$scope.getDiscount = function () {
 					var sub = $scope.getSubtotal();
 					return $scope.voucher.value * sub / 100;
 				};
@@ -527,7 +554,7 @@ app.controller("checkoutCtrl", function($scope, $http) {
 		})
 	}
 
-	$scope.handleCheckout = function() {
+	$scope.handleCheckout = function () {
 		var url = `${host}rest/order/neworder`;
 
 		var data = angular.copy($scope.currentUser);
@@ -537,7 +564,7 @@ app.controller("checkoutCtrl", function($scope, $http) {
 		}
 		data.list = angular.copy($scope.payFromCart);
 		data.address = angular.copy($scope.currentUser.selectedAddress);
-		console.log("Không chọn địa chỉ: "+ data.address);
+		console.log("Không chọn địa chỉ: " + data.address);
 		var diferAdd = angular.copy($scope.differentAddress);
 		console.log(diferAdd);
 		if (!data.address && diferAdd) {
@@ -560,7 +587,7 @@ app.controller("checkoutCtrl", function($scope, $http) {
 	}
 
 	// Function to calculate the subtotal
-	$scope.getSubtotal = function() {
+	$scope.getSubtotal = function () {
 		let subtotal = 0;
 		for (const listCart of $scope.payFromCart) {
 			subtotal += listCart.proCart.price * listCart.qty;
@@ -569,12 +596,12 @@ app.controller("checkoutCtrl", function($scope, $http) {
 	};
 
 
-	$scope.getDiscount = function() {
+	$scope.getDiscount = function () {
 		return 0;
 	};
 
 	// Function to calculate the total amount
-	$scope.getTotal = function() {
+	$scope.getTotal = function () {
 		return $scope.getSubtotal() - $scope.getDiscount();
 	};
 
@@ -586,9 +613,9 @@ app.controller("checkoutCtrl", function($scope, $http) {
 // End Orders Controller
 
 //User update image
-app.controller("userImage", function($scope, $http) {
+app.controller("userImage", function ($scope, $http) {
 	var url = "http://localhost:8080/rest/uploads/accountImg";
-	$scope.upload = function(files) {
+	$scope.upload = function (files) {
 		var form = new FormData();
 		form.append('files', files[0]);
 		$http.post(url, form, {
@@ -611,11 +638,11 @@ app.controller("userImage", function($scope, $http) {
 });
 
 // start product favorites controller
-app.controller("favoritesCtrl", function($scope, $http, $rootScope, $window) {
+app.controller("favoritesCtrl", function ($scope, $http, $rootScope, $window) {
 
 	$scope.favoriteProductsList = [];
 
-	$scope.loadFavoriteProducts = function() {
+	$scope.loadFavoriteProducts = function () {
 		var url = `${host}rest/favorites/like/all`;
 		$http.get(url).then((resp) => {
 			$scope.favoriteProductsList = resp.data;
@@ -627,7 +654,7 @@ app.controller("favoritesCtrl", function($scope, $http, $rootScope, $window) {
 		});
 	}
 
-	$scope.unLikeFavoriteProducts = function(id) {
+	$scope.unLikeFavoriteProducts = function (id) {
 
 		var url = `${host}rest/favorites/unLike/${id}`;
 
@@ -640,7 +667,7 @@ app.controller("favoritesCtrl", function($scope, $http, $rootScope, $window) {
 		});
 	}
 
-	$scope.addCart = function(id) {
+	$scope.addCart = function (id) {
 		var url = `${host}Cart/create/${id}`;
 		var urlLogin = "http://" + $window.location.host + "/login.html";
 		$http.get(url).then(resp => {

@@ -22,46 +22,34 @@
                 <!-- Product Title End -->
                 <!-- Hot Deal Product Activation Start -->
                 <div class="hot-deal-active owl-carousel">
-                    <!-- Single Product Start -->
-                    <div class="single-product" th:each="p:${product}">
-                        <!-- Product Image Start -->
+                    <div class="single-product" th:each="s:${sale}">
                         <div class="pro-img">
-                            <a th:href="@{|/product.html?id=${p.id}|}">
-                                <img class="primary-img" th:src="${'/uploads/productImg/'+{p.img}}"
+                            <a href="#">
+                                <img class="primary-img"
+                                    src="https://i.pinimg.com/564x/90/f7/93/90f793bf1bf20352b009b079c934ab9c.jpg"
                                     alt="single-product">
                             </a>
                             <a href="#" class="quick_view" data-toggle="modal" data-target="#myModal"
                                 title="Quick View"><i class="lnr lnr-magnifier"></i></a>
                         </div>
-                        <!-- Product Image End -->
-                        <!-- Product Content Start -->
                         <div class="pro-content">
                             <div class="pro-info">
-                                <h4><a th:utext="${p.name}" href="#"></a></h4>
-                                <p><span th:utext="|${#numbers.formatInteger(p.price-(p.price*p.sale/100),3,'POINT')} VNĐ|"
-                                        class="price"> </span></p>
-                                <p><del th:if="${p.sale>0}"
-                                        class="prev-price">[[${#numbers.formatInteger(p.price,3,'POINT')}]] VNĐ</del>
-                                </p>
-                                <div class="label-product l_sale" th:if="${p.sale>0}"><span
-                                        th:utext="${p.sale}"></span><span class="symbol-percent">%</span></div>
+                                <h4><a th:utext="'Giảm đến ' + ${s.value} + '% giá trị đơn hàng'" href="#"></a></h4>
+                                <p><span th:text="${s.code}" class="price"></span></p>
+                                <p>Đã dùng</p>
+                                <div class="label-product m_sale">
+                                    <span th:utext="${(s.amountused * 100 / s.amount)} + '%'"></span>
+                                </div>
                             </div>
                             <div class="pro-actions">
                                 <div class="actions-primary">
-                                    <a href="" title="Add to Cart" th:attr="ng-click=|addCart(${p.id})|"> + Thêm vào giỏ
-                                        hàng</a>
-                                </div>
-                                <div class="actions-secondary">
-                                    <a href="" th:attr="ng-click=|like(${p.id})|" title="WishList"><i
-                                            class="lnr lnr-heart"></i>
-                                        <span>Thêm
-                                            vào danh sách yêu thích</span></a>
+                                    <a href="" th:attr="ng-click=|addToCopyCode(${s.code})|"> + Copy</a>
                                 </div>
                             </div>
                         </div>
-                        <!-- Product Content End -->
                     </div>
-                    <!-- Single Product End -->
+
+
                 </div>
                 <!-- Hot Deal Product Active End -->
 

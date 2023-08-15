@@ -19,4 +19,7 @@ public interface SaleDAO extends JpaRepository<Sale, Integer> {
 
 	@Query(value = "UPDATE Sale set amountused = amountused + 1 WHERE id = ?1", nativeQuery = true)
 	void updateQuantityByCode(@Param("code") Integer code);
+
+	@Query(value = "select * from Sale where GETDATE() between createDate and endDate ORDER BY amountused ASC;", nativeQuery = true)
+	List<Sale> findCurrentSale();
 }

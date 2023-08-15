@@ -1399,6 +1399,20 @@ li.megamenu-img a {
   text-transform: uppercase;
   z-index: 1;
 }
+.m_sale {
+  bottom: 20px;
+  color: orangered;
+  font-size: 20px;
+  font-weight: 900;
+  height: 22px;
+  line-height: 1;
+  padding-right: 17px;
+  position: absolute;
+  right: 15px;
+  text-align: center;
+  text-transform: uppercase;
+  z-index: 1;
+}
 .actions-secondary a span {
   color: #363636;
   display: inline-block;

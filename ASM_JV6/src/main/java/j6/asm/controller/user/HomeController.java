@@ -23,10 +23,12 @@ import j6.asm.entity.Favorites;
 import j6.asm.entity.ProductColor;
 import j6.asm.entity.ProductImg;
 import j6.asm.entity.Products;
+import j6.asm.entity.Sale;
 import j6.asm.service.CategoriesService;
 import j6.asm.service.ProductColorService;
 import j6.asm.service.ProductImgService;
 import j6.asm.service.ProductsService;
+import j6.asm.service.SaleService;
 import j6.asm.service.SessionService;
 import j6.asm.service.impl.CategoryServiceImp;
 
@@ -48,6 +50,8 @@ public class HomeController {
 	ProductImgService productImgService;
 	@Autowired
 	ProductColorService colorService;
+	@Autowired
+	SaleService saleService;
 
 	// Index Page :))
 	@RequestMapping("/index.html")
@@ -68,7 +72,8 @@ public class HomeController {
 
 		List<Products> product = productservice.findAll();
 		m.addAttribute("product", product);
-
+		List<Sale> sale = saleService.findCurrentSale();
+		m.addAttribute("sale", sale);
 		List<Categories> categories = cateDAO.listCateInProduct();
 		if (!categories.isEmpty()) {
 			m.addAttribute("cate", categories);

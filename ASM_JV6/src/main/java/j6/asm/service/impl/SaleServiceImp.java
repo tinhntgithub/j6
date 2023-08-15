@@ -62,5 +62,9 @@ public class SaleServiceImp implements SaleService {
 	  public Sale save(Sale sale) {
 	    return dao.save(sale);
 	  }
+	@Override
+	public List<Sale> findCurrentSale() {
+		return dao.findCurrentSale();
+	}
 
 }
