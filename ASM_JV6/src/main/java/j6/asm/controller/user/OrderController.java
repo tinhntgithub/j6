@@ -123,8 +123,8 @@ public class OrderController {
 		// orderdao.save(orders); // Lưu đối tượng Orders và OrderDetails trong cùng một
 		// giao dịch
 
-		List<Orders> order_all = orderdao.find_LoginbyUsername(account.getUsername());
-		model.addAttribute("or", order_all.get(0));
+//		List<Orders> order_all = orderdao.find_LoginbyUsername(account.getUsername());
+//		model.addAttribute("or", order_all.get(0));
 
 		return "redirect:/manageOrders.html";
 	}
@@ -207,7 +207,7 @@ public class OrderController {
 
 		Orders order = orderdao.findById(id).get();
 		order.setStatusId(statusdao.findById(4).get());
-		orderdao.delete(order);
+		orderdao.save(order);
 		return "redirect:/manageOrders.html";
 	}
 

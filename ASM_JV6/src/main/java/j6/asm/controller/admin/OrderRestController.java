@@ -13,6 +13,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -58,7 +59,7 @@ public class OrderRestController {
 	OrderDetailsService ordersService;
 	@Autowired
 	StatusService statusService;
-	@Autowired
+	@Autowired  
 	SessionService session;
 	@Autowired
 	AddressService addressDAO;
@@ -128,15 +129,13 @@ public class OrderRestController {
 
 		String address;
 		JsonNode addNode = data.get("address");
-		
-
-
+	
 		LocalDateTime now = LocalDateTime.now();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-ddHH:mm:ss.SSS");
 		String dateString = now.format(formatter);
 		SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-ddHH:mm:ss.SSS");
 		Date date = inputFormat.parse(dateString);
-
+		
 		Integer statusid = 1;
 		Status status = statusService.findById(statusid);
 
@@ -145,19 +144,28 @@ public class OrderRestController {
 		List<Cart> cartList = new ArrayList<Cart>();
 
 		JsonNode listNode = data.get("list");
-		if (listNode != null && listNode.isArray()) {
+		
+		String hashData = session.get("hashData");
+		if(hashData == null) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+		}else {
+			session.remove("hashData");
+		}
+
+		if (listNode.size() >0 && listNode.isArray()) {
 			for (JsonNode node : listNode) {
 				Integer cartid = node.get("id").asInt();
 				Cart cart = cartService.findById(cartid);
 				cartList.add(cart);
 			}
+		}else {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
 		}
 
 		Integer saleid = data.get("voucher").asInt();
 
 		Orders orders = new Orders();
 		orders.setDate(date);
-		orders.setUserOrder(account);
 		orders.setStatusId(status);
 		orders.setFullname(fullname);
 		orders.setPhone(phone);
@@ -201,7 +209,8 @@ public class OrderRestController {
 			cartService.delete(cartProduct.getId());
 		}
 
-		return ResponseEntity.ok(orders);
+		return ResponseEntity.status(200).body(null);
+		
 	}
 
 }
