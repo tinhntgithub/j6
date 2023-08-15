@@ -25,6 +25,7 @@ public class UploadAvatarRestController {
 //		return fileService.read(folder, file);
 //	}
 //	
+
 	@PostMapping("/update_account.html/{folder}")
 	public String upload(@PathVariable("folder") String folder,@PathParam("files") MultipartFile files) {
 		return fileService.save(folder, files).getAbsolutePath();
